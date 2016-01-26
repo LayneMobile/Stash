@@ -1,0 +1,75 @@
+/*
+ * Copyright 2016 Layne Mobile, LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+include ':stash-annotations',
+        ':stash-core',
+        ':stash-extension-model',
+        ':stash-extension-processor',
+        ':stash-plugin',
+        ':stash-compiler',
+        ':stash',
+        ':stash-gson',
+        ':stash-shopify',
+        ':stash-retrofit',
+        ':hockeyloader',
+        ':shopify'
+
+// Annotations dir
+project(':stash-annotations')
+        .setProjectDir(file('shared/stash-annotations'))
+
+// Extensions model dir
+project(':stash-extension-model')
+        .setProjectDir(file('shared/stash-extension-model'))
+
+// Extensions processor dir
+project(':stash-extension-processor')
+        .setProjectDir(file('library/extensions/stash-extension-processor'))
+
+// Plugin dir
+project(':stash-plugin')
+        .setProjectDir(file('plugin/stash-plugin'))
+
+// Core dir
+project(':stash-core')
+        .setProjectDir(file('library/stash-core'))
+
+// Stash Compiler dir
+project(':stash-compiler')
+        .setProjectDir(file('library/stash-compiler'))
+
+// Stash dir
+project(':stash')
+        .setProjectDir(file('library/stash'))
+
+// Stash-Gson dir
+project(':stash-gson')
+        .setProjectDir(file('library/extensions/stash-gson'))
+
+// Stash-Shopify dir
+project(':stash-shopify')
+        .setProjectDir(file('library/extensions/stash-shopify'))
+
+// Stash-Retrofit dir
+project(':stash-retrofit')
+        .setProjectDir(file('library/extensions/stash-retrofit'))
+
+// Samples dirs
+project(':hockeyloader')
+        .setProjectDir(file('samples/hockeyloader'))
+project(':shopify')
+        .setProjectDir(file('samples/shopify'))
+
