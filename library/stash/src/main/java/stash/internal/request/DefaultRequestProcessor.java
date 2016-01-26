@@ -25,6 +25,7 @@ import java.util.List;
 
 import rx.Observable;
 import rx.functions.Func1;
+import stash.Entry;
 import stash.Params;
 import stash.Progress;
 import stash.Request;
@@ -35,6 +36,7 @@ import stash.Stashable;
 import stash.StashableProcessor;
 import stash.params.StashableParams;
 import stash.sources.AggregableSource;
+import stash.sources.OpenEndedSource;
 import stash.sources.StashableSource;
 import stash.util.Result;
 
@@ -58,7 +60,9 @@ final class DefaultRequestProcessor<T, P extends Params> {
     @NonNull
     static <T, P extends Params> DefaultRequestProcessor<T, P> create(@NonNull final Source<T, P> source) {
         final SourceProgressProcessor<T, P> sourceProcessor;
-        if (source instanceof AggregableSource) {
+        if (source instanceof OpenEndedSource) {
+            sourceProcessor = OpenEndedProcessor.create((OpenEndedSource<T, P>) source);
+        } else if (source instanceof AggregableSource) {
             sourceProcessor = AggregableProcessor.create((AggregableSource<T, P>) source);
         } else {
             sourceProcessor = SourceProgressProcessor.create(source);
@@ -130,7 +134,7 @@ final class DefaultRequestProcessor<T, P extends Params> {
             @Override public Observable<? extends T> call(StashState<T> stashState) {
                 if (stashState.kind == StashState.Kind.Stash) {
                     Observable<T> stash = Observable.just(stashState.stashData);
-                    Observable<T> source = peekSourceRequest(p);
+                    Observable<T> source = peekSourceRequest(p, stashState.stashEntry, bp.stashRunner);
                     if (source != null) {
                         return Observable.concat(stash, source);
                     }
@@ -205,7 +209,8 @@ final class DefaultRequestProcessor<T, P extends Params> {
                             Observable<Progress<T>> received
                                     = Observable.just(Progress.receivedFromStash(stashState.stashData));
                             if (stashState.kind == StashState.Kind.Stash) {
-                                Observable<Progress<T>> source = peekSourceRequestWithProgress(p);
+                                Observable<Progress<T>> source
+                                        = peekSourceRequestWithProgress(p, stashState.stashEntry, bp.stashRunner);
                                 if (source != null) {
                                     return Observable.concat(received, source);
                                 }
@@ -285,8 +290,9 @@ final class DefaultRequestProcessor<T, P extends Params> {
     }
 
     @Nullable
-    private Observable<T> peekSourceRequest(@NonNull P p) {
-        Observable<Progress<T>> request = peekSourceRequestWithProgress(p);
+    private Observable<T> peekSourceRequest(@NonNull P p, @Nullable Entry<T> entry,
+            @NonNull StashRunner<T> stashRunner) {
+        Observable<Progress<T>> request = peekSourceRequestWithProgress(p, entry, stashRunner);
         if (request != null) {
             return map(request);
         }
@@ -294,7 +300,12 @@ final class DefaultRequestProcessor<T, P extends Params> {
     }
 
     @Nullable
-    private Observable<Progress<T>> peekSourceRequestWithProgress(@NonNull P p) {
+    private Observable<Progress<T>> peekSourceRequestWithProgress(@NonNull P p, @Nullable Entry<T> entry,
+            @NonNull StashRunner<T> stashRunner) {
+        if (sourceProcessor instanceof OpenEndedProcessor) {
+            return ((OpenEndedProcessor<T, P>) sourceProcessor).scheduleNext(p, entry,
+                    stashRunner.saveFunctionWithProgress());
+        }
         return sourceProcessor.peekSourceRequest(p);
     }
 
