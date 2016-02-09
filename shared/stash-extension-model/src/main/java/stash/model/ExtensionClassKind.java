@@ -38,7 +38,7 @@ public enum ExtensionClassKind {
     Module(stash.annotations.Module.class, "stash", "StashModule"),
     Stashes(stash.annotations.Stashes.class, "stash", "Stashes");
 
-    private static final String OUTPUT_DIR = "META-INF/com.laynepenney.stash";
+    private static final String OUTPUT_DIR = "META-INF/com.laynemobile.stash";
     private static final String FILE_EXTENSION = ".stash";
 
     public final Class<? extends Annotation> annotationType;
