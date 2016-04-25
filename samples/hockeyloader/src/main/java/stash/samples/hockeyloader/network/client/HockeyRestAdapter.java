@@ -33,7 +33,7 @@ public final class HockeyRestAdapter {
     private static RestAdapter.Log DEFAULT_LOG;
     private static RestAdapter.LogLevel DEFAULT_LOGLEVEL;
     private static boolean LOGGING_ENABLED = true;
-    private static RestAdapter sInstance;
+    private static volatile RestAdapter sInstance;
 
     private HockeyRestAdapter() {}
 

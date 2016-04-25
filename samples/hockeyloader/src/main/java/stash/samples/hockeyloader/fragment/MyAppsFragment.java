@@ -74,7 +74,7 @@ public class MyAppsFragment extends ListFragment implements AdapterView.OnItemCl
             swipey.setRefreshing(false);
             return;
         }
-        Api.Apps.getProgressRequest(params)
+        Api.apps().getProgressRequest(params)
                 .onMain(subscriptions())
                 .subscribe(new Subscriber());
     }

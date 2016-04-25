@@ -68,7 +68,7 @@ public class AuthFragment extends HockeyFragment {
             AuthApi.StashParams params = new AuthApi.StashParams.Builder()
                     .setUsername(lastUsername)
                     .build();
-            Api.Auth.getRequest(params).onMain(subscriptions()).subscribe(new Action1<Auth>() {
+            Api.auth().getRequest(params).onMain(subscriptions()).subscribe(new Action1<Auth>() {
                 @Override public void call(Auth auth) {
                     if (auth != null) {
                         onSuccess(auth);
@@ -123,7 +123,7 @@ public class AuthFragment extends HockeyFragment {
                     .setPassword(password)
                     .setStashPolicy(StashPolicy.SOURCE)
                     .build();
-            Api.Auth.getRequest(params).onMain(subscriptions()).subscribe(new Action1<Auth>() {
+            Api.auth().getRequest(params).onMain(subscriptions()).subscribe(new Action1<Auth>() {
                 @Override
                 public void call(Auth o) {
                     if (o != null) {

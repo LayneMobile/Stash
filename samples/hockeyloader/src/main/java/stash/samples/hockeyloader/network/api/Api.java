@@ -23,9 +23,17 @@ import stash.samples.hockeyloader.network.model.Apps;
 import stash.samples.hockeyloader.network.model.Auth;
 
 public final class Api {
-    public static final StashableApi<Auth, AuthApi.Params> Auth = AuthApi.INSTANCE;
-    public static final StashableApi<Apps, AppsApi.Params> Apps = AppsApi.INSTANCE;
-    public static final StashableApi<AppVersions, AppVersionsApi.Params> AppVersions = AppVersionsApi.INSTANCE;
-
     private Api() { throw new AssertionError("no instances"); }
+
+    public static StashableApi<Auth, AuthApi.Params> auth() {
+        return AuthApi.INSTANCE;
+    }
+
+    public static StashableApi<Apps, AppsApi.Params> apps() {
+        return AppsApi.INSTANCE;
+    }
+
+    public static StashableApi<AppVersions, AppVersionsApi.Params> appVersions() {
+        return AppVersionsApi.INSTANCE;
+    }
 }

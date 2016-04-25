@@ -75,7 +75,7 @@ public class AppVersionsFragment extends ListFragment {
                 .setApp(mApp)
                 .setStashPolicy(stashPolicy)
                 .build();
-        Api.AppVersions.getProgressRequest(params)
+        Api.appVersions().getProgressRequest(params)
                 .onMain(subscriptions())
                 .subscribe(new Subscriber());
     }
