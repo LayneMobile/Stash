@@ -16,5 +16,4 @@
 
 package stash;
 
-public class ProxyHandler {
-}
+public interface TypeHandlerModule<T> extends Builder<TypeHandler<T>> { }
