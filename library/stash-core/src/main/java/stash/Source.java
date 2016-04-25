@@ -73,6 +73,15 @@ public interface Source<T, P extends Params> {
                 }
             };
         }
+
+        @ProxyTransform("get")
+        Func0<T> value(final T t) {
+            return new Func0<T>() {
+                @Override public T call() {
+                    return t;
+                }
+            };
+        }
     }
 
     // Generated Interface
@@ -125,6 +134,11 @@ public interface Source<T, P extends Params> {
 
         Builder<T, P> value(Func0<T> value) {
             proxy.value = value;
+            return this;
+        }
+
+        Builder<T, P> value(T t) {
+            proxy.value = proxy.value(t);
             return this;
         }
 
