@@ -11,3 +11,6 @@
     * Javadoc
     * More work on samples
     * Add new out-of-the-box stash extensions as it makese since (like Gson, i.e. Ormlite, etc.)
+* Experimental
+    * Use module implementations for RequestProcessor (and/or Api?) like with Source
+    * Create abstract framework for doing this with various datasets
