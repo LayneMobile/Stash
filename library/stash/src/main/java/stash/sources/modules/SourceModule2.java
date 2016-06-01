@@ -28,7 +28,7 @@ import stash.Params;
 import stash.Source;
 import stash.TypeHandler;
 import stash.TypeHandlerModule;
-import stash.sources.builder.MethodResult;
+import stash.types.MethodResult;
 
 public final class SourceModule2<T, P extends Params> implements TypeHandlerModule<Source> {
     private Action2<P, Subscriber<? super T>> source;

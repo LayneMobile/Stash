@@ -18,7 +18,7 @@ package stash;
 
 import java.lang.reflect.Method;
 
-import stash.sources.builder.MethodResult;
+import stash.types.MethodResult;
 
 public interface MethodHandler {
     boolean handle(Object proxy, Method method, Object[] args, MethodResult result) throws Throwable;
