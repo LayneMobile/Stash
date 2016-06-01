@@ -22,7 +22,6 @@ import stash.Params;
 import stash.StashKey;
 import stash.StashPolicy;
 
-
 public interface StashableParams<K> extends Params, StashKey<K> {
     @NonNull StashPolicy getStashPolicy();
 }

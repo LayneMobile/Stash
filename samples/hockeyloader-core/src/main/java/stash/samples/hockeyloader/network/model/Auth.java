@@ -16,7 +16,6 @@
 
 package stash.samples.hockeyloader.network.model;
 
-
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;

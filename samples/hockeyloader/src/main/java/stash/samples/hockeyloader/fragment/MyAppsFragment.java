@@ -37,7 +37,6 @@ import stash.samples.hockeyloader.network.model.App;
 import stash.samples.hockeyloader.network.model.Apps;
 import stash.samples.hockeyloader.network.model.Auth;
 
-
 public class MyAppsFragment extends ListFragment implements AdapterView.OnItemClickListener {
     private static final String TAG = MyAppsFragment.class.getSimpleName();
 

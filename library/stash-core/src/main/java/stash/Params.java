@@ -20,5 +20,5 @@ package stash;
 public interface Params {
 
     /** Params Builder */
-    interface Builder<P extends Params> extends stash.Builder<P> { }
+    interface Builder<P extends Params> extends stash.Builder<P> {}
 }

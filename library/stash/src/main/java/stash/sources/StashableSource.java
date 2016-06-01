@@ -16,7 +16,6 @@
 
 package stash.sources;
 
-
 import stash.Source;
 import stash.StashableProcessor;
 import stash.params.StashableParams;

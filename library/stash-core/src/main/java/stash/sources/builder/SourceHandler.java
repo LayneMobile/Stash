@@ -16,9 +16,8 @@
 
 package stash.sources.builder;
 
-
-import stash.types.MethodHandler;
 import stash.Source;
+import stash.types.MethodHandler;
 import stash.types.TypeHandler;
 
 public final class SourceHandler extends TypeHandler<Source> {

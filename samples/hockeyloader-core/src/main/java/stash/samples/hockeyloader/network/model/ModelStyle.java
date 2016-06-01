@@ -35,7 +35,10 @@ import static org.immutables.value.Value.Style.ImplementationVisibility.PACKAGE;
         typeImmutableEnclosing = "*Impl", // No prefix or suffix for generated immutable enclosing type
         typeModifiable = "*Editor",
         instance = "instance",
+        deepImmutablesDetection = true,
         builder = "new", // construct builder using 'new' instead of factory method
+        builderVisibility = Value.Style.BuilderVisibility.SAME,
+        overshadowImplementation = true,
         visibility = PACKAGE, // Generated class will be the same
         defaults = @Value.Immutable(copy = false)) // Disable copy methods by default
 public @interface ModelStyle {}

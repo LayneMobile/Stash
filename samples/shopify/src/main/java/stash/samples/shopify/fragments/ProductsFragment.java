@@ -16,7 +16,6 @@
 
 package stash.samples.shopify.fragments;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -133,7 +132,6 @@ public class ProductsFragment extends BaseFragment {
             }
         }
     }
-
 
     private class Adapter extends BaseAdapter {
         private Adapter() {}

@@ -21,13 +21,13 @@ import android.support.annotation.NonNull;
 import java.lang.reflect.Method;
 
 import rx.functions.Func1;
-import stash.sources.builder.SourceHandler;
-import stash.types.MethodResult;
 import stash.SourceModuleBuilder;
 import stash.Stashable;
 import stash.params.StashableParams;
 import stash.sources.StashableSource;
+import stash.sources.builder.SourceHandler;
 import stash.sources.builder.SourceMethodHandler;
+import stash.types.MethodResult;
 
 @stash.annotations.SourceModule(StashableSource.class)
 public final class StashableSourceModule<T, P extends StashableParams<?>> implements SourceModuleBuilder {

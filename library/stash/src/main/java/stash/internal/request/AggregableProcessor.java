@@ -29,7 +29,6 @@ import stash.Params;
 import stash.Progress;
 import stash.sources.AggregableSource;
 
-
 class AggregableProcessor<T, P extends Params> extends SourceProgressProcessor<T, P> {
     private static final EmptyConcatFunction EMPTY_CONCAT_FUNCTION = new EmptyConcatFunction();
 

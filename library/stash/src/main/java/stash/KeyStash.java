@@ -16,7 +16,6 @@
 
 package stash;
 
-
 import android.support.annotation.NonNull;
 
 public class KeyStash<K, V> extends Stash<V> {

@@ -18,4 +18,4 @@ package stash;
 
 import stash.sources.builder.SourceHandler;
 
-public interface SourceModuleBuilder extends Builder<SourceHandler> { }
+public interface SourceModuleBuilder extends Builder<SourceHandler> {}

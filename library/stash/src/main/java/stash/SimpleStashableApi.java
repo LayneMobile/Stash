@@ -16,16 +16,8 @@
 
 package stash;
 
-
 import android.support.annotation.NonNull;
 
-import stash.BaseApi;
-import stash.Progress;
-import stash.Request;
-import stash.RequestProcessor;
-import stash.Stash;
-import stash.StashPolicy;
-import stash.Stashable;
 import stash.annotations.GenerateApiBuilder;
 import stash.params.SimpleStashableParams;
 import stash.sources.modules.AggregableSourceStashableModule;

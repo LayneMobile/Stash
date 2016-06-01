@@ -27,7 +27,6 @@ import stash.samples.hockeyloader.plugin.GsonHook;
 import stash.util.AndroidLogger;
 import stash.util.gson.ImmutableGson;
 
-
 public class HlApp extends Application {
     @Override
     public void onCreate() {

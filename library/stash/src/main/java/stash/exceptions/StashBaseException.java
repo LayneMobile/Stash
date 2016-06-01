@@ -16,7 +16,6 @@
 
 package stash.exceptions;
 
-
 public class StashBaseException extends Exception {
     public StashBaseException() {
     }

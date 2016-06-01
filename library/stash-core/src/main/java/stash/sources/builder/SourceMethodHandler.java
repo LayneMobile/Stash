@@ -18,4 +18,4 @@ package stash.sources.builder;
 
 import stash.types.MethodHandler;
 
-public interface SourceMethodHandler extends MethodHandler { }
+public interface SourceMethodHandler extends MethodHandler {}

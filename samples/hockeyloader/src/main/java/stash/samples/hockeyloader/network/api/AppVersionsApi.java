@@ -39,7 +39,6 @@ import stash.samples.hockeyloader.network.model.App;
 import stash.samples.hockeyloader.network.model.AppVersions;
 import stash.samples.hockeyloader.network.model.Auth;
 
-
 @Value.Enclosing
 public final class AppVersionsApi {
     private static final int MEM_SIZE = 2;
@@ -104,6 +103,6 @@ public final class AppVersionsApi {
             return token == null ? null : token.getToken();
         }
 
-        public static final class Builder extends AppVersionsApiImpl.Params.Builder { }
+        public static final class Builder extends AppVersionsApiImpl.Params.Builder {}
     }
 }

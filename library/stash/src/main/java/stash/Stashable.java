@@ -26,7 +26,6 @@ import rx.functions.Func1;
 import stash.predicates.EntryPredicate;
 import stash.predicates.Predicates;
 
-
 public interface Stashable<T> {
     @Nullable Stash<T> getStash();
 

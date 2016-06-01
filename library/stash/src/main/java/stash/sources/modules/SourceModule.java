@@ -23,12 +23,12 @@ import java.lang.reflect.Method;
 import rx.Subscriber;
 import rx.functions.Action2;
 import rx.functions.Func1;
-import stash.sources.builder.SourceHandler;
-import stash.types.MethodResult;
 import stash.Params;
 import stash.Source;
 import stash.SourceModuleBuilder;
+import stash.sources.builder.SourceHandler;
 import stash.sources.builder.SourceMethodHandler;
+import stash.types.MethodResult;
 
 @stash.annotations.SourceModule(Source.class)
 public final class SourceModule<T, P extends Params> implements SourceModuleBuilder {

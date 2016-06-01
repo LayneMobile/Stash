@@ -22,12 +22,12 @@ import java.lang.reflect.Method;
 
 import rx.functions.Func1;
 import stash.Aggregable;
-import stash.sources.builder.SourceHandler;
-import stash.types.MethodResult;
 import stash.Params;
 import stash.SourceModuleBuilder;
 import stash.sources.AggregableSource;
+import stash.sources.builder.SourceHandler;
 import stash.sources.builder.SourceMethodHandler;
+import stash.types.MethodResult;
 
 @stash.annotations.SourceModule(AggregableSource.class)
 public final class AggregableSourceModule<P extends Params> implements SourceModuleBuilder {

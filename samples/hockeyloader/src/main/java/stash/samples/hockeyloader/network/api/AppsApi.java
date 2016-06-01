@@ -16,7 +16,6 @@
 
 package stash.samples.hockeyloader.network.api;
 
-
 import android.support.annotation.NonNull;
 
 import org.immutables.value.Value;

@@ -16,7 +16,6 @@
 
 package stash.model;
 
-
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;

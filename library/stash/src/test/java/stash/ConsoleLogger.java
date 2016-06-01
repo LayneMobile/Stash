@@ -20,7 +20,6 @@ import android.util.Log;
 
 import stash.util.Logger;
 
-
 public class ConsoleLogger implements Logger {
 
     @Override public void v(String tag, String msg) {

@@ -18,7 +18,6 @@ package stash.plugins;
 
 import stash.schedulers.ServiceScheduler;
 
-
 public class StashSchedulersHook {
     private static final StashSchedulersHook DEFAULT_INSTANCE = new StashSchedulersHook();
 

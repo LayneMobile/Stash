@@ -26,7 +26,6 @@ import stash.internal.StashLog;
 import stash.internal.StashModuleImpl;
 import stash.services.StashService;
 
-
 public final class StashSchedulers {
     private static final String TAG = StashSchedulers.class.getSimpleName();
     private static final AtomicReference<StashSchedulers> INSTANCE = new AtomicReference<StashSchedulers>();

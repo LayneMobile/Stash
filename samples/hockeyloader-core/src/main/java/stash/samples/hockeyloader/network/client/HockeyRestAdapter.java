@@ -16,7 +16,6 @@
 
 package stash.samples.hockeyloader.network.client;
 
-
 import android.util.Log;
 
 import retrofit.RestAdapter;

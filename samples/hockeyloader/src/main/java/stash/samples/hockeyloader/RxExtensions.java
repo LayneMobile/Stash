@@ -26,5 +26,5 @@ public interface RxExtensions {
 
     <T> SubscriptionBuilderExtension<T> asSubscriptionBuilder();
 
-    interface SubscriptionBuilderExtension<T> extends Func1<Observable.OnSubscribe<T>, SubscriptionBuilder<T>> { }
+    interface SubscriptionBuilderExtension<T> extends Func1<Observable.OnSubscribe<T>, SubscriptionBuilder<T>> {}
 }

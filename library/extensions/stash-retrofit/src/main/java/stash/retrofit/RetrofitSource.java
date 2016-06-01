@@ -16,7 +16,6 @@
 
 package stash.retrofit;
 
-
 import stash.Params;
 import stash.sources.NetworkSource;
 

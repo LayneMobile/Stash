@@ -16,7 +16,6 @@
 
 package stash.types;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

@@ -74,7 +74,6 @@ public final class GsonUtil {
         }
     }
 
-
     private static final class AbstractTypeAdapterFactory implements TypeAdapterFactory {
         private static final List<TypeToken<?>> TOKENS = new ImmutableList.Builder<TypeToken<?>>()
                 // Add interfaces that have Immutables implementation with Gson adapters

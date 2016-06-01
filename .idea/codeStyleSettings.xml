@@ -32,7 +32,10 @@
             <emptyLine />
           </value>
         </option>
+        <option name="JD_ADD_BLANK_AFTER_PARM_COMMENTS" value="true" />
+        <option name="JD_ADD_BLANK_AFTER_RETURN" value="true" />
         <option name="JD_DO_NOT_WRAP_ONE_LINE_COMMENTS" value="true" />
+        <option name="JD_PARAM_DESCRIPTION_ON_NEW_LINE" value="true" />
         <option name="WRAP_COMMENTS" value="true" />
         <AndroidXmlCodeStyleSettings>
           <option name="USE_CUSTOM_SETTINGS" value="true" />
@@ -73,15 +76,19 @@
           <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
         </XML>
         <codeStyleSettings language="JAVA">
+          <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1" />
+          <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
+          <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="0" />
           <option name="ALIGN_MULTILINE_PARAMETERS" value="false" />
-          <option name="ALIGN_MULTILINE_METHOD_BRACKETS" value="true" />
-          <option name="SPACE_WITHIN_BRACES" value="true" />
           <option name="CALL_PARAMETERS_WRAP" value="1" />
           <option name="METHOD_PARAMETERS_WRAP" value="1" />
           <option name="METHOD_CALL_CHAIN_WRAP" value="5" />
           <option name="KEEP_SIMPLE_BLOCKS_IN_ONE_LINE" value="true" />
           <option name="KEEP_SIMPLE_METHODS_IN_ONE_LINE" value="true" />
           <option name="KEEP_SIMPLE_CLASSES_IN_ONE_LINE" value="true" />
+          <option name="ARRAY_INITIALIZER_WRAP" value="5" />
+          <option name="ARRAY_INITIALIZER_LBRACE_ON_NEXT_LINE" value="true" />
+          <option name="ARRAY_INITIALIZER_RBRACE_ON_NEXT_LINE" value="true" />
           <option name="METHOD_ANNOTATION_WRAP" value="1" />
           <option name="FIELD_ANNOTATION_WRAP" value="1" />
           <option name="ENUM_CONSTANTS_WRAP" value="2" />

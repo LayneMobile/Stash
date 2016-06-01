@@ -16,7 +16,6 @@
 
 package stash.internal.subscribers;
 
-
 import rx.Subscriber;
 
 public class StringSubscriber extends Subscriber<String> {

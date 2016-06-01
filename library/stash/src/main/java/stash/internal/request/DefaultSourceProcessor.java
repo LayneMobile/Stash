@@ -32,7 +32,6 @@ import stash.sources.NetworkSource;
 import stash.sources.PreparableSource;
 import stash.util.NetworkChecker;
 
-
 class DefaultSourceProcessor<T, P extends Params> {
     private static final String TAG = DefaultSourceProcessor.class.getSimpleName();
 

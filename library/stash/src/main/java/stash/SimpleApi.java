@@ -18,10 +18,6 @@ package stash;
 
 import android.support.annotation.NonNull;
 
-import stash.BaseApi;
-import stash.Progress;
-import stash.Request;
-import stash.RequestProcessor;
 import stash.annotations.GenerateApiBuilder;
 import stash.params.SimpleParams;
 import stash.sources.modules.AggregableSourceSimpleModule;

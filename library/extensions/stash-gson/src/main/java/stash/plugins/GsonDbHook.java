@@ -18,7 +18,6 @@ package stash.plugins;
 
 import stash.stashdbs.GsonDb;
 
-
 public class GsonDbHook {
     private static final GsonDbHook DEFAULT_INSTANCE = new GsonDbHook();
 

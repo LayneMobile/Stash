@@ -19,4 +19,4 @@ package stash.params;
 import stash.Params;
 
 /** Marker interface for network requests to verify connection before making request */
-public interface NetworkParams extends Params { }
+public interface NetworkParams extends Params {}

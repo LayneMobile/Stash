@@ -27,7 +27,6 @@ import stash.samples.hockeyloader.fragment.HockeyFragment;
 import stash.samples.hockeyloader.fragment.MyAppsFragment;
 import stash.samples.hockeyloader.network.model.Auth;
 
-
 public class MainActivity extends RxsAppCompatActivity
         implements AuthFragment.AuthDelegate, HockeyFragment.HockeyFragmentListener {
 

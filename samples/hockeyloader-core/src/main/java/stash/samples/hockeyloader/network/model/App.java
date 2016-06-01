@@ -16,7 +16,6 @@
 
 package stash.samples.hockeyloader.network.model;
 
-
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
