@@ -16,11 +16,33 @@
 
 package stash.sources;
 
+import stash.Request;
 import stash.Source;
+import stash.StashPolicy;
 import stash.StashableProcessor;
+import stash.experimental.Processor;
+import stash.experimental.RequestProcessor;
 import stash.params.StashableParams;
 
 public interface StashableSource<T, P extends StashableParams<?>> extends
         Source<T, P>,
         StashableProcessor<T, P> {
+
+    class Transformer<T, P extends StashableParams<?>> implements Processor.Interceptor.Transformer<StashableSource<T, P>, RequestProcessor.Interceptor<T, P>> {
+        @Override public RequestProcessor.Interceptor<T, P> call(final StashableSource<T, P> source) {
+            return new RequestProcessor.Interceptor<T, P>() {
+                @Override public Request<T> intercept(Processor.Interceptor.Chain<P, Request<T>> chain) {
+                    final P p = chain.params();
+                    final StashPolicy stashPolicy = p.getStashPolicy();
+                    if (stashPolicy == StashPolicy.SOURCE_ONLY_NO_STASH) {
+                        return chain.proceed(p);
+                    }
+
+                    // TODO: see what the stash looks like, etc
+//                    final Stashable<T> stashable = source.getStashable(p);
+                    return chain.proceed(p);
+                }
+            };
+        }
+    }
 }

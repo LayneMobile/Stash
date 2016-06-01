@@ -38,7 +38,7 @@ public interface PreparableSource<T, P extends Params> extends Source<T, P> {
      */
     @NonNull Observable<T> prepareSourceRequest(@NonNull Observable<T> sourceRequest, @NonNull P p);
 
-    class Transformer<T, P extends Params> implements Processor.Interceptor.Transformer<P, PreparableSource<T, P>, RequestProcessor.Interceptor<T, P>> {
+    class Transformer<T, P extends Params> implements Processor.Interceptor.Transformer<PreparableSource<T, P>, RequestProcessor.Interceptor<T, P>> {
         @Override public RequestProcessor.Interceptor<T, P> call(final PreparableSource<T, P> source) {
             return new RequestProcessor.Interceptor<T, P>() {
                 @Override public Request<T> intercept(Processor.Interceptor.Chain<P, Request<T>> chain) {

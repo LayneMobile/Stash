@@ -29,7 +29,7 @@ import stash.experimental.RequestProcessor;
 public interface AggregableSource<T, P extends Params> extends Source<T, P> {
     @Nullable Aggregable getAggregable(@NonNull P p);
 
-    class Transformer<T, P extends Params> implements Processor.Interceptor.Transformer<P, AggregableSource<T, P>, RequestProcessor.Interceptor<T, P>> {
+    class Transformer<T, P extends Params> implements Processor.Interceptor.Transformer<AggregableSource<T, P>, RequestProcessor.Interceptor<T, P>> {
         @Override public RequestProcessor.Interceptor<T, P> call(final AggregableSource<T, P> source) {
             return new RequestProcessor.Interceptor<T, P>() {
                 @Override public Request<T> intercept(Processor.Interceptor.Chain<P, Request<T>> chain) {

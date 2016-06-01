@@ -32,7 +32,7 @@ import stash.util.NetworkChecker;
 public interface NetworkSource<T, P extends Params> extends Source<T, P> {
     @Nullable NetworkChecker getNetworkChecker();
 
-    class Transformer<T, P extends Params> implements Processor.Interceptor.Transformer<P, NetworkSource<T, P>, RequestProcessor.Interceptor<T, P>> {
+    class Transformer<T, P extends Params> implements Processor.Interceptor.Transformer<NetworkSource<T, P>, RequestProcessor.Interceptor<T, P>> {
         private static final String TAG = Transformer.class.getSimpleName();
 
         @Override public RequestProcessor.Interceptor<T, P> call(final NetworkSource<T, P> source) {

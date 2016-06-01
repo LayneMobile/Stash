@@ -32,7 +32,7 @@ public interface Processor<T, R> extends Func1<T, R> {
             R proceed(T t);
         }
 
-        interface Transformer<T1, T2, I extends Interceptor<T1, ?>>
-                extends Func1<T2, I> {}
+        interface Transformer<T, I extends Interceptor<?, ?>>
+                extends Func1<T, I> {}
     }
 }
