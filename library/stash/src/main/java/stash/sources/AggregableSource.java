@@ -21,8 +21,36 @@ import android.support.annotation.Nullable;
 
 import stash.Aggregable;
 import stash.Params;
+import stash.Request;
 import stash.Source;
+import stash.experimental.Processor;
+import stash.experimental.RequestProcessor;
 
 public interface AggregableSource<T, P extends Params> extends Source<T, P> {
     @Nullable Aggregable getAggregable(@NonNull P p);
+
+    class Transformer<T, P extends Params> implements Processor.Interceptor.Transformer<P, AggregableSource<T, P>, RequestProcessor.Interceptor<T, P>> {
+        @Override public RequestProcessor.Interceptor<T, P> call(final AggregableSource<T, P> source) {
+            return new RequestProcessor.Interceptor<T, P>() {
+                @Override public Request<T> intercept(Processor.Interceptor.Chain<P, Request<T>> chain) {
+                    P p = chain.params();
+                    Aggregable aggregable = source.getAggregable(p);
+                    if (aggregable != null) {
+                        Object key = aggregable.key();
+                        // TODO: look for existing
+                        /*
+                            Aggregate aggregate = find(key);
+                            if (aggregate == null) {
+                                Request<T> source = chain.proceed(p);
+                                aggregate = new Aggregate(source);
+                                put(key, aggregate);
+                            }
+                            return aggregate.request;
+                         */
+                    }
+                    return chain.proceed(p);
+                }
+            };
+        }
+    }
 }

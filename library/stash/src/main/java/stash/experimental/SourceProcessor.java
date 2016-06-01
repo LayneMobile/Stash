@@ -16,73 +16,19 @@
 
 package stash.experimental;
 
-import android.content.Context;
-
 import com.google.common.collect.ImmutableList;
 
 import rx.Observable;
 import rx.Subscriber;
-import stash.Api;
 import stash.Params;
 import stash.Request;
 import stash.Source;
-import stash.exceptions.NetworkUnavailableException;
-import stash.internal.StashLog;
-import stash.sources.NetworkSource;
-import stash.util.NetworkChecker;
 
 public class SourceProcessor<T, P extends Params> implements RequestProcessor<T, P> {
     private final Source<T, P> source;
 
     public SourceProcessor(Source<T, P> source) {
         this.source = source;
-    }
-
-    static class Intercept<T, P extends Params> implements Interceptor<T, P> {
-        private final Source<T, P> source;
-
-        public Intercept(Source<T, P> source) {
-            this.source = source;
-        }
-
-        @Override public Request<T> intercept(Processor.Interceptor.Chain<P, Request<T>> chain) {
-            P params = chain.params();
-            return null;
-        }
-    }
-
-    public static class Transformer<T, P extends Params> implements Processor.Transformer<P, Source<T, P>, RequestProcessor<T, P>> {
-        @Override public RequestProcessor<T, P> call(final Source<T, P> source) {
-            return new SourceProcessor<>(source);
-        }
-    }
-
-    static class NetworkSourceTransformer<T, P extends Params>
-            implements Processor.Interceptor.Transformer<P, NetworkSource<T, P>, RequestProcessor.Interceptor<T, P>> {
-        private static final String TAG = NetworkSourceTransformer.class.getSimpleName();
-
-        @Override public Interceptor<T, P> call(final NetworkSource<T, P> source) {
-            return new Interceptor<T, P>() {
-                @Override public Request<T> intercept(Processor.Interceptor.Chain<P, Request<T>> chain) {
-                    P p = chain.params();
-                    StashLog.d(TAG, "checking network connection");
-                    Context context = Api.getContext(p);
-                    if (context == null) {
-                        StashLog.w(TAG, "context is null. unable to check network connection");
-                    } else {
-                        NetworkChecker networkChecker = source.getNetworkChecker();
-                        if (networkChecker == null) {
-                            networkChecker = NetworkChecker.DEFAULT;
-                        }
-                        if (!networkChecker.isNetworkAvailable(context)) {
-                            StashLog.i(TAG, "not running request. no network");
-                            return Request.error(new NetworkUnavailableException("no network"));
-                        }
-                    }
-                    return chain.proceed(p);
-                }
-            };
-        }
     }
 
     @Override public Request<T> call(P p) {

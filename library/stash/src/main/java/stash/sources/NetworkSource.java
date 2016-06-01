@@ -16,12 +16,46 @@
 
 package stash.sources;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 
+import stash.Api;
 import stash.Params;
+import stash.Request;
 import stash.Source;
+import stash.exceptions.NetworkUnavailableException;
+import stash.experimental.Processor;
+import stash.experimental.RequestProcessor;
+import stash.internal.StashLog;
 import stash.util.NetworkChecker;
 
 public interface NetworkSource<T, P extends Params> extends Source<T, P> {
     @Nullable NetworkChecker getNetworkChecker();
+
+    class Transformer<T, P extends Params> implements Processor.Interceptor.Transformer<P, NetworkSource<T, P>, RequestProcessor.Interceptor<T, P>> {
+        private static final String TAG = Transformer.class.getSimpleName();
+
+        @Override public RequestProcessor.Interceptor<T, P> call(final NetworkSource<T, P> source) {
+            return new RequestProcessor.Interceptor<T, P>() {
+                @Override public Request<T> intercept(Processor.Interceptor.Chain<P, Request<T>> chain) {
+                    P p = chain.params();
+                    StashLog.d(TAG, "checking network connection");
+                    Context context = Api.getContext(p);
+                    if (context == null) {
+                        StashLog.w(TAG, "context is null. unable to check network connection");
+                    } else {
+                        NetworkChecker networkChecker = source.getNetworkChecker();
+                        if (networkChecker == null) {
+                            networkChecker = NetworkChecker.DEFAULT;
+                        }
+                        if (!networkChecker.isNetworkAvailable(context)) {
+                            StashLog.i(TAG, "not running request. no network");
+                            return Request.error(new NetworkUnavailableException("no network"));
+                        }
+                    }
+                    return chain.proceed(p);
+                }
+            };
+        }
+    }
 }

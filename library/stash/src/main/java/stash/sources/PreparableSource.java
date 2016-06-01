@@ -20,7 +20,10 @@ import android.support.annotation.NonNull;
 
 import rx.Observable;
 import stash.Params;
+import stash.Request;
 import stash.Source;
+import stash.experimental.Processor;
+import stash.experimental.RequestProcessor;
 
 public interface PreparableSource<T, P extends Params> extends Source<T, P> {
     /**
@@ -34,4 +37,17 @@ public interface PreparableSource<T, P extends Params> extends Source<T, P> {
      * @return the prepared source request observable
      */
     @NonNull Observable<T> prepareSourceRequest(@NonNull Observable<T> sourceRequest, @NonNull P p);
+
+    class Transformer<T, P extends Params> implements Processor.Interceptor.Transformer<P, PreparableSource<T, P>, RequestProcessor.Interceptor<T, P>> {
+        @Override public RequestProcessor.Interceptor<T, P> call(final PreparableSource<T, P> source) {
+            return new RequestProcessor.Interceptor<T, P>() {
+                @Override public Request<T> intercept(Processor.Interceptor.Chain<P, Request<T>> chain) {
+                    P p = chain.params();
+                    Request<T> request = chain.proceed(p);
+                    Observable<T> prepared = source.prepareSourceRequest(request.asObservable(), p);
+                    return Request.from(prepared);
+                }
+            };
+        }
+    }
 }
