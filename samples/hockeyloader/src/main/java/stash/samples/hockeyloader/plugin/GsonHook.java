@@ -19,18 +19,23 @@ package stash.samples.hockeyloader.plugin;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.File;
 
 import stash.plugins.GsonDbHook;
 import stash.samples.hockeyloader.BuildConfig;
+import stash.samples.hockeyloader.network.util.gson.GsonUtil;
 import stash.stashdbs.GsonDb;
+import stash.util.gson.ImmutableGson;
 
 public class GsonHook extends GsonDbHook {
     private static final String CACHE_DIR = "network";
     private static final int VERSION = BuildConfig.VERSION_CODE;
     private static final int SIZE = 10 * 1024 * 1024; // 10 MB
+
+    static {
+        GsonUtil.register(ImmutableGson.instance());
+    }
 
     private final Context mContext;
 
@@ -39,10 +44,7 @@ public class GsonHook extends GsonDbHook {
     }
 
     private static Gson gson() {
-        // TODO: customize Gson as needed
-        return new GsonBuilder()
-                .disableHtmlEscaping()
-                .create();
+        return GsonUtil.gson();
     }
 
     private static File cacheDir(Context context) {

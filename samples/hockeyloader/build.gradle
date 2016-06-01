@@ -16,6 +16,7 @@
 
 apply plugin: 'com.android.application'
 apply from: "${rootDir}/gradle/sample.gradle"
+apply plugin: 'stash.gsonutil'
 
 android {
     compileSdkVersion appCompileSdkVersion as int

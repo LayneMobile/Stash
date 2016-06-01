@@ -14,15 +14,23 @@
  * limitations under the License.
  */
 
-ext {
-    javaPoetVersion = '1.2.0'
-    appOkioVersion = '1.5.0'
-}
+package stash.util.gson;
 
-repositories {
-    jcenter()
-}
-dependencies {
-    compile "com.squareup:javapoet:${javaPoetVersion}"
-    compile "com.squareup.okio:okio:${appOkioVersion}"
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+public interface GsonFactory {
+    GsonFactory DEFAULT = new GsonFactory() {
+        @Override public Gson gson() {
+            return new Gson();
+        }
+
+        @Override public GsonBuilder newGsonBuilder() {
+            return new GsonBuilder();
+        }
+    };
+
+    Gson gson();
+
+    GsonBuilder newGsonBuilder();
 }
