@@ -125,13 +125,14 @@ public final class TypeBuilder<T> implements Builder<T> {
         }
 
         @Override public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            StashLog.d(TAG, "calling method: %s", method);
             MethodResult result = new MethodResult();
             List<MethodHandler> handlers = this.handlers.get(method.getName());
             for (MethodHandler handler : Util.nullSafe(handlers)) {
                 if (handler.handle(proxy, method, args, result)) {
-                    StashLog.d(TAG, "handling method: %s", method);
-                    StashLog.d(TAG, "result: %s", result.get());
-                    return result.get();
+                    Object r = result.get();
+                    StashLog.d(TAG, "handled method: %s, result: %s", method, r);
+                    return r;
                 }
             }
             StashLog.w(TAG, "could not find handler for method: %s", method);

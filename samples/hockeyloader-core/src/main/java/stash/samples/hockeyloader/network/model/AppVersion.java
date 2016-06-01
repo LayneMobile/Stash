@@ -16,211 +16,77 @@
 
 package stash.samples.hockeyloader.network.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
+import com.laynemobile.android.gson.GsonParcelable;
+
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
 import java.util.Date;
 import java.util.List;
 
-public class AppVersion implements Parcelable {
-
-    public static Creator<AppVersion> CREATOR = new Creator<AppVersion>() {
-        @Override
-        public AppVersion createFromParcel(Parcel source) {
-            return new AppVersion(source);
-        }
-
-        @Override
-        public AppVersion[] newArray(int size) {
-            return new AppVersion[size];
-        }
-    };
-
+@Value.Immutable
+@Gson.TypeAdapters
+public abstract class AppVersion extends GsonParcelable {
     @SerializedName("version")
-    private String version;
+    public abstract String getVersion();
 
     @SerializedName("shortversion")
-    private String shortVersion;
+    public abstract String getShortVersion();
 
     @SerializedName("title")
-    private String title;
+    public abstract String getTitle();
 
     @SerializedName("timestamp")
-    private long timestamp;
+    public abstract long getTimestamp();
 
     @SerializedName("appsize")
-    private long appsize;
+    public abstract long getAppsize();
 
     @SerializedName("notes")
-    private String notes;
+    public abstract String getNotes();
 
     @SerializedName("mandatory")
-    private boolean mandatory;
+    public abstract boolean isMandatory();
 
     @SerializedName("external")
-    private boolean external;
+    public abstract boolean isExternal();
 
+    @Nullable
     @SerializedName("device_family")
-    private String deviceFamily;
+    public abstract String getDeviceFamily();
 
     @SerializedName("id")
-    private int id;
+    public abstract int getId();
 
     @SerializedName("app_id")
-    private int appId;
+    public abstract int getAppId();
 
+    @Nullable
     @SerializedName("minimum_os_version")
-    private String minimumOsVersion;
+    public abstract String getMinimumOsVersion();
 
+    @Nullable
     @SerializedName("download_url")
-    private String downloadUrl;
+    public abstract String getDownloadUrl();
 
     @SerializedName("config_url")
-    private String configUrl;
+    public abstract String getConfigUrl();
 
     @SerializedName("restricted_to_tags")
-    private boolean restrictedToTags;
+    public abstract boolean isRestrictedToTags();
 
     @SerializedName("status")
-    private int status;
+    public abstract int getStatus();
 
     @SerializedName("tags")
-    private List<String> tags;
+    public abstract List<String> getTags();
 
     @SerializedName("created_at")
-    private Date createdAt;
+    public abstract Date getCreatedAt();
 
     @SerializedName("updated_at")
-    private Date updatedAt;
-
-    public AppVersion() {}
-
-    private AppVersion(Parcel in) {
-        this.version = in.readString();
-        this.shortVersion = in.readString();
-        this.title = in.readString();
-        this.timestamp = in.readLong();
-        this.appsize = in.readLong();
-        this.notes = in.readString();
-        this.mandatory = in.readInt() == 1;
-        this.external = in.readInt() == 1;
-        this.deviceFamily = in.readString();
-        this.id = in.readInt();
-        this.appId = in.readInt();
-        this.minimumOsVersion = in.readString();
-        this.downloadUrl = in.readString();
-        this.configUrl = in.readString();
-        this.restrictedToTags = in.readInt() == 1;
-        this.status = in.readInt();
-        long date = in.readLong();
-        this.createdAt = date == 0 ? null : new Date(date);
-        date = in.readLong();
-        this.updatedAt = date == 0 ? null : new Date(date);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(version);
-        dest.writeString(shortVersion);
-        dest.writeString(title);
-        dest.writeLong(timestamp);
-        dest.writeLong(appsize);
-        dest.writeString(notes);
-        dest.writeInt(mandatory ? 1 : 0);
-        dest.writeInt(external ? 1 : 0);
-        dest.writeString(deviceFamily);
-        dest.writeInt(id);
-        dest.writeInt(appId);
-        dest.writeString(minimumOsVersion);
-        dest.writeString(downloadUrl);
-        dest.writeString(configUrl);
-        dest.writeInt(restrictedToTags ? 1 : 0);
-        dest.writeInt(status);
-        dest.writeStringList(tags);
-        dest.writeLong(createdAt == null ? 0L : createdAt.getTime());
-        dest.writeLong(updatedAt == null ? 0L : updatedAt.getTime());
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public String getShortVersion() {
-        return shortVersion;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public long getAppsize() {
-        return appsize;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public boolean isMandatory() {
-        return mandatory;
-    }
-
-    public boolean isExternal() {
-        return external;
-    }
-
-    public String getDeviceFamily() {
-        return deviceFamily;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getAppId() {
-        return appId;
-    }
-
-    public String getMinimumOsVersion() {
-        return minimumOsVersion;
-    }
-
-    public String getDownloadUrl() {
-        return downloadUrl;
-    }
-
-    public String getConfigUrl() {
-        return configUrl;
-    }
-
-    public boolean isRestrictedToTags() {
-        return restrictedToTags;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
+    public abstract Date getUpdatedAt();
 }

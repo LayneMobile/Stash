@@ -22,6 +22,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import com.laynemobile.android.gson.GsonParcelable;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -44,7 +45,11 @@ public final class GsonUtil {
     }
 
     public static boolean register(GsonFactory factory) {
-        return INSTANCE.compareAndSet(DEFAULT_FACTORY, new Factory(factory));
+        if (INSTANCE.compareAndSet(DEFAULT_FACTORY, new Factory(factory))) {
+            GsonParcelable.setGson(gson());
+            return true;
+        }
+        return false;
     }
 
     private static final class Factory extends AtomicReference<Gson> implements GsonFactory {

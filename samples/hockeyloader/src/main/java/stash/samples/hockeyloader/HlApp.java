@@ -22,8 +22,10 @@ import retrofit.RestAdapter;
 import stash.StashModule;
 import stash.retrofit.plugins.RetrofitHook;
 import stash.samples.hockeyloader.network.client.HockeyRestAdapter;
+import stash.samples.hockeyloader.network.util.gson.GsonUtil;
 import stash.samples.hockeyloader.plugin.GsonHook;
 import stash.util.AndroidLogger;
+import stash.util.gson.ImmutableGson;
 
 
 public class HlApp extends Application {
@@ -31,11 +33,13 @@ public class HlApp extends Application {
     public void onCreate() {
         super.onCreate();
 
+        GsonUtil.register(ImmutableGson.instance());
+
         // Configure stash module
         StashModule.getInstance()
                 .init(this)
                 .setLogger(AndroidLogger.FULL)
-                .registerGsonDbHook(new GsonHook(this))
+                .registerGsonDbHook(new GsonHook(this, GsonUtil.gson()))
                 .registerRetrofitHook(new RetrofitHook() {
                     @Override public RestAdapter defaultRestAdapter() {
                         return HockeyRestAdapter.getDefault();

@@ -14,22 +14,5 @@
  * limitations under the License.
  */
 
+@ModelStyle
 package stash.samples.hockeyloader.network.model;
-
-import com.google.gson.annotations.SerializedName;
-import com.laynemobile.android.gson.GsonParcelable;
-
-import org.immutables.gson.Gson;
-import org.immutables.value.Value;
-
-import java.util.List;
-
-@Value.Immutable
-@Gson.TypeAdapters
-public abstract class Apps extends GsonParcelable {
-    @SerializedName("apps")
-    public abstract List<App> getApps();
-
-    @SerializedName("status")
-    public abstract String getStatus();
-}

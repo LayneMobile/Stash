@@ -17,108 +17,39 @@
 package stash.samples.hockeyloader.network.model;
 
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
+import com.laynemobile.android.gson.GsonParcelable;
 
-public class App implements Parcelable {
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-    public static final Creator<App> CREATOR = new Creator<App>() {
-        @Override
-        public App createFromParcel(Parcel source) {
-            return new App(source);
-        }
-
-        @Override
-        public App[] newArray(int size) {
-            return new App[size];
-        }
-    };
-
+@Value.Immutable
+@Gson.TypeAdapters
+public abstract class App extends GsonParcelable {
     @SerializedName("title")
-    String title;
+    public abstract String getTitle();
 
     @SerializedName("bundle_identifier")
-    String bundleIdentifier;
+    public abstract String getBundleIdentifier();
 
     @SerializedName("public_identifier")
-    String publicIdentifier;
+    public abstract String getPublicIdentifier();
 
+    @Nullable
     @SerializedName("device_family")
-    String deviceFamily;
+    public abstract String getDeviceFamily();
 
     @SerializedName("minimum_os_version")
-    String minimumOsVersion;
+    public abstract String getMinimumOsVersion();
 
     @SerializedName("release_type")
-    int releaseType;
+    public abstract int getReleaseType();
 
     @SerializedName("status")
-    int status;
+    public abstract int getStatus();
 
     @SerializedName("platform")
-    String platform;
-
-    public App() {}
-
-    private App(Parcel in) {
-        this.title = in.readString();
-        this.bundleIdentifier = in.readString();
-        this.publicIdentifier = in.readString();
-        this.deviceFamily = in.readString();
-        this.minimumOsVersion = in.readString();
-        this.releaseType = in.readInt();
-        this.status = in.readInt();
-        this.platform = in.readString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(bundleIdentifier);
-        dest.writeString(publicIdentifier);
-        dest.writeString(deviceFamily);
-        dest.writeString(minimumOsVersion);
-        dest.writeInt(releaseType);
-        dest.writeInt(status);
-        dest.writeString(platform);
-    }
-
-    public String getPlatform() {
-        return platform;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getBundleIdentifier() {
-        return bundleIdentifier;
-    }
-
-    public String getPublicIdentifier() {
-        return publicIdentifier;
-    }
-
-    public String getDeviceFamily() {
-        return deviceFamily;
-    }
-
-    public String getMinimumOsVersion() {
-        return minimumOsVersion;
-    }
-
-    public int getReleaseType() {
-        return releaseType;
-    }
-
-    public int getStatus() {
-        return status;
-    }
+    public abstract String getPlatform();
 }

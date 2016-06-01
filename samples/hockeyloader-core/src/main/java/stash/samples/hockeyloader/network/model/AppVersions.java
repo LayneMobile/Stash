@@ -17,26 +17,19 @@
 package stash.samples.hockeyloader.network.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.laynemobile.android.gson.GsonParcelable;
 
-import java.util.Collections;
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
+
 import java.util.List;
 
-public class AppVersions {
-
+@Value.Immutable
+@Gson.TypeAdapters
+public abstract class AppVersions extends GsonParcelable {
     @SerializedName("app_versions")
-    List<AppVersion> appVersions;
+    public abstract List<AppVersion> getAppVersions();
 
     @SerializedName("status")
-    String status;
-
-    public List<AppVersion> getAppVersions() {
-        if (appVersions == null) {
-            return Collections.emptyList();
-        }
-        return appVersions;
-    }
-
-    public String getStatus() {
-        return status;
-    }
+    public abstract String getStatus();
 }

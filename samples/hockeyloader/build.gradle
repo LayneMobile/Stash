@@ -59,6 +59,12 @@ dependencies {
     compile project(':hockeyloader-core')
     compile "com.jakewharton:butterknife:${appButterKnifeVersion}"
 
+    // Immutables
+    apt "org.immutables:value:${appImmutablesVersion}"
+    provided "org.immutables:value:${appImmutablesVersion}:annotations"
+    provided "org.immutables:builder:${appImmutablesVersion}"
+    provided "org.immutables:gson:${appImmutablesVersion}:annotations"
+
     // Android Support Dependencies
     compile "com.android.support:support-v13:${appAndroidSupportVersion}"
     compile "com.android.support:appcompat-v7:${appAndroidSupportVersion}"

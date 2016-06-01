@@ -24,27 +24,19 @@ import java.io.File;
 
 import stash.plugins.GsonDbHook;
 import stash.samples.hockeyloader.BuildConfig;
-import stash.samples.hockeyloader.network.util.gson.GsonUtil;
 import stash.stashdbs.GsonDb;
-import stash.util.gson.ImmutableGson;
 
 public class GsonHook extends GsonDbHook {
     private static final String CACHE_DIR = "network";
     private static final int VERSION = BuildConfig.VERSION_CODE;
     private static final int SIZE = 10 * 1024 * 1024; // 10 MB
 
-    static {
-        GsonUtil.register(ImmutableGson.instance());
-    }
-
     private final Context mContext;
+    private final Gson mGson;
 
-    public GsonHook(Context context) {
+    public GsonHook(Context context, Gson gson) {
         this.mContext = context.getApplicationContext();
-    }
-
-    private static Gson gson() {
-        return GsonUtil.gson();
+        this.mGson = gson;
     }
 
     private static File cacheDir(Context context) {
@@ -53,6 +45,6 @@ public class GsonHook extends GsonDbHook {
 
     @Override
     public GsonDb.Config getGsonConfig() {
-        return new GsonDb.Config(gson(), cacheDir(mContext), VERSION, SIZE);
+        return new GsonDb.Config(mGson, cacheDir(mContext), VERSION, SIZE);
     }
 }

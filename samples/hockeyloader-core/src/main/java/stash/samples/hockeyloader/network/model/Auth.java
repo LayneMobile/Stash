@@ -18,40 +18,46 @@ package stash.samples.hockeyloader.network.model;
 
 
 import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
+import com.laynemobile.android.gson.GsonParcelable;
+
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class Auth {
-
+@Value.Immutable
+@Value.Enclosing
+@Gson.TypeAdapters
+public abstract class Auth extends GsonParcelable {
     private static final String LAST_USERNAME = "Auth.username";
-    private static Auth sCurrentUser;
+    private static final AtomicReference<Auth> CURRENT_USER = new AtomicReference<>();
 
     @SerializedName("tokens")
-    List<Token> tokens;
+    public abstract List<Token> getTokens();
 
     @SerializedName("key")
-    String key;
+    public abstract String getKey();
 
     @SerializedName("name")
-    String name;
+    public abstract String getName();
 
     @SerializedName("gravatar_hash")
-    String gravatarHash;
+    public abstract String getGravatarHash();
 
     @SerializedName("status")
-    String status;
+    public abstract String getStatus();
 
     public static Auth getCurrentUser() {
-        return sCurrentUser;
+        return CURRENT_USER.get();
     }
 
     public static void setCurrentUser(Auth currentUser) {
-        sCurrentUser = currentUser;
+        CURRENT_USER.set(currentUser);
     }
 
     public static String getLastUsername(Context context) {
@@ -66,109 +72,19 @@ public class Auth {
                 .apply();
     }
 
-    public List<Token> getTokens() {
-        return tokens;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getGravatarHash() {
-        return gravatarHash;
-    }
-
-    @Override
-    public String toString() {
-        return "Auth{" +
-                "tokens=" + tokens +
-                ", key='" + key + '\'' +
-                ", name='" + name + '\'' +
-                ", gravatarHash='" + gravatarHash + '\'' +
-                ", status='" + status + '\'' +
-                '}';
-    }
-
-    public static class Token implements Parcelable {
-        public static final Creator<Token> CREATOR = new Creator<Token>() {
-            @Override
-            public Token createFromParcel(Parcel source) {
-                return new Token(source);
-            }
-
-            @Override
-            public Token[] newArray(int size) {
-                return new Token[size];
-            }
-        };
-
+    @Value.Immutable
+    public static abstract class Token extends GsonParcelable {
         @SerializedName("token")
-        private String token;
+        public abstract String getToken();
 
         @SerializedName("app_id")
-        private int appId;
+        public abstract int getAppId();
 
+        @Nullable
         @SerializedName("name")
-        private String name;
+        public abstract String getName();
 
         @SerializedName("rights")
-        private int rights;
-
-        public Token() {}
-
-        private Token(Parcel in) {
-            this.token = in.readString();
-            this.appId = in.readInt();
-            this.name = in.readString();
-            this.rights = in.readInt();
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(token);
-            dest.writeInt(appId);
-            dest.writeString(name);
-            dest.writeInt(rights);
-        }
-
-        public String getToken() {
-            return token;
-        }
-
-        public int getRights() {
-            return rights;
-        }
-
-        public int getAppId() {
-            return appId;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        @Override
-        public String toString() {
-            return "Token{" +
-                    "token='" + token + '\'' +
-                    ", appId=" + appId +
-                    ", name='" + name + '\'' +
-                    ", rights=" + rights +
-                    '}';
-        }
-
+        public abstract int getRights();
     }
 }

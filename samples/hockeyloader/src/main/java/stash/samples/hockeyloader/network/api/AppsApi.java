@@ -19,22 +19,28 @@ package stash.samples.hockeyloader.network.api;
 
 import android.support.annotation.NonNull;
 
+import org.immutables.value.Value;
+
 import java.util.concurrent.TimeUnit;
 
 import retrofit.http.GET;
 import retrofit.http.Header;
 import rx.functions.Func1;
 import rx.functions.Func2;
+import stash.Progress;
+import stash.Request;
+import stash.Stash;
 import stash.StashPolicy;
 import stash.Stashable;
-import stash.Stashes;
 import stash.StashableApi;
+import stash.Stashes;
 import stash.params.NetworkParams;
 import stash.params.StashableParams;
 import stash.retrofit.RetrofitStashableApiBuilder;
 import stash.samples.hockeyloader.network.model.Apps;
 import stash.samples.hockeyloader.network.model.Auth;
 
+@Value.Enclosing
 public final class AppsApi {
     private interface Service {
         String PATH = "/apps";
@@ -49,7 +55,7 @@ public final class AppsApi {
             .serviceType(Service.class)
             .source(new Func2<Service, Params, Apps>() {
                 @Override public Apps call(Service service, Params params) {
-                    return service.getApps(params.token);
+                    return service.getApps(params.getKey());
                 }
             })
             .add()
@@ -64,55 +70,49 @@ public final class AppsApi {
             .aggregate()
             .build();
 
-    public static final class Params implements NetworkParams, StashableParams<String> {
-        private final String token;
-        private final StashPolicy stashPolicy;
+    @Value.Immutable
+    public static abstract class Params implements NetworkParams, StashableParams<String> {
+        abstract Auth.Token token();
 
-        private Params(Builder builder) {
-            this.token = builder.token;
-            this.stashPolicy = builder.stashPolicy;
+        @Value.Default
+        @NonNull
+        @Override public StashPolicy getStashPolicy() {
+            return StashPolicy.DEFAULT;
         }
 
-        @NonNull @Override public StashPolicy getStashPolicy() {
-            return stashPolicy;
-        }
-
+        @Value.Derived
         @Override public String getKey() {
-            return token;
+            return token().getToken();
         }
 
         public Builder mutate() {
-            return new Builder(this);
+            return new Builder()
+                    .from(this);
         }
 
-        public static final class Builder {
-            private String token;
-            private StashPolicy stashPolicy = StashPolicy.DEFAULT;
+        public Request<Apps> request() {
+            return INSTANCE.getRequest(this);
+        }
 
-            public Builder() {}
+        public Request<Progress<Apps>> progressRequest() {
+            return INSTANCE.getProgressRequest(this);
+        }
 
-            private Builder(Params params) {
-                this.token = params.token;
-                this.stashPolicy = params.stashPolicy;
+        public Stash<Apps> stash() {
+            return INSTANCE.getStash(this);
+        }
+
+        public static final class Builder extends AppsApiImpl.Params.Builder {
+            public Request<Apps> request() {
+                return build().request();
             }
 
-            public Builder setToken(Auth.Token token) {
-                this.token = token.getToken();
-                return this;
+            public Request<Progress<Apps>> progressRequest() {
+                return build().progressRequest();
             }
 
-            public Builder setStashPolicy(StashPolicy stashPolicy) {
-                this.stashPolicy = stashPolicy;
-                return this;
-            }
-
-            public Params build() {
-                validate();
-                return new Params(this);
-            }
-
-            private void validate() {
-                if (token == null) throw new IllegalArgumentException("must set token");
+            public Stash<Apps> stash() {
+                return build().stash();
             }
         }
     }

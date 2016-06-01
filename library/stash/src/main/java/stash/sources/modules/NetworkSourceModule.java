@@ -21,11 +21,11 @@ import android.support.annotation.Nullable;
 
 import java.lang.reflect.Method;
 
-import stash.sources.builder.SourceHandler;
-import stash.types.MethodResult;
 import stash.SourceModuleBuilder;
 import stash.sources.NetworkSource;
+import stash.sources.builder.SourceHandler;
 import stash.sources.builder.SourceMethodHandler;
+import stash.types.MethodResult;
 import stash.util.NetworkChecker;
 
 @stash.annotations.SourceModule(NetworkSource.class)
@@ -57,7 +57,8 @@ public final class NetworkSourceModule implements SourceModuleBuilder {
 
         @Override
         public boolean handle(Object proxy, Method method, Object[] args, MethodResult result) throws Throwable {
-            if (args.length == 0) {
+            Class<?>[] paramTypes = method.getParameterTypes();
+            if (paramTypes.length == 0) {
                 result.set(networkChecker);
                 return true;
             }
