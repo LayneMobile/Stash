@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Layne Mobile, LLC
+ * Copyright 2016 Evove.tech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-package stash.sources.builder;
+package stash.samples.hockeyloader.core;
 
-import stash.types.MethodHandler;
-
-public interface SourceMethodHandler extends MethodHandler { }
+public class MyClass {
+}

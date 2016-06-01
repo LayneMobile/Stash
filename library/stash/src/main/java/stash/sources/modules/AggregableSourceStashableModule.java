@@ -24,7 +24,7 @@ import stash.SourceModuleBuilder;
 import stash.aggregables.SimpleAggregable;
 import stash.params.StashableParams;
 import stash.sources.AggregableSource;
-import stash.sources.builder.SourceHandlerModule;
+import stash.sources.builder.SourceHandler;
 
 @stash.annotations.SourceModule(AggregableSource.class)
 public final class AggregableSourceStashableModule<P extends StashableParams<?>> implements SourceModuleBuilder {
@@ -48,7 +48,7 @@ public final class AggregableSourceStashableModule<P extends StashableParams<?>>
         return this;
     }
 
-    @NonNull @Override public SourceHandlerModule build() {
+    @NonNull @Override public SourceHandler build() {
         return module.build();
     }
 

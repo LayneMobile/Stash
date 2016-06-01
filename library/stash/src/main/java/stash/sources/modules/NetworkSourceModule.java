@@ -21,10 +21,10 @@ import android.support.annotation.Nullable;
 
 import java.lang.reflect.Method;
 
+import stash.sources.builder.SourceHandler;
+import stash.types.MethodResult;
 import stash.SourceModuleBuilder;
 import stash.sources.NetworkSource;
-import stash.sources.builder.MethodResult;
-import stash.sources.builder.SourceHandlerModule;
 import stash.sources.builder.SourceMethodHandler;
 import stash.util.NetworkChecker;
 
@@ -42,8 +42,8 @@ public final class NetworkSourceModule implements SourceModuleBuilder {
         return this;
     }
 
-    @NonNull @Override public SourceHandlerModule build() {
-        return new SourceHandlerModule.Builder(NetworkSource.class)
+    @NonNull @Override public SourceHandler build() {
+        return new SourceHandler.Builder(NetworkSource.class)
                 .handle("getNetworkChecker", new Handler(networkChecker))
                 .build();
     }

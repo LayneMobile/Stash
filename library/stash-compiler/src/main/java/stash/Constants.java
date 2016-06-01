@@ -21,13 +21,13 @@ import com.squareup.javapoet.ClassName;
 import java.util.List;
 
 import stash.sources.builder.SourceBuilder;
-import stash.sources.builder.SourceHandlerModule;
+import stash.sources.builder.SourceHandler;
 
 final class Constants {
     static final ClassName NonNull = ClassName.get("android.support.annotation", "NonNull");
     static final ClassName Override = ClassName.get(Override.class);
     static final ClassName BaseApi = ClassName.get("stash", "BaseApi");
-    static final ClassName SourceModule = ClassName.get(SourceHandlerModule.class);
+    static final ClassName SourceModule = ClassName.get(SourceHandler.class);
     static final ClassName Builder = ClassName.get(Builder.class);
     static final ClassName SourceBuilder = ClassName.get(SourceBuilder.class);
     static final ClassName Source = ClassName.get(Source.class);

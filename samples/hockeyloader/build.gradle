@@ -14,13 +14,8 @@
  * limitations under the License.
  */
 
+apply plugin: 'com.android.application'
 apply from: "${rootDir}/gradle/sample.gradle"
-
-ext {
-    okhttpVersion = '2.3.0'
-    retrofitVersion = '1.9.0'
-    butterKnifeVersion = '7.0.1'
-}
 
 android {
     compileSdkVersion appCompileSdkVersion as int
@@ -60,12 +55,8 @@ android {
 }
 
 dependencies {
-    compile project(':stash-gson')
-    compile project(':stash-retrofit')
-    compile "com.squareup.okhttp:okhttp:${okhttpVersion}"
-    compile "com.squareup.retrofit:retrofit:${retrofitVersion}"
-    compile "com.jakewharton:butterknife:${butterKnifeVersion}"
-    compile "com.laynemobile:rxsubscriptions-components:${appRxSubscriptionsVersion}"
+    compile project(':hockeyloader-core')
+    compile "com.jakewharton:butterknife:${appButterKnifeVersion}"
 
     // Android Support Dependencies
     compile "com.android.support:support-v13:${appAndroidSupportVersion}"

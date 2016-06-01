@@ -22,9 +22,7 @@ import org.gradle.api.tasks.OutputDirectory
 import stash.model.ExtensionClassKind
 import stash.model.SourceWriter
 
-import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
-import java.util.zip.ZipInputStream
 
 public class SourcesTask extends DefaultTask {
     @InputFiles
@@ -56,33 +54,16 @@ public class SourcesTask extends DefaultTask {
                     if (zipEntry == null) {
                         throw new IllegalStateException("can't find classes")
                     }
-                    SourcesTask.read(zip.getInputStream(zipEntry), sourceWriters)
+                    Util.read(zip.getInputStream(zipEntry), sourceWriters)
                 } finally {
                     zip.close()
                 }
             } else if (file.name.contains(".jar")) {
-                SourcesTask.read(new FileInputStream(file), sourceWriters)
+                Util.read(new FileInputStream(file), sourceWriters)
             }
         }
         for (SourceWriter writer : sourceWriters) {
             writer.write(outputDir)
-        }
-    }
-
-    private static void read(InputStream is, Set<SourceWriter> sourceWriters) {
-        final ZipInputStream zis = new ZipInputStream(new BufferedInputStream(is))
-        try {
-            ZipEntry entry
-            while ((entry = zis.nextEntry) != null) {
-                for (SourceWriter sourceWriter : sourceWriters) {
-                    if (sourceWriter.matches(entry)) {
-                        sourceWriter.read(zis)
-                        break
-                    }
-                }
-            }
-        } finally {
-            zis.close()
         }
     }
 }

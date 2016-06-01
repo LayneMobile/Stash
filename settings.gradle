@@ -25,6 +25,7 @@ include ':stash-annotations',
         ':stash-shopify',
         ':stash-retrofit',
         ':hockeyloader',
+        ':hockeyloader-core',
         ':shopify'
 
 // Annotations dir
@@ -70,6 +71,8 @@ project(':stash-retrofit')
 // Samples dirs
 project(':hockeyloader')
         .setProjectDir(file('samples/hockeyloader'))
+project(':hockeyloader-core')
+        .setProjectDir(file('samples/hockeyloader-core'))
 project(':shopify')
         .setProjectDir(file('samples/shopify'))
 

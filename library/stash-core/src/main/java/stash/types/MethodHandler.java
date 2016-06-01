@@ -14,18 +14,10 @@
  * limitations under the License.
  */
 
-package stash.sources.builder;
+package stash.types;
 
-public final class MethodResult {
-    private Object result;
+import java.lang.reflect.Method;
 
-    MethodResult() {}
-
-    public void set(Object result) {
-        this.result = result;
-    }
-
-    Object get() {
-        return result;
-    }
+public interface MethodHandler {
+    boolean handle(Object proxy, Method method, Object[] args, MethodResult result) throws Throwable;
 }

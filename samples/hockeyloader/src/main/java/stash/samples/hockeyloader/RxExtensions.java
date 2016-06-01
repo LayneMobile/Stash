@@ -14,8 +14,17 @@
  * limitations under the License.
  */
 
-package stash.sources.builder;
+package stash.samples.hockeyloader;
 
-import stash.types.MethodHandler;
+import rx.Observable;
+import rx.functions.Func1;
+import rxsubscriptions.SubscriptionBuilder;
+import stash.Request;
 
-public interface SourceMethodHandler extends MethodHandler { }
+public interface RxExtensions {
+    <T> Request.Extender<T> asRequest();
+
+    <T> SubscriptionBuilderExtension<T> asSubscriptionBuilder();
+
+    interface SubscriptionBuilderExtension<T> extends Func1<Observable.OnSubscribe<T>, SubscriptionBuilder<T>> { }
+}

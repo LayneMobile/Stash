@@ -14,8 +14,18 @@
  * limitations under the License.
  */
 
-package stash.sources.builder;
+package stash.types;
 
-import stash.types.MethodHandler;
+public final class MethodResult {
+    private Object result;
 
-public interface SourceMethodHandler extends MethodHandler { }
+    public MethodResult() {}
+
+    public void set(Object result) {
+        this.result = result;
+    }
+
+    public Object get() {
+        return result;
+    }
+}

@@ -16,7 +16,6 @@
 
 package stash.model;
 
-
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
@@ -30,7 +29,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
@@ -78,7 +76,7 @@ public final class ExtensionClass {
         ExtensionMethod instanceMethod = null;
         List<ExtensionMethod> methods = new ArrayList<>();
         for (Element memberElement : element.getEnclosedElements()) {
-            ExtensionMethod method = parseMethod(memberElement);
+            ExtensionMethod method = ExtensionMethod.parse(memberElement);
             if (method == null) continue;
             switch (method.kind) {
                 case Instance:
@@ -95,36 +93,6 @@ public final class ExtensionClass {
             }
         }
         return new ExtensionClass(element, instanceMethod, methods);
-    }
-
-    private static ExtensionMethod parseMethod(Element memberElement) {
-        ExtensionMethodKind methodKind = null;
-        List<TypeElement> others = new ArrayList<>();
-        for (AnnotationMirror am : memberElement.getAnnotationMirrors()) {
-            ExtensionMethodKind kind = parseAnnotation(am, others);
-            if (methodKind != null && kind != null) {
-                String format = "Cannot have annotation '%s' when '%s' is already present";
-                String message = String.format(format, kind.annotationType, methodKind.annotationType);
-                throw new IllegalStateException(message);
-            } else if (kind != null) {
-                kind.validate(memberElement);
-                methodKind = kind;
-            }
-        }
-        return (methodKind == null) ? null
-                : new ExtensionMethod(methodKind, (ExecutableElement) memberElement, others);
-    }
-
-    private static ExtensionMethodKind parseAnnotation(AnnotationMirror am, List<TypeElement> others) {
-        TypeElement te = (TypeElement) am.getAnnotationType().asElement();
-        String name = te.getQualifiedName().toString();
-        for (ExtensionMethodKind annotationKind : ExtensionMethodKind.values()) {
-            if (name.equals(annotationKind.annotationType.getCanonicalName())) {
-                return annotationKind;
-            }
-        }
-        others.add(te);
-        return null;
     }
 
     @Override public boolean equals(Object o) {

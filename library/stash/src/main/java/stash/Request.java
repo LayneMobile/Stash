@@ -16,7 +16,6 @@
 
 package stash;
 
-
 import android.support.annotation.NonNull;
 
 import java.util.concurrent.Callable;
@@ -24,14 +23,18 @@ import java.util.concurrent.Callable;
 import rx.Notification;
 import rx.Observable;
 import rx.functions.Func1;
+import rxsubscriptions.RxSubscriptions;
+import rxsubscriptions.SubscriptionBuilder;
 import stash.schedulers.StashSchedulers;
 import stash.subscribers.StashSubscribers;
 import stash.util.ResultCallable;
-import rxsubscriptions.SubscriptionBuilder;
-import rxsubscriptions.RxSubscriptions;
 
 public class Request<T> {
     private final Observable<T> observable;
+
+    protected Request(@NonNull Observable.OnSubscribe<T> onSubscribe) {
+        this(Observable.create(onSubscribe));
+    }
 
     protected Request(@NonNull Observable<T> observable) {
         this.observable = observable;
@@ -94,8 +97,18 @@ public class Request<T> {
                 .observeOnMainThread();
     }
 
+    public static <T> Extender<T> extender() {
+        return new Extender<T>() {
+            @Override public Request<T> call(Observable.OnSubscribe<T> onSubscribe) {
+                return new Request<T>(onSubscribe);
+            }
+        };
+    }
+
     public final void execute() {
         asAsyncObservable()
                 .subscribe(StashSubscribers.empty());
     }
+
+    public interface Extender<T> extends Func1<Observable.OnSubscribe<T>, Request<T>> { }
 }
