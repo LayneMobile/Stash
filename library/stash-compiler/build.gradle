@@ -19,6 +19,7 @@ apply plugin: 'groovy'
 dependencies {
     compile 'com.google.auto.service:auto-service:1.0-rc2'
     compile "com.squareup:javapoet:${appJavaPoetGradleVersion}"
+    compile "org.immutables:value:${appImmutablesVersion}"
     compile project(':stash-annotations')
     compile project(':stash-core')
 }

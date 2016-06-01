@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -84,18 +85,31 @@ public class ExtensionProcessor extends AbstractProcessor {
                 ExtensionClassKind kind = entry.getKey();
                 Set<ExtensionClass> classes = entry.getValue();
                 if (classes.size() > 0) {
+                    List<ExtensionClass> classList = new ArrayList<>(classes);
                     try {
                         FileObject output
                                 = filer.createResource(StandardLocation.CLASS_OUTPUT, "", kind.resourceFilePath());
                         try (BufferedSink sink = Okio.buffer(Okio.sink(output.openOutputStream()))) {
                             // Write method data to buffer
-                            kind.writeMethods(sink, new ArrayList<>(classes));
+                            kind.writeMethods(sink, classList);
                             sink.flush();
                         }
                     } catch (IOException e) {
                         error("Error writing: %s", e.getMessage());
                         return true;
                     }
+                    // TODO: find a way to filter out these classes from jar (make provided)
+//                    try {
+//                        Buffer sink = new Buffer();
+//                        kind.writeMethods(sink, classList);
+//
+//                        SourceWriter sourceWriter = kind.sourceWriter();
+//                        sourceWriter.read(sink);
+//
+//                        sourceWriter.writeTo(filer);
+//                    } catch (IOException e) {
+//                        // ignore
+//                    }
                 }
             }
         }

@@ -25,13 +25,17 @@ import com.squareup.javapoet.TypeSpec;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.zip.ZipEntry;
 
+import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;
+import javax.tools.JavaFileObject;
 
 import okio.BufferedSource;
 import okio.Okio;
@@ -80,7 +84,16 @@ public final class SourceWriter {
     public void read(InputStream is) throws IOException {
         // Read method data from buffer into java source
         BufferedSource source = Okio.buffer(Okio.source(is));
+        read(source);
+    }
+
+    public void read(BufferedSource source) throws IOException {
         kind.readMethods(source, classBuilder);
+    }
+
+    public void writeTo(Filer filer) throws IOException {
+        JavaFileObject fileObject = filer.createSourceFile(kind.qualifiedName);
+        writeTo(fileObject.openOutputStream());
     }
 
     public void write(File outputDir) throws IOException {
@@ -90,12 +103,15 @@ public final class SourceWriter {
         }
         outputDir.mkdirs();
         File outputFile = new File(outputDir, kind.javaFileName());
+        writeTo(new FileOutputStream(outputFile));
+    }
 
+    private void writeTo(OutputStream out) throws IOException {
         // Write java file
         JavaFile javaFile = JavaFile.builder(kind.packageName, classBuilder.build())
                 .build();
 
-        try (Writer writer = new BufferedWriter(new FileWriter(outputFile))) {
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(out))) {
             javaFile.writeTo(writer);
             writer.flush();
         }
