@@ -23,9 +23,9 @@ import java.lang.reflect.Method;
 
 import stash.SourceModuleBuilder;
 import stash.sources.NetworkSource;
-import stash.sources.builder.MethodResult;
-import stash.sources.builder.SourceHandlerModule;
+import stash.sources.builder.SourceHandler;
 import stash.sources.builder.SourceMethodHandler;
+import stash.types.MethodResult;
 import stash.util.NetworkChecker;
 
 @stash.annotations.SourceModule(NetworkSource.class)
@@ -42,8 +42,8 @@ public final class NetworkSourceModule implements SourceModuleBuilder {
         return this;
     }
 
-    @NonNull @Override public SourceHandlerModule build() {
-        return new SourceHandlerModule.Builder(NetworkSource.class)
+    @NonNull @Override public SourceHandler build() {
+        return new SourceHandler.Builder(NetworkSource.class)
                 .handle("getNetworkChecker", new Handler(networkChecker))
                 .build();
     }
@@ -57,7 +57,8 @@ public final class NetworkSourceModule implements SourceModuleBuilder {
 
         @Override
         public boolean handle(Object proxy, Method method, Object[] args, MethodResult result) throws Throwable {
-            if (args.length == 0) {
+            Class<?>[] paramTypes = method.getParameterTypes();
+            if (paramTypes.length == 0) {
                 result.set(networkChecker);
                 return true;
             }

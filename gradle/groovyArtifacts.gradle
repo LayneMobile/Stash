@@ -20,6 +20,9 @@ apply plugin: 'com.jfrog.bintray'
 version = VERSION_NAME
 group = GROUP
 
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
 install {
     repositories.mavenInstaller {
         pom {

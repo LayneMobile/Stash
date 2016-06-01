@@ -26,8 +26,11 @@ public interface PreparableSource<T, P extends Params> extends Source<T, P> {
     /**
      * Prepare the observable after it's created.
      *
-     * @param sourceRequest the source request observable
-     * @param p             the parameters
+     * @param sourceRequest
+     *         the source request observable
+     * @param p
+     *         the parameters
+     *
      * @return the prepared source request observable
      */
     @NonNull Observable<T> prepareSourceRequest(@NonNull Observable<T> sourceRequest, @NonNull P p);

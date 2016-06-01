@@ -16,7 +16,6 @@
 
 package stash.internal;
 
-
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;

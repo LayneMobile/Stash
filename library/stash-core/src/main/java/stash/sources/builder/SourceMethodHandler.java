@@ -16,8 +16,6 @@
 
 package stash.sources.builder;
 
-import java.lang.reflect.Method;
+import stash.types.MethodHandler;
 
-public interface SourceMethodHandler {
-    boolean handle(Object proxy, Method method, Object[] args, MethodResult result) throws Throwable;
-}
+public interface SourceMethodHandler extends MethodHandler {}

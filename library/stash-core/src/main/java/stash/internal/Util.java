@@ -16,7 +16,6 @@
 
 package stash.internal;
 
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Arrays;

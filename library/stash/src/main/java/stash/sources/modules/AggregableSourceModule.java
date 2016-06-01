@@ -25,9 +25,9 @@ import stash.Aggregable;
 import stash.Params;
 import stash.SourceModuleBuilder;
 import stash.sources.AggregableSource;
-import stash.sources.builder.MethodResult;
-import stash.sources.builder.SourceHandlerModule;
+import stash.sources.builder.SourceHandler;
 import stash.sources.builder.SourceMethodHandler;
+import stash.types.MethodResult;
 
 @stash.annotations.SourceModule(AggregableSource.class)
 public final class AggregableSourceModule<P extends Params> implements SourceModuleBuilder {
@@ -38,11 +38,11 @@ public final class AggregableSourceModule<P extends Params> implements SourceMod
         return this;
     }
 
-    @NonNull @Override public SourceHandlerModule build() {
+    @NonNull @Override public SourceHandler build() {
         if (action == null) {
             throw new IllegalStateException("source must be set");
         }
-        return new SourceHandlerModule.Builder(AggregableSource.class)
+        return new SourceHandler.Builder(AggregableSource.class)
                 .handle("getAggregable", new Handler<P>(action))
                 .build();
     }

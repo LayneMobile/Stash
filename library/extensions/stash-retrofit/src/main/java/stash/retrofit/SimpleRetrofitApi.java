@@ -19,8 +19,8 @@ package stash.retrofit;
 import android.support.annotation.NonNull;
 
 import stash.RequestProcessor;
-import stash.annotations.GenerateApiBuilder;
 import stash.SimpleApi;
+import stash.annotations.GenerateApiBuilder;
 import stash.params.SimpleParams;
 import stash.sources.modules.AggregableSourceSimpleModule;
 import stash.sources.modules.PreparableSourceSimpleModule;

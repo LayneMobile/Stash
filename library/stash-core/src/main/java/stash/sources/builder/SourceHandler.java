@@ -16,69 +16,53 @@
 
 package stash.sources.builder;
 
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import stash.Params;
 import stash.Source;
-import stash.internal.StashLog;
-import stash.internal.Util;
+import stash.types.MethodHandler;
+import stash.types.TypeHandler;
 
-final class SourceHandler {
-    private static final String TAG = SourceHandler.class.getSimpleName();
-
-    private SourceHandler() { throw new AssertionError("no instances"); }
-
-    @SuppressWarnings("unchecked")
-    static <T, P extends Params> Source<T, P> source(Collection<SourceHandlerModule> extensions) {
-        Set<Class<? extends Source>> classes = new HashSet<Class<? extends Source>>();
-        Map<String, List<SourceMethodHandler>> handlers = new HashMap<String, List<SourceMethodHandler>>();
-        for (SourceHandlerModule extension : extensions) {
-            classes.add(extension.source);
-            for (Map.Entry<String, List<SourceMethodHandler>> entry : extension.handlers.entrySet()) {
-                final String name = entry.getKey();
-                List<SourceMethodHandler> current = handlers.get(name);
-                if (current == null) {
-                    current = new ArrayList<SourceMethodHandler>();
-                    handlers.put(name, current);
-                }
-                current.addAll(entry.getValue());
-            }
-        }
-        ClassLoader cl = Source.class.getClassLoader();
-        Class[] ca = classes.toArray(new Class[classes.size()]);
-        return (Source<T, P>) Proxy.newProxyInstance(cl, ca, new InvokeHandler(handlers));
+public final class SourceHandler extends TypeHandler<Source> {
+    private SourceHandler(Builder builder) {
+        super(builder.source);
     }
 
-    private static class InvokeHandler implements InvocationHandler {
-        private final Map<String, List<SourceMethodHandler>> handlers;
+    public static final class Builder {
+        private final TypeHandler.Builder<Source> source;
 
-        private InvokeHandler(Map<String, List<SourceMethodHandler>> handlers) {
-            this.handlers = Collections.unmodifiableMap(handlers);
+        public Builder(Class<? extends Source> source) {
+            this.source = new TypeHandler.Builder<>(source);
         }
 
-        @Override public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            MethodResult result = new MethodResult();
-            List<SourceMethodHandler> handlers = this.handlers.get(method.getName());
-            for (SourceMethodHandler handler : Util.nullSafe(handlers)) {
-                if (handler.handle(proxy, method, args, result)) {
-                    StashLog.d(TAG, "handling method: %s", method);
-                    StashLog.d(TAG, "result: %s", result.get());
-                    return result.get();
-                }
-            }
-            StashLog.w(TAG, "could not find handler for method: %s", method);
-            return null;
+        public MethodBuilder method(String methodName) {
+            return new MethodBuilder(this, methodName);
+        }
+
+        public Builder handle(String methodName, MethodHandler handler) {
+            source.handle(methodName, handler);
+            return this;
+        }
+
+        public SourceHandler build() {
+            return new SourceHandler(this);
+        }
+    }
+
+    public static final class MethodBuilder {
+        private final Builder builder;
+        private final TypeHandler.MethodBuilder<Source> method;
+
+        public MethodBuilder(Builder builder, String methodName) {
+            this.builder = builder;
+            this.method = builder.source.method(methodName);
+        }
+
+        public MethodBuilder handle(MethodHandler handler) {
+            method.handle(handler);
+            return this;
+        }
+
+        public Builder add() {
+            method.add();
+            return builder;
         }
     }
 }

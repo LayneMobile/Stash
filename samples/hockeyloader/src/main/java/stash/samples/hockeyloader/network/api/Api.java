@@ -16,7 +16,6 @@
 
 package stash.samples.hockeyloader.network.api;
 
-
 import stash.StashableApi;
 import stash.samples.hockeyloader.network.model.AppVersions;
 import stash.samples.hockeyloader.network.model.Apps;

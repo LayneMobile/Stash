@@ -26,9 +26,9 @@ import rx.functions.Func1;
 import stash.Params;
 import stash.Source;
 import stash.SourceModuleBuilder;
-import stash.sources.builder.MethodResult;
-import stash.sources.builder.SourceHandlerModule;
+import stash.sources.builder.SourceHandler;
 import stash.sources.builder.SourceMethodHandler;
+import stash.types.MethodResult;
 
 @stash.annotations.SourceModule(Source.class)
 public final class SourceModule<T, P extends Params> implements SourceModuleBuilder {
@@ -43,11 +43,11 @@ public final class SourceModule<T, P extends Params> implements SourceModuleBuil
         return sourceInternal(this, source);
     }
 
-    @NonNull @Override public SourceHandlerModule build() {
+    @NonNull @Override public SourceHandler build() {
         if (source == null) {
             throw new IllegalStateException("source must be set");
         }
-        return new SourceHandlerModule.Builder(Source.class)
+        return new SourceHandler.Builder(Source.class)
                 .handle("call", new Handler<T, P>(source))
                 .build();
     }

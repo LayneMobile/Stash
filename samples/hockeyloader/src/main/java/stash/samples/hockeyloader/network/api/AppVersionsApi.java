@@ -17,6 +17,9 @@
 package stash.samples.hockeyloader.network.api;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import org.immutables.value.Value;
 
 import java.util.concurrent.TimeUnit;
 
@@ -27,8 +30,8 @@ import rx.functions.Func1;
 import rx.functions.Func2;
 import stash.StashPolicy;
 import stash.Stashable;
-import stash.Stashes;
 import stash.StashableApi;
+import stash.Stashes;
 import stash.params.NetworkParams;
 import stash.params.StashableParams;
 import stash.retrofit.RetrofitStashableApiBuilder;
@@ -36,7 +39,7 @@ import stash.samples.hockeyloader.network.model.App;
 import stash.samples.hockeyloader.network.model.AppVersions;
 import stash.samples.hockeyloader.network.model.Auth;
 
-
+@Value.Enclosing
 public final class AppVersionsApi {
     private static final int MEM_SIZE = 2;
     private static final String PATH = "/apps/{APP_ID}/app_versions";
@@ -58,11 +61,11 @@ public final class AppVersionsApi {
             .serviceType(Service.class)
             .source(new Func2<Service, Params, AppVersions>() {
                 @Override public AppVersions call(Service service, Params params) {
-                    String token = params.token;
+                    String token = params.authToken();
                     if (token == null) {
                         // TODO: any way to get current token?
                     }
-                    return service.getAppVersions(token, params.appId);
+                    return service.getAppVersions(token, params.getKey());
                 }
             })
             .add()
@@ -78,55 +81,28 @@ public final class AppVersionsApi {
             .aggregate()
             .build();
 
-    public static final class Params implements NetworkParams, StashableParams<String> {
-        private final String token;
-        private final String appId;
-        private final StashPolicy stashPolicy;
+    @Value.Immutable
+    public static abstract class Params implements NetworkParams, StashableParams<String> {
+        @Nullable abstract Auth.Token token();
 
-        private Params(Builder builder) {
-            this.token = builder.token == null ? null : builder.token.getToken();
-            this.appId = builder.app.getPublicIdentifier();
-            this.stashPolicy = builder.stashPolicy;
-        }
+        abstract App app();
 
-        @Override public String getKey() {
-            return appId;
-        }
-
+        @Value.Default
         @NonNull @Override public StashPolicy getStashPolicy() {
-            return stashPolicy;
+            return StashPolicy.DEFAULT;
         }
 
-        public static final class Builder {
-            private StashPolicy stashPolicy = StashPolicy.DEFAULT;
-            private Auth.Token token;
-            private App app;
-
-            public Builder setStashPolicy(StashPolicy stashPolicy) {
-                this.stashPolicy = stashPolicy;
-                return this;
-            }
-
-            public Builder setToken(Auth.Token token) {
-                this.token = token;
-                return this;
-            }
-
-            public Builder setApp(App app) {
-                this.app = app;
-                return this;
-            }
-
-            public Params build() {
-                verify();
-                return new Params(this);
-            }
-
-            private void verify() {
-                if (app == null) {
-                    throw new IllegalArgumentException("app must not be null");
-                }
-            }
+        @Value.Derived
+        @Override public String getKey() {
+            return app().getPublicIdentifier();
         }
+
+        @Nullable
+        @Value.Derived String authToken() {
+            Auth.Token token = token();
+            return token == null ? null : token.getToken();
+        }
+
+        public static final class Builder extends AppVersionsApiImpl.Params.Builder {}
     }
 }

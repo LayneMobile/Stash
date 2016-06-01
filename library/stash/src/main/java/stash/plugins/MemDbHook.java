@@ -16,7 +16,6 @@
 
 package stash.plugins;
 
-
 import stash.stashdbs.MemDb;
 
 public class MemDbHook {

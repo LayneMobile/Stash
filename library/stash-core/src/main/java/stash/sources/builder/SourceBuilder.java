@@ -16,68 +16,48 @@
 
 package stash.sources.builder;
 
-
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import stash.Builder;
 import stash.Params;
 import stash.Source;
+import stash.types.TypeBuilder;
+import stash.types.TypeHandler;
 
 public final class SourceBuilder<T, P extends Params> implements Builder<Source<T, P>> {
-    private final Set<SourceHandlerModule> modules = new HashSet<SourceHandlerModule>();
+    private final TypeBuilder<Source> source;
 
-    public SourceBuilder<T, P> module(SourceHandlerModule module) {
-        if (this.modules.contains(module)) {
-            String msg = String.format("source type '%s' already defined", module.source);
-            throw new IllegalStateException(msg);
-        }
-        this.modules.add(module);
-        return this;
+    public SourceBuilder() {
+        this.source = new TypeBuilder<>(Source.class);
     }
 
-    public SourceBuilder<T, P> modules(SourceHandlerModule... modules) {
-        return modules(Arrays.asList(modules));
+    public boolean contains(Class<? extends Source> type) {
+        return source.contains(type);
     }
 
-    public SourceBuilder<T, P> modules(List<SourceHandlerModule> modules) {
-        for (SourceHandlerModule module : modules) {
-            module(module);
-        }
-        return this;
+    public TypeBuilder<Source> module(SourceHandler module) {
+        return source.module(module);
     }
 
-    public boolean contains(Class<? extends Source> source) {
-        for (SourceHandlerModule module : modules) {
-            if (module.source.equals(source)) {
-                return true;
-            }
-        }
-        return false;
+    public void verifyContains(Class<? extends Source> type) {
+        source.verifyContains(type);
     }
 
-    public void verifyContains(Class<? extends Source> source) {
-        if (!contains(source)) {
-            String msg = String.format("builder must have source type '%s'. You might have forgot a module", source);
-            throw new IllegalStateException(msg);
-        }
+    public TypeBuilder<Source> modules(List<SourceHandler> modules) {
+        return source.modules(modules);
     }
 
-    public void verifyContains(Collection<Class<? extends Source>> sources) {
-        for (Class<? extends Source> source : sources) {
-            verifyContains(source);
-        }
+    public void verifyContains(Collection<Class<? extends Source>> types) {
+        source.verifyContains(types);
     }
 
+    @SafeVarargs public final TypeBuilder<Source> modules(TypeHandler<? extends Source>... modules) {
+        return source.modules(modules);
+    }
+
+    @SuppressWarnings("unchecked")
     @Override public Source<T, P> build() {
-        if (modules.isEmpty()) {
-            throw new IllegalStateException("no modules");
-        } else if (!contains(Source.class)) {
-            throw new IllegalStateException("must contain Source module");
-        }
-        return SourceHandler.source(modules);
+        return (Source<T, P>) source.build();
     }
 }

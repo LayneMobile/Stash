@@ -20,7 +20,6 @@ import java.util.Map;
 
 import stash.util.Logger;
 
-
 public final class StashLog {
     private static volatile Logger sLogger = Logger.NONE;
 

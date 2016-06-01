@@ -16,7 +16,6 @@
 
 package stash.aggregables;
 
-
 import android.support.annotation.Nullable;
 
 import stash.Aggregable;
@@ -26,7 +25,9 @@ public interface OpenEndedAggregable<T> extends Aggregable {
     /**
      * Determines the delay in milliseconds until the next call to the source.
      *
-     * @param entry the current entry (could be from source or from the stash)
+     * @param entry
+     *         the current entry (could be from source or from the stash)
+     *
      * @return the delay until the next source should be called, or -1 in order to prevent scheduling another call
      */
     long delayUntilNextRefresh(@Nullable Entry<T> entry);

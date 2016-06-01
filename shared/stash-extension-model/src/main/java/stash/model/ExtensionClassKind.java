@@ -69,6 +69,10 @@ public enum ExtensionClassKind {
         return writers;
     }
 
+    public SourceWriter sourceWriter() {
+        return new SourceWriter(this);
+    }
+
     public void writeMethods(BufferedSink sink, List<ExtensionClass> classes) throws IOException {
         sink.write(FILE_HEADER);
         sink.writeInt(FILE_VERSION);

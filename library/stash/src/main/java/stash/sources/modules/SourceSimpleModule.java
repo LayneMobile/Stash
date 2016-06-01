@@ -27,7 +27,7 @@ import rx.functions.Func1;
 import stash.Params;
 import stash.Source;
 import stash.SourceModuleBuilder;
-import stash.sources.builder.SourceHandlerModule;
+import stash.sources.builder.SourceHandler;
 
 @stash.annotations.SourceModule(Source.class)
 public final class SourceSimpleModule<T, P extends Params> implements SourceModuleBuilder {
@@ -45,7 +45,7 @@ public final class SourceSimpleModule<T, P extends Params> implements SourceModu
         return sourceInternal(this, source);
     }
 
-    @NonNull @Override public SourceHandlerModule build() {
+    @NonNull @Override public SourceHandler build() {
         return module.build();
     }
 

@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-package stash.sources.builder;
-
+package stash.types;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,57 +22,53 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import stash.Source;
+public class TypeHandler<T> {
+    final Class<? extends T> type;
+    final Map<String, List<MethodHandler>> handlers;
 
-public final class SourceHandlerModule {
-    final Class<? extends Source> source;
-    final Map<String, List<SourceMethodHandler>> handlers;
-
-    private SourceHandlerModule(Builder builder) {
-        this.source = builder.source;
+    protected TypeHandler(Builder<T> builder) {
+        this.type = builder.type;
         this.handlers = Collections.unmodifiableMap(builder.handlers);
     }
 
     @Override public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        SourceHandlerModule module = (SourceHandlerModule) o;
-
-        return source.equals(module.source);
+        TypeHandler module = (TypeHandler) o;
+        return type.equals(module.type);
     }
 
     @Override public int hashCode() {
-        return source.hashCode();
+        return type.hashCode();
     }
 
-    public static final class Builder {
-        private final Class<? extends Source> source;
-        private final Map<String, List<SourceMethodHandler>> handlers
-                = new HashMap<String, List<SourceMethodHandler>>();
+    public static final class Builder<T> {
+        private final Class<? extends T> type;
+        private final Map<String, List<MethodHandler>> handlers
+                = new HashMap<String, List<MethodHandler>>();
 
-        public Builder(Class<? extends Source> source) {
-            this.source = source;
+        public Builder(Class<? extends T> type) {
+            this.type = type;
         }
 
-        public MethodBuilder method(String methodName) {
-            return new MethodBuilder(this, methodName);
+        public MethodBuilder<T> method(String methodName) {
+            return new MethodBuilder<T>(this, methodName);
         }
 
-        public Builder handle(String methodName, SourceMethodHandler handler) {
+        public Builder<T> handle(String methodName, MethodHandler handler) {
             return method(methodName)
                     .handle(handler)
                     .add();
         }
 
-        public SourceHandlerModule build() {
-            return new SourceHandlerModule(this);
+        public TypeHandler<T> build() {
+            return new TypeHandler<T>(this);
         }
 
-        private Builder add(MethodBuilder builder) {
-            List<SourceMethodHandler> handlerList = this.handlers.get(builder.methodName);
+        private Builder<T> add(MethodBuilder<T> builder) {
+            List<MethodHandler> handlerList = this.handlers.get(builder.methodName);
             if (handlerList == null) {
-                handlerList = new ArrayList<SourceMethodHandler>();
+                handlerList = new ArrayList<MethodHandler>();
                 this.handlers.put(builder.methodName, handlerList);
             }
             handlerList.add(builder.handler);
@@ -81,22 +76,22 @@ public final class SourceHandlerModule {
         }
     }
 
-    public static final class MethodBuilder {
-        private final Builder builder;
+    public static final class MethodBuilder<T> {
+        private final Builder<T> builder;
         private final String methodName;
-        private SourceMethodHandler handler;
+        private MethodHandler handler;
 
-        private MethodBuilder(Builder builder, String methodName) {
+        private MethodBuilder(Builder<T> builder, String methodName) {
             this.builder = builder;
             this.methodName = methodName;
         }
 
-        public MethodBuilder handle(SourceMethodHandler handler) {
+        public MethodBuilder<T> handle(MethodHandler handler) {
             this.handler = handler;
             return this;
         }
 
-        public Builder add() {
+        public Builder<T> add() {
             if (handler == null) {
                 throw new IllegalArgumentException("must set a handler");
             }

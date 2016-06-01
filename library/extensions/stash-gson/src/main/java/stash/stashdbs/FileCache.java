@@ -158,7 +158,6 @@ public class FileCache implements Closeable {
         return open(config);
     }
 
-
     public Entry get(String key) {
         key = toKey(key);
         DiskLruCache.Snapshot snapshot;
@@ -249,7 +248,6 @@ public class FileCache implements Closeable {
         }
     }
 
-
     public static final class Editor {
         private final DiskLruCache.Editor editor;
 
@@ -312,7 +310,6 @@ public class FileCache implements Closeable {
             return new Config(getDefaultDir(context), DEFAULT_VERSION, 10 * 1024);
         }
     }
-
 
     private static final class Instance {
         private final FileCache cache;

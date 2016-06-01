@@ -14,29 +14,23 @@
  * limitations under the License.
  */
 
-package stash.samples.hockeyloader.network.model;
+package stash.util.gson;
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import java.util.Collections;
-import java.util.List;
-
-public class Apps {
-
-    @SerializedName("apps")
-    List<App> apps;
-
-    @SerializedName("status")
-    String status;
-
-    public List<App> getApps() {
-        if (apps == null) {
-            return Collections.emptyList();
+public interface GsonFactory {
+    GsonFactory DEFAULT = new GsonFactory() {
+        @Override public Gson gson() {
+            return new Gson();
         }
-        return apps;
-    }
 
-    public String getStatus() {
-        return status;
-    }
+        @Override public GsonBuilder newGsonBuilder() {
+            return new GsonBuilder();
+        }
+    };
+
+    Gson gson();
+
+    GsonBuilder newGsonBuilder();
 }

@@ -14,29 +14,10 @@
  * limitations under the License.
  */
 
-package stash.samples.hockeyloader.network.model;
+package stash.types;
 
-import com.google.gson.annotations.SerializedName;
+import java.lang.reflect.Method;
 
-import java.util.Collections;
-import java.util.List;
-
-public class AppVersions {
-
-    @SerializedName("app_versions")
-    List<AppVersion> appVersions;
-
-    @SerializedName("status")
-    String status;
-
-    public List<AppVersion> getAppVersions() {
-        if (appVersions == null) {
-            return Collections.emptyList();
-        }
-        return appVersions;
-    }
-
-    public String getStatus() {
-        return status;
-    }
+public interface MethodHandler {
+    boolean handle(Object proxy, Method method, Object[] args, MethodResult result) throws Throwable;
 }

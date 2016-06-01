@@ -110,5 +110,5 @@ public class Request<T> {
                 .subscribe(StashSubscribers.empty());
     }
 
-    public interface Extender<T> extends Func1<Observable.OnSubscribe<T>, Request<T>> { }
+    public interface Extender<T> extends Func1<Observable.OnSubscribe<T>, Request<T>> {}
 }

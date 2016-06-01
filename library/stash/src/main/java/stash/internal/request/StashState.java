@@ -16,7 +16,6 @@
 
 package stash.internal.request;
 
-
 import stash.Entry;
 import stash.Metadata;
 

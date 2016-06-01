@@ -16,13 +16,13 @@
 
 package stash;
 
-import stash.sources.builder.SourceHandlerModule;
+import stash.sources.builder.SourceHandler;
 
 public abstract class SourceModulesBuilder implements SourceModuleBuilder {
-    public abstract SourceHandlerModule[] buildModules();
+    public abstract SourceHandler[] buildModules();
 
-    @Override public final SourceHandlerModule build() {
-        SourceHandlerModule[] modules = buildModules();
+    @Override public final SourceHandler build() {
+        SourceHandler[] modules = buildModules();
         if (modules.length == 1) {
             return modules[0];
         }

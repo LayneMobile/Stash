@@ -17,18 +17,12 @@
 apply plugin: 'com.android.library'
 apply plugin: 'android-apt'
 
-ext {
-    okhttpVersion = '2.3.0'
-    retrofitVersion = '1.9.0'
-    butterKnifeVersion = '7.0.1'
-}
-
 android {
     compileSdkVersion appCompileSdkVersion as int
     buildToolsVersion appBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion appMinSdkVersion as int
     }
 
     compileOptions {
@@ -46,12 +40,12 @@ android {
 dependencies {
     compile project(':stash-gson')
     compile project(':stash-retrofit')
-    compile "org.apache.commons:commons-lang3:3.3.2"
-    compile "com.google.guava:guava:19.0"
+    compile "org.apache.commons:commons-lang3:${appCommonsLangVersion}"
+    compile "com.google.guava:guava:${appGuavaVersion}"
     compile "com.google.code.gson:gson:${appGsonVersion}"
     compile "com.laynemobile:androidutils-gson:${appAndroidUtilsVersion}"
-    compile "com.squareup.okhttp:okhttp:${okhttpVersion}"
-    compile "com.squareup.retrofit:retrofit:${retrofitVersion}"
+    compile "com.squareup.okhttp:okhttp:${appOkhttpVersion}"
+    compile "com.squareup.retrofit:retrofit:${appRetrofitVersion}"
     compile "com.laynemobile:rxsubscriptions-components:${appRxSubscriptionsVersion}"
 
     // Immutables

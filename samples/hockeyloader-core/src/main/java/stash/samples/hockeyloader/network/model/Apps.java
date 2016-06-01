@@ -14,18 +14,22 @@
  * limitations under the License.
  */
 
-package stash.sources.builder;
+package stash.samples.hockeyloader.network.model;
 
-public final class MethodResult {
-    private Object result;
+import com.google.gson.annotations.SerializedName;
+import com.laynemobile.android.gson.GsonParcelable;
 
-    MethodResult() {}
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-    public void set(Object result) {
-        this.result = result;
-    }
+import java.util.List;
 
-    Object get() {
-        return result;
-    }
+@Value.Immutable
+@Gson.TypeAdapters
+public abstract class Apps extends GsonParcelable {
+    @SerializedName("apps")
+    public abstract List<App> getApps();
+
+    @SerializedName("status")
+    public abstract String getStatus();
 }

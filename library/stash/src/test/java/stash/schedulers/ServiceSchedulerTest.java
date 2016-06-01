@@ -145,7 +145,6 @@ public class ServiceSchedulerTest {
                 intent.getValue().getComponent().getClassName());
     }
 
-
     public static class TestService extends Service {
         static ServiceListener sListener;
         static boolean sRunning;
@@ -178,7 +177,6 @@ public class ServiceSchedulerTest {
             return running;
         }
     }
-
 
     public static interface ServiceListener {
         void runningChanged(boolean isRunning);

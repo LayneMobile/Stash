@@ -16,19 +16,14 @@
 
 package stash.samples.hockeyloader.network.client;
 
-
 import android.util.Log;
-
-import com.google.gson.Gson;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
-import retrofit.converter.Converter;
 import retrofit.converter.GsonConverter;
+import stash.samples.hockeyloader.network.util.gson.GsonUtil;
 
 public final class HockeyRestAdapter {
-    public static final Converter CONVERTER = new GsonConverter(new Gson());
-
     private static final String ENDPOINT = "https://rink.hockeyapp.net/api/2";
     private static RestAdapter.Log DEFAULT_LOG;
     private static RestAdapter.LogLevel DEFAULT_LOGLEVEL;
@@ -73,13 +68,11 @@ public final class HockeyRestAdapter {
         return createDefault(ENDPOINT, DEFAULT_LOG, DEFAULT_LOGLEVEL);
     }
 
-    public static RestAdapter createDefault(String endpoint,
-            RestAdapter.Log log,
-            RestAdapter.LogLevel logLevel) {
+    public static RestAdapter createDefault(String endpoint, RestAdapter.Log log, RestAdapter.LogLevel logLevel) {
         return new RestAdapter.Builder()
                 .setEndpoint(endpoint)
                 .setClient(new OkClient(HttpClient.getDefault()))
-                .setConverter(CONVERTER)
+                .setConverter(new GsonConverter(GsonUtil.gson()))
                 .setLog(log)
                 .setLogLevel(logLevel)
                 .build();

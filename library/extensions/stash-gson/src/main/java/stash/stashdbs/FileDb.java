@@ -188,7 +188,6 @@ public class FileDb implements StashDb.Worker<String> {
         }
     }
 
-
     private static final class Body<T> {
         private final T data;
 
@@ -202,7 +201,6 @@ public class FileDb implements StashDb.Worker<String> {
             out.close();
         }
     }
-
 
     private static final class Entry<T> extends LazyEntry<T> {
         private final Class<T> type;

@@ -16,7 +16,6 @@
 
 package stash.shopify;
 
-
 import com.shopify.buy.model.Shop;
 
 import java.util.concurrent.TimeUnit;
