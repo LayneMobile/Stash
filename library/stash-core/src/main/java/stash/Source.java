@@ -16,13 +16,8 @@
 
 package stash;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import rx.Subscriber;
-import rx.functions.Action1;
 import rx.functions.Action2;
-import rx.functions.Function;
 
 public interface Source<T, P extends Params> {
     void call(P p, Subscriber<? super T> subscriber);
@@ -34,6 +29,104 @@ public interface Source<T, P extends Params> {
             return null;
         }
     }
+
+    /*
+    public interface RequestProcessor<T, P> {
+        Request<T> request(P params);
+
+        interface Interceptor<T, P> {
+            Request<T> intercept(Chain<T, P> chain);
+
+            interface Chain<T, P> {
+                RequestProcessor<T, P> processor();
+
+                Request<T> proceed(RequestProcessor<T, P> processor);
+            }
+        }
+    }
+
+    final List<RequestProcessor.Interceptor> interceptors;
+
+    private Request getRequestWithInterceptorChain(P params) {
+        RequestProcessor defaultProcessor = defaultProcessor();
+        RequestProcessorInterceptorChain chain = new RequestProcessorInterceptorChain(0, defaultProcessor);
+        RequestProcessor processor = chain.proceed(defaultProcessor);
+        return processor.request(params);
+    }
+
+    class RequestProcessorInterceptorChain implements RequestProcessor.Interceptor.Chain {
+        private final int index;
+        private final RequestProcessor processor;
+
+        RequestProcessorInterceptorChain(int index, RequestProcessor processor) {
+            this.index = index;
+            this.processor = processor;
+        }
+
+        public RequestProcessor processor() {
+            return processor;
+        }
+
+        public Request<T> proceed(RequestProcessor<T, P> processor) {
+            if (index < interceptors.size()) {
+                RequestProcessorInterceptorChain chain = new RequestProcessorInterceptorChain(index + 1, processor);
+                return interceptors.get(index).intercept(chain);
+            } else {
+                return processor;
+            }
+        }
+    }
+
+     */
+
+    /* From OkHttp
+
+    public interface Interceptor {
+        Response intercept(Chain chain) throws IOException;
+
+        interface Chain {
+            Request request();
+            Response proceed(Request request) throws IOException;
+        }
+    }
+
+    private Response getResponseWithInterceptorChain(boolean forWebSocket) throws IOException {
+        Interceptor.Chain chain = new ApplicationInterceptorChain(0, originalRequest, forWebSocket);
+        return chain.proceed(originalRequest);
+    }
+
+    class ApplicationInterceptorChain implements Interceptor.Chain {
+        private final int index;
+        private final Request request;
+        private final boolean forWebSocket;
+
+        ApplicationInterceptorChain(int index, Request request, boolean forWebSocket) {
+          this.index = index;
+          this.request = request;
+          this.forWebSocket = forWebSocket;
+        }
+
+        @Override public Connection connection() {
+          return null;
+        }
+
+        @Override public Request request() {
+          return request;
+        }
+
+        @Override public Response proceed(Request request) throws IOException {
+          if (index < client.interceptors().size()) {
+            // There's another interceptor in the chain. Call that.
+            Interceptor.Chain chain = new ApplicationInterceptorChain(index + 1, request, forWebSocket);
+            return client.interceptors().get(index).intercept(chain);
+          } else {
+            // No more interceptors. Do HTTP.
+            return getResponse(request, forWebSocket);
+          }
+        }
+    }
+
+     */
 
     /*
     Need to use annotations
@@ -156,59 +249,4 @@ public interface Source<T, P extends Params> {
     @GenerateBuilder(OtherProxySource.class)
     public interface ExtendedSource<T, P extends Params> implements Source<T, P> {}
     */
-
-    interface ProxyInterface {
-        String name();
-
-        List<Method<?>> methods();
-
-        interface Method<F extends Function> {
-            String name();
-
-            List<Transformer<F, ?>> transformers();
-        }
-
-        interface Transformer<R extends Function, T> {
-            String name();
-
-            R transform(T t);
-        }
-    }
-
-    final class SourceProxy<T, P extends Params> implements ProxyInterface {
-        @Override public String name() {
-            return "Source";
-        }
-
-        @Override public List<Method<?>> methods() {
-            List<Method<?>> methods = new ArrayList<>();
-            methods.add(new Method<Action2<P, Subscriber<? super T>>>() {
-                @Override public String name() {
-                    return "call";
-                }
-
-                @Override public List<Transformer<Action2<P, Subscriber<? super T>>, ?>> transformers() {
-                    List<Transformer<Action2<P, Subscriber<? super T>>, ?>> transformers = new ArrayList<Transformer<Action2<P, Subscriber<? super T>>, ?>>();
-                    transformers.add(
-                            new Transformer<Action2<P, Subscriber<? super T>>, Action1<Subscriber<? super T>>>() {
-                                @Override public String name() {
-                                    return "source";
-                                }
-
-                                @Override
-                                public Action2<P, Subscriber<? super T>> transform(
-                                        Action1<Subscriber<? super T>> subscriberAction1) {
-                                    return new Action2<P, Subscriber<? super T>>() {
-                                        @Override public void call(P p, Subscriber<? super T> subscriber) {
-                                            subscriberAction1.call(subscriber);
-                                        }
-                                    };
-                                }
-                            });
-                    return transformers;
-                }
-            });
-            return methods;
-        }
-    }
 }

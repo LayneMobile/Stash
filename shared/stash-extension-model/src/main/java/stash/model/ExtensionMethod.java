@@ -16,10 +16,12 @@
 
 package stash.model;
 
-
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.lang.model.element.AnnotationMirror;
+import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 
@@ -28,13 +30,44 @@ final class ExtensionMethod {
     final ExecutableElement method;
     final List<TypeElement> returnAnnotations;
 
-    ExtensionMethod(ExtensionMethodKind kind, ExecutableElement method, List<TypeElement> returnAnnotations) {
+    private ExtensionMethod(ExtensionMethodKind kind, ExecutableElement method, List<TypeElement> returnAnnotations) {
         if (kind == ExtensionMethodKind.Instance && method.getParameters().size() > 0) {
             throw new IllegalArgumentException("instance method cannot have parameters");
         }
         this.kind = kind;
         this.method = method;
         this.returnAnnotations = Collections.unmodifiableList(returnAnnotations);
+    }
+
+    public static ExtensionMethod parse(Element memberElement) {
+        ExtensionMethodKind methodKind = null;
+        List<TypeElement> others = new ArrayList<>();
+        for (AnnotationMirror am : memberElement.getAnnotationMirrors()) {
+            ExtensionMethodKind kind = parseAnnotation(am, others);
+            if (methodKind != null && kind != null) {
+                String format = "Cannot have annotation '%s' when '%s' is already present";
+                String message = String.format(format, kind.annotationType, methodKind.annotationType);
+                throw new IllegalStateException(message);
+            } else if (kind != null) {
+                kind.validate(memberElement);
+                methodKind = kind;
+            }
+        }
+        return (methodKind == null)
+                ? null
+                : new ExtensionMethod(methodKind, (ExecutableElement) memberElement, others);
+    }
+
+    private static ExtensionMethodKind parseAnnotation(AnnotationMirror am, List<TypeElement> others) {
+        TypeElement te = (TypeElement) am.getAnnotationType().asElement();
+        String name = te.getQualifiedName().toString();
+        for (ExtensionMethodKind annotationKind : ExtensionMethodKind.values()) {
+            if (name.equals(annotationKind.annotationType.getCanonicalName())) {
+                return annotationKind;
+            }
+        }
+        others.add(te);
+        return null;
     }
 
     String name() {

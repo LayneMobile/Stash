@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Layne Mobile, LLC
+ * Copyright 2016 Evove.tech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,7 @@
  * limitations under the License.
  */
 
-package stash;
+package stash.samples.hockeyloader.core;
 
-import rx.Subscriber;
-
-/** Marker Interface. */
-public interface ProgressApi2<T, P extends Params> extends Api2<T, P> {
-    Request<Progress<T>> progressRequest(P p);
-
-    /** Marker Interface. */
-    interface Source<T, P extends Params> {
-        void call(P p, Subscriber<? super Progress<T>> subscriber);
-    }
+public class MyClass {
 }

@@ -60,12 +60,8 @@ android {
 }
 
 dependencies {
-    compile project(':stash-gson')
-    compile project(':stash-retrofit')
-    compile "com.squareup.okhttp:okhttp:${okhttpVersion}"
-    compile "com.squareup.retrofit:retrofit:${retrofitVersion}"
+    compile project(':hockeyloader-core')
     compile "com.jakewharton:butterknife:${butterKnifeVersion}"
-    compile "com.laynemobile:rxsubscriptions-components:${appRxSubscriptionsVersion}"
 
     // Android Support Dependencies
     compile "com.android.support:support-v13:${appAndroidSupportVersion}"

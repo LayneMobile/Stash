@@ -21,10 +21,14 @@ import android.os.Bundle;
 import android.view.View;
 
 import butterknife.ButterKnife;
+import rx.Observable;
 import rxsubscriptions.RxSubscriptions;
+import rxsubscriptions.SubscriptionBuilder;
 import rxsubscriptions.components.RxsFragment;
+import stash.Request;
+import stash.samples.hockeyloader.RxExtensions;
 
-public class HockeyFragment extends RxsFragment {
+public class HockeyFragment extends RxsFragment implements RxExtensions {
 
     private HockeyFragmentListener mListener;
 
@@ -56,6 +60,19 @@ public class HockeyFragment extends RxsFragment {
 
     protected HockeyFragmentListener getListener() {
         return mListener;
+    }
+
+    @Override public <T> Request.Extender<T> asRequest() {
+        return Request.extender();
+    }
+
+    @Override public <T> SubscriptionBuilderExtension<T> asSubscriptionBuilder() {
+        return new SubscriptionBuilderExtension<T>() {
+            @Override public SubscriptionBuilder<T> call(Observable.OnSubscribe<T> onSubscribe) {
+                return subscriptions()
+                        .with(Observable.create(onSubscribe));
+            }
+        };
     }
 
     public interface HockeyFragmentListener {

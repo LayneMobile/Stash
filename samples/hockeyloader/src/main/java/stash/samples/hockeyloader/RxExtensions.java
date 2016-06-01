@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-package stash;
+package stash.samples.hockeyloader;
 
-import stash.params.StashableParams;
+import rx.Observable;
+import rx.functions.Func1;
+import rxsubscriptions.SubscriptionBuilder;
+import stash.Request;
 
-/** Marker Interface. */
-public interface StashableApi2<T, P extends StashableParams<?>> extends Api2<T, P> {
-    Stash<T> stash(P p);
+public interface RxExtensions {
+    <T> Request.Extender<T> asRequest();
 
-    /** Marker Interface. */
-    interface Source<T, P extends StashableParams<?>> extends Api2.Source<T, P> {
-        Stashable<T> stashable(P p);
-    }
+    <T> SubscriptionBuilderExtension<T> asSubscriptionBuilder();
+
+    interface SubscriptionBuilderExtension<T> extends Func1<Observable.OnSubscribe<T>, SubscriptionBuilder<T>> { }
 }

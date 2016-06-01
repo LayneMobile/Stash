@@ -67,6 +67,44 @@ class DefaultSourceProcessor<T, P extends Params> {
         return null;
     }
 
+    /*
+
+    steps :
+
+    Source {
+        void call(P params, Subscriber<? super T> subscriber);
+
+        -> Observable<T> observable = from(source.call(p, subscriber));
+
+        Internal {
+            Observable<T> request(P p);
+        }
+    }
+
+    NetworkSource extends Source {
+        NetworkChecker networkChecker();
+
+        Internal {
+            Observable<T> request (P p, NetworkSource s, Observable<T> request) {
+                if (!hasNetwork(s.networkChecker())) {
+                    return Observable.error();
+                } else {
+                    return request;
+                }
+            }
+        }
+    }
+
+    PreparableSource extends Source {
+        Observable<T> prepareSource(Observable<T> source);
+
+
+    }
+
+    Request<T> request = processor.request(P params);
+
+     */
+
     private final class OnSubscribeImpl implements Observable.OnSubscribe<T> {
         private final P p;
 

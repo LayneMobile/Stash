@@ -59,7 +59,11 @@ public class ExtensionProcessor extends AbstractProcessor {
     @Override public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
         boolean processed = false;
         for (ExtensionClassKind kind : ExtensionClassKind.values()) {
-            Set<ExtensionClass> classes = new HashSet<>();
+            Set<ExtensionClass> classes = classMap.get(kind);
+            if (classes == null) {
+                classes = new HashSet<>();
+                classMap.put(kind, classes);
+            }
             for (Element element : env.getElementsAnnotatedWith(kind.annotationType)) {
                 processed = true;
 
@@ -73,11 +77,6 @@ public class ExtensionProcessor extends AbstractProcessor {
                 ExtensionClass extensionClass = ExtensionClass.parse(typeElement);
                 classes.add(extensionClass);
             }
-            Set<ExtensionClass> current = classMap.get(kind);
-            if (current != null) {
-                classes.addAll(current);
-            }
-            classMap.put(kind, classes);
         }
 
         if (processed) {
