@@ -40,6 +40,10 @@ public class Request<T> {
         this.observable = observable;
     }
 
+    @NonNull public static <T> Request<T> create(@NonNull Observable.OnSubscribe<T> onSubscribe) {
+        return new Request<T>(onSubscribe);
+    }
+
     @NonNull public static <T> Request<T> just(@NonNull T t) {
         return new Request<T>(Observable.just(t));
     }
@@ -54,6 +58,10 @@ public class Request<T> {
 
     @NonNull public static <T> Request<T> from(@NonNull ResultCallable<T> callable) {
         return new Request<T>(StashObservables.from(callable));
+    }
+
+    @NonNull public static <T> Request<T> error(@NonNull Throwable throwable) {
+        return new Request<T>(Observable.<T>error(throwable));
     }
 
     @NonNull public final Observable<T> asObservable() {
