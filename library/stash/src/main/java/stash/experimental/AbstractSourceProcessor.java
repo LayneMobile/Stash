@@ -16,7 +16,7 @@
 
 package stash.experimental;
 
-import com.google.common.collect.ImmutableList;
+import org.immutables.value.Value;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -24,14 +24,11 @@ import stash.Params;
 import stash.Request;
 import stash.Source;
 
-public class SourceProcessor<T, P extends Params> implements RequestProcessor<T, P> {
-    private final Source<T, P> source;
+@Value.Immutable
+abstract class AbstractSourceProcessor<T, P extends Params> implements RequestProcessor<T, P> {
+    abstract Source<T, P> source();
 
-    public SourceProcessor(Source<T, P> source) {
-        this.source = source;
-    }
-
-    @Override public Request<T> call(P p) {
+    @Override public final Request<T> call(P p) {
         return Request.create(new OnSubscribeImpl(p));
     }
 
@@ -44,7 +41,7 @@ public class SourceProcessor<T, P extends Params> implements RequestProcessor<T,
 
         @Override public void call(final Subscriber<? super T> subscriber) {
             if (subscriber.isUnsubscribed()) { return; }
-            source.call(p, new Subscriber<T>(subscriber) {
+            source().call(p, new Subscriber<T>(subscriber) {
                 @Override public void onCompleted() {
                     if (!subscriber.isUnsubscribed()) {
                         subscriber.onCompleted();
@@ -63,43 +60,6 @@ public class SourceProcessor<T, P extends Params> implements RequestProcessor<T,
                     }
                 }
             });
-        }
-    }
-
-    static class InterceptorChain<T, P extends Params> implements RequestProcessor<T, P> {
-        private final SourceProcessor<T, P> processor;
-        private final ImmutableList<Interceptor<T, P>> interceptors;
-
-        public InterceptorChain(SourceProcessor<T, P> processor, ImmutableList<Interceptor<T, P>> interceptors) {
-            this.processor = processor;
-            this.interceptors = interceptors;
-        }
-
-        @Override public Request<T> call(P p) {
-            return new Child(0, p)
-                    .proceed(p);
-        }
-
-        private final class Child implements RequestProcessor.Interceptor.Chain<T, P> {
-            private final int index;
-            private final P params;
-
-            private Child(int index, P params) {
-                this.index = index;
-                this.params = params;
-            }
-
-            @Override public P params() {
-                return params;
-            }
-
-            @Override public Request<T> proceed(P p) {
-                if (index < interceptors.size()) {
-                    Child chain = new Child(index + 1, p);
-                    return interceptors.get(index).intercept(chain);
-                }
-                return processor.call(p);
-            }
         }
     }
 }
