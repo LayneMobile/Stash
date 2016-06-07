@@ -61,10 +61,6 @@ public class ExtensionProcessor extends AbstractProcessor {
         boolean processed = false;
         for (ExtensionClassKind kind : ExtensionClassKind.values()) {
             Set<ExtensionClass> classes = classMap.get(kind);
-            if (classes == null) {
-                classes = new HashSet<>();
-                classMap.put(kind, classes);
-            }
             for (Element element : env.getElementsAnnotatedWith(kind.annotationType)) {
                 processed = true;
 
@@ -76,6 +72,11 @@ public class ExtensionProcessor extends AbstractProcessor {
 
                 TypeElement typeElement = (TypeElement) element;
                 ExtensionClass extensionClass = ExtensionClass.parse(typeElement);
+
+                if (classes == null) {
+                    classes = new HashSet<>();
+                    classMap.put(kind, classes);
+                }
                 classes.add(extensionClass);
             }
         }
@@ -83,34 +84,32 @@ public class ExtensionProcessor extends AbstractProcessor {
         if (processed) {
             for (Map.Entry<ExtensionClassKind, Set<ExtensionClass>> entry : classMap.entrySet()) {
                 ExtensionClassKind kind = entry.getKey();
-                Set<ExtensionClass> classes = entry.getValue();
-                if (classes.size() > 0) {
-                    List<ExtensionClass> classList = new ArrayList<>(classes);
-                    try {
-                        FileObject output
-                                = filer.createResource(StandardLocation.CLASS_OUTPUT, "", kind.resourceFilePath());
-                        try (BufferedSink sink = Okio.buffer(Okio.sink(output.openOutputStream()))) {
-                            // Write method data to buffer
-                            kind.writeMethods(sink, classList);
-                            sink.flush();
-                        }
-                    } catch (IOException e) {
-                        error("Error writing: %s", e.getMessage());
-                        return true;
+                List<ExtensionClass> classes = new ArrayList<>(entry.getValue());
+                try {
+                    FileObject output
+                            = filer.createResource(StandardLocation.CLASS_OUTPUT, "", kind.resourceFilePath());
+                    try (BufferedSink sink = Okio.buffer(Okio.sink(output.openOutputStream()))) {
+                        // Write method data to buffer
+                        kind.writeMethods(sink, classes);
+                        sink.flush();
                     }
-                    // TODO: find a way to filter out these classes from jar (make provided)
-//                    try {
-//                        Buffer sink = new Buffer();
-//                        kind.writeMethods(sink, classList);
-//
-//                        SourceWriter sourceWriter = kind.sourceWriter();
-//                        sourceWriter.read(sink);
-//
-//                        sourceWriter.writeTo(filer);
-//                    } catch (IOException e) {
-//                        // ignore
-//                    }
+                } catch (IOException e) {
+                    error("Error writing: %s", e.getMessage());
+                    return true;
                 }
+
+                // TODO: find a way to filter out these classes from jar (make provided)
+//                try {
+//                    Buffer sink = new Buffer();
+//                    kind.writeMethods(sink, classList);
+//
+//                    SourceWriter sourceWriter = kind.sourceWriter();
+//                    sourceWriter.read(sink);
+//
+//                    sourceWriter.writeTo(filer);
+//                } catch (IOException e) {
+//                    // ignore
+//                }
             }
         }
 

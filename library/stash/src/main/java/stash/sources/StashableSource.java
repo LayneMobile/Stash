@@ -28,7 +28,18 @@ public interface StashableSource<T, P extends StashableParams<?>> extends
         Source<T, P>,
         StashableProcessor<T, P> {
 
-    class Transformer<T, P extends StashableParams<?>> implements Processor.Interceptor.Transformer<StashableSource<T, P>, RequestProcessor.Interceptor<T, P>> {
+    final class Transformer<T, P extends StashableParams<?>>
+            implements Processor.Interceptor.Transformer<StashableSource<T, P>, RequestProcessor.Interceptor<T, P>> {
+
+        private static final Transformer<Object, StashableParams<?>> INSTANCE = new Transformer<>();
+
+        private Transformer() {}
+
+        @SuppressWarnings("unchecked")
+        public static <T, P extends StashableParams<?>> Transformer<T, P> instance() {
+            return (Transformer<T, P>) INSTANCE;
+        }
+
         @Override public RequestProcessor.Interceptor<T, P> call(final StashableSource<T, P> source) {
             return new RequestProcessor.Interceptor<T, P>() {
                 @Override public Request<T> intercept(Processor.Interceptor.Chain<P, Request<T>> chain) {
