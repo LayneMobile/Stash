@@ -19,6 +19,7 @@ apply plugin: 'provided-base'
 
 dependencies {
     provided "io.reactivex:rxjava:${appRxJavaVersion}"
+    compile "com.laynemobile.sourcerer:core:${appSourcererVersion}"
 }
 
 apply from: "${rootDir}/gradle/groovyArtifacts.gradle"

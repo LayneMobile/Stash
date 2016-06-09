@@ -17,8 +17,7 @@
 apply plugin: 'groovy'
 
 dependencies {
-    compile 'com.google.auto.service:auto-service:1.0-rc2'
-    compile project(':stash-extension-model')
+    compile "com.laynemobile.sourcerer:sourcerer:${appSourcererVersion}"
     compile project(':stash-compiler')
 }
 

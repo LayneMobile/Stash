@@ -20,6 +20,7 @@ buildscript {
     repositories {
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
+        maven { url 'http://dl.bintray.com/laynemobile/maven' }
         maven { url 'http://dl.bintray.com/laynemobile/stash' }
     }
     dependencies {

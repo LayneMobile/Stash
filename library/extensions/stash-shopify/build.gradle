@@ -27,4 +27,4 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.7.0'
 }
 
-//apply from: 'https://raw.github.com/LayneMobile/gradle-publish/master/android-artifacts.gradle'
+apply from: 'https://raw.githubusercontent.com/LayneMobile/gradle-publish/master/android-artifacts.gradle'

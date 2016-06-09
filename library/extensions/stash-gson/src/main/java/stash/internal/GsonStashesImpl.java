@@ -22,12 +22,12 @@ import android.support.annotation.NonNull;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
+import sourcerer.InstanceMethod;
+import sourcerer.ReturnMethod;
 import stash.Stash;
 import stash.StashCollection;
 import stash.StashDb;
 import stash.StashKey;
-import stash.annotations.InstanceMethod;
-import stash.annotations.ReturnMethod;
 import stash.annotations.Stashes;
 import stash.stashdbs.FileDb;
 import stash.stashdbs.GsonDb;

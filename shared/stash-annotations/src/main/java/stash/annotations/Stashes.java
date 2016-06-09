@@ -22,8 +22,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import sourcerer.Extension;
+import sourcerer.Source;
+
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 @Target({ElementType.TYPE})
-public @interface Stashes {
-}
+@Extension(
+        kind = Source.Kind.StaticDelegate,
+        packageName = "stash",
+        className = "Stashes"
+)
+public @interface Stashes {}

@@ -17,7 +17,7 @@
 apply from: "${rootDir}/gradle/plugin.gradle"
 
 dependencies {
-    compile project(':stash-extension-model')
+//    compile project(':stash-extension-model')
 }
 
 apply from: "${rootDir}/gradle/groovyArtifacts.gradle"

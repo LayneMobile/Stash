@@ -18,11 +18,11 @@ package stash.internal;
 
 import android.support.annotation.NonNull;
 
+import sourcerer.InstanceMethod;
+import sourcerer.ReturnMethod;
 import stash.Stash;
 import stash.StashCollection;
 import stash.StashKey;
-import stash.annotations.InstanceMethod;
-import stash.annotations.ReturnMethod;
 import stash.annotations.Stashes;
 import stash.stashdbs.MemDb;
 

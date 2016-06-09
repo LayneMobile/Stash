@@ -20,9 +20,9 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import stash.annotations.InstanceMethod;
+import sourcerer.InstanceMethod;
+import sourcerer.ReturnThisMethod;
 import stash.annotations.Module;
-import stash.annotations.ReturnThisMethod;
 import stash.internal.GsonStashModuleImpl;
 import stash.plugins.GsonDbHook;
 import stash.shopify.plugins.ShopifyConfig;

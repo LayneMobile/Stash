@@ -20,9 +20,10 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import stash.annotations.InstanceMethod;
+import sourcerer.InstanceMethod;
+import sourcerer.ReturnMethod;
+import sourcerer.ReturnThisMethod;
 import stash.annotations.Module;
-import stash.annotations.ReturnThisMethod;
 import stash.retrofit.plugins.RetrofitHook;
 
 @Module
@@ -44,7 +45,7 @@ public final class RetrofitStashModule {
         }
     }
 
-    public RetrofitHook getRetrofitHook() {
+    @ReturnMethod public RetrofitHook getRetrofitHook() {
         if (hook.get() == null) {
             hook.compareAndSet(null, RetrofitHook.getDefaultInstance());
         }
