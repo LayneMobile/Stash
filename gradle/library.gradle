@@ -45,7 +45,8 @@ project.android {
 
 dependencies {
     provided project(':stash-annotations')
+    apt "com.laynemobile.sourcerer:sourcerer:${appSourcererVersion}"
     // TODO: hack because if not already built, doesn't work
-    provided project(':stash-extension-processor')
-    apt project(':stash-extension-processor')
+    provided project(':stash-compiler')
+    apt project(':stash-compiler')
 }
