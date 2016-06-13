@@ -20,9 +20,8 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import sourcerer.InstanceMethod;
-import sourcerer.ReturnMethod;
-import sourcerer.ReturnThisMethod;
+import sourcerer.ExtensionMethod;
+import sourcerer.ExtensionMethod.Kind;
 import stash.annotations.Module;
 import stash.retrofit.plugins.RetrofitHook;
 
@@ -34,18 +33,18 @@ public final class RetrofitStashModule {
 
     private RetrofitStashModule() {}
 
-    @InstanceMethod public static RetrofitStashModule instance() {
+    @ExtensionMethod(Kind.Instance) public static RetrofitStashModule instance() {
         return INSTANCE;
     }
 
-    @ReturnThisMethod public void registerRetrofitHook(@NonNull RetrofitHook hook) {
+    @ExtensionMethod(Kind.ReturnThis) public void registerRetrofitHook(@NonNull RetrofitHook hook) {
         if (!this.hook.compareAndSet(null, hook)) {
             throw new IllegalStateException(
                     "Another strategy was already registered: " + this.hook.get());
         }
     }
 
-    @ReturnMethod public RetrofitHook getRetrofitHook() {
+    @ExtensionMethod(Kind.Return) public RetrofitHook getRetrofitHook() {
         if (hook.get() == null) {
             hook.compareAndSet(null, RetrofitHook.getDefaultInstance());
         }

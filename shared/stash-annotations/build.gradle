@@ -19,7 +19,7 @@ apply plugin: 'provided-base'
 
 dependencies {
     provided project(':stash-core')
-    compile "com.laynemobile.sourcerer:annotations:${appSourcererVersion}"
+    compile "com.laynemobile.sourcerer:extensions-annotations:${appSourcererVersion}"
 }
 
 apply from: "${rootDir}/gradle/groovyArtifacts.gradle"

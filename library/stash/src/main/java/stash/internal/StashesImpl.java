@@ -18,8 +18,8 @@ package stash.internal;
 
 import android.support.annotation.NonNull;
 
-import sourcerer.InstanceMethod;
-import sourcerer.ReturnMethod;
+import sourcerer.ExtensionMethod;
+import sourcerer.ExtensionMethod.Kind;
 import stash.Stash;
 import stash.StashCollection;
 import stash.StashKey;
@@ -40,19 +40,20 @@ public final class StashesImpl {
         this.memDb = mem;
     }
 
-    @InstanceMethod @NonNull public static StashesImpl getInstance() {
+    @ExtensionMethod(Kind.Instance) @NonNull public static StashesImpl getInstance() {
         return INSTANCE;
     }
 
-    @ReturnMethod @NonNull public MemDb memDb() {
+    @ExtensionMethod(Kind.Return) @NonNull public MemDb memDb() {
         return memDb;
     }
 
-    @ReturnMethod @NonNull public <T> StashCollection<Object, T> memCollection(@NonNull Class<T> type) {
+    @ExtensionMethod(Kind.Return) @NonNull public <T> StashCollection<Object, T> memCollection(@NonNull Class<T> type) {
         return memDb.getStashCollection(type);
     }
 
-    @ReturnMethod @NonNull public <T> Stash<T> mem(@NonNull Class<T> type, @NonNull StashKey<?> stashKey) {
+    @ExtensionMethod(Kind.Return) @NonNull
+    public <T> Stash<T> mem(@NonNull Class<T> type, @NonNull StashKey<?> stashKey) {
         return memDb.getStash(type, stashKey);
     }
 }

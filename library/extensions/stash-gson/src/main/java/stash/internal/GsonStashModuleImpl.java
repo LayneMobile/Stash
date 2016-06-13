@@ -20,9 +20,8 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import sourcerer.InstanceMethod;
-import sourcerer.ReturnMethod;
-import sourcerer.ReturnThisMethod;
+import sourcerer.ExtensionMethod;
+import sourcerer.ExtensionMethod.Kind;
 import stash.annotations.Module;
 import stash.plugins.GsonDbHook;
 
@@ -34,11 +33,11 @@ public final class GsonStashModuleImpl {
 
     private GsonStashModuleImpl() {}
 
-    @InstanceMethod public static GsonStashModuleImpl getInstance() {
+    @ExtensionMethod(Kind.Instance) public static GsonStashModuleImpl getInstance() {
         return INSTANCE;
     }
 
-    @ReturnMethod @NonNull public GsonDbHook getGsonDbHook() {
+    @ExtensionMethod(Kind.Return) @NonNull public GsonDbHook getGsonDbHook() {
         if (gsonDbHook.get() == null) {
             gsonDbHook.compareAndSet(null, GsonDbHook.getDefaultInstance());
             // we don't return from here but call get() again in case of thread-race so the winner will always get returned
@@ -46,7 +45,7 @@ public final class GsonStashModuleImpl {
         return gsonDbHook.get();
     }
 
-    @ReturnThisMethod public void registerGsonDbHook(@NonNull GsonDbHook hook) {
+    @ExtensionMethod(Kind.ReturnThis) public void registerGsonDbHook(@NonNull GsonDbHook hook) {
         if (!gsonDbHook.compareAndSet(null, hook)) {
             throw new IllegalStateException(
                     "Another strategy was already registered: " + gsonDbHook.get());
