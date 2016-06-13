@@ -74,8 +74,6 @@ public final class ServiceScheduler extends Scheduler {
      *         the execution scheduler
      *
      * @return the ServiceScheduler
-     *
-     * @see {@link #create(Context, Class, Scheduler, long, TimeUnit)}
      */
     public static ServiceScheduler create(Context context, Class<? extends Service> serviceClass, Scheduler scheduler) {
         return create(context, serviceClass, scheduler, DEFAULT_STOP_DELAY_TIME, DEFAULT_STOP_DELAY_UNIT);
