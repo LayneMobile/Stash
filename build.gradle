@@ -21,6 +21,8 @@ buildscript {
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
         maven { url 'http://dl.bintray.com/laynemobile/stash' }
+        maven { url 'http://dl.bintray.com/laynemobile/sourcerer' }
+        mavenLocal()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${appAndroidGradleVersion}"
@@ -28,9 +30,7 @@ buildscript {
         classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:2.2.2'
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${appBintrayGradlePlugin}"
         classpath "com.github.dcendents:android-maven-gradle-plugin:${appAndroidMavenGradleVersion}"
-        if (!Build.isPublish(project)) {
-            classpath "${GROUP}:stash-plugin:${appStashSamplePluginGradleVersion}"
-        }
+        classpath "com.laynemobile.sourcerer:extensions-plugin:${appSourcererVersion}"
     }
 }
 
@@ -44,9 +44,11 @@ subprojects {
         maven { url 'https://maven.fabric.io/public' }
         maven { url 'http://dl.bintray.com/laynemobile/maven' }
         maven { url 'http://dl.bintray.com/laynemobile/stash' }
+        maven { url 'http://dl.bintray.com/laynemobile/sourcerer' }
         flatDir {
             dirs "${project.rootDir}/libs"
         }
+        mavenLocal()
     }
 
     configurations {

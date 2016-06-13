@@ -22,8 +22,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import sourcerer.ExtensionClass;
+
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 @Target({ElementType.TYPE})
-public @interface Module {
-}
+@ExtensionClass(
+        kind = ExtensionClass.Kind.InstanceDelegate,
+        packageName = "stash",
+        className = "StashModule"
+)
+public @interface Module {}
