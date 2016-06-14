@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-import stash.Build
-
 buildscript {
     repositories {
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
+        mavenLocal()
         maven { url 'http://dl.bintray.com/laynemobile/stash' }
         maven { url 'http://dl.bintray.com/laynemobile/sourcerer' }
-        mavenLocal()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${appAndroidGradleVersion}"
@@ -42,13 +40,13 @@ subprojects {
     repositories {
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
+        mavenLocal()
         maven { url 'http://dl.bintray.com/laynemobile/maven' }
         maven { url 'http://dl.bintray.com/laynemobile/stash' }
         maven { url 'http://dl.bintray.com/laynemobile/sourcerer' }
         flatDir {
             dirs "${project.rootDir}/libs"
         }
-        mavenLocal()
     }
 
     configurations {
