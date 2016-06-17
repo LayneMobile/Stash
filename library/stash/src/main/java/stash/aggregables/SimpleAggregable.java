@@ -16,7 +16,6 @@
 
 package stash.aggregables;
 
-
 import android.support.annotation.NonNull;
 
 import stash.Aggregable;

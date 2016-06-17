@@ -25,23 +25,24 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Collections;
+import java.util.List;
+
 import stash.StashPolicy;
 import stash.exceptions.StashBaseException;
 import stash.internal.StashLog;
 import stash.samples.hockeyloader.R;
-import stash.samples.hockeyloader.network.api.Api;
 import stash.samples.hockeyloader.network.api.AppsApi;
 import stash.samples.hockeyloader.network.model.App;
 import stash.samples.hockeyloader.network.model.Apps;
 import stash.samples.hockeyloader.network.model.Auth;
-
 
 public class MyAppsFragment extends ListFragment implements AdapterView.OnItemClickListener {
     private static final String TAG = MyAppsFragment.class.getSimpleName();
 
     private Adapter adapter;
     private Auth.Token token;
-    private Apps apps = new Apps();
+    private Apps apps;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class MyAppsFragment extends ListFragment implements AdapterView.OnItemCl
             swipey.setRefreshing(false);
             return;
         }
-        Api.Apps.getProgressRequest(params)
+        params.progressRequest()
                 .onMain(subscriptions())
                 .subscribe(new Subscriber());
     }
@@ -116,16 +117,19 @@ public class MyAppsFragment extends ListFragment implements AdapterView.OnItemCl
     }
 
     private class Adapter extends BaseAdapter {
+        List<App> _apps;
+
         @Override
         public int getCount() {
-            return apps.getApps()
-                    .size();
+            Apps a = apps;
+            List<App> list = a == null ? Collections.<App>emptyList() : a.getApps();
+            _apps = list;
+            return list.size();
         }
 
         @Override
         public App getItem(int position) {
-            return apps.getApps()
-                    .get(position);
+            return _apps.get(position);
         }
 
         @Override

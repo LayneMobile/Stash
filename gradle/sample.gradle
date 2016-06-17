@@ -14,9 +14,5 @@
  * limitations under the License.
  */
 
-import stash.Build
-
-apply plugin: 'com.android.application'
-if (!Build.isPublish(project)) {
-    apply plugin: 'stash'
-}
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'sourcerer-android'

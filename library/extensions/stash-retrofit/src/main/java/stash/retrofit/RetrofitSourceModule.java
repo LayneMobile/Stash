@@ -27,9 +27,9 @@ import rx.functions.Func1;
 import rx.functions.Func2;
 import stash.Params;
 import stash.SourceModulesBuilder;
+import stash.sources.builder.SourceHandler;
 import stash.sources.modules.NetworkSourceModule;
 import stash.sources.modules.SourceModule;
-import stash.sources.builder.SourceHandlerModule;
 import stash.util.NetworkChecker;
 
 @stash.annotations.SourceModule(value = RetrofitSource.class, simple = false)
@@ -67,7 +67,7 @@ public final class RetrofitSourceModule<T, P extends Params, S> extends SourceMo
         return this;
     }
 
-    @NonNull @Override public SourceHandlerModule[] buildModules() {
+    @NonNull @Override public SourceHandler[] buildModules() {
         return getBuilder().buildModules();
     }
 
@@ -102,8 +102,8 @@ public final class RetrofitSourceModule<T, P extends Params, S> extends SourceMo
             sourceInternal(sourceModule, retrofittable, func);
         }
 
-        @NonNull private SourceHandlerModule[] buildModules() {
-            return new SourceHandlerModule[]{
+        @NonNull private SourceHandler[] buildModules() {
+            return new SourceHandler[]{
                     sourceModule.build(),
                     networkModule.build()
             };

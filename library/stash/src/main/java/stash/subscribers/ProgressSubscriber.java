@@ -16,7 +16,6 @@
 
 package stash.subscribers;
 
-
 import android.support.annotation.NonNull;
 
 import rx.Subscriber;
@@ -42,14 +41,16 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<Progress<T>> 
     /**
      * Called when the request progress status is updated.
      *
-     * @param status the current progress status
+     * @param status
+     *         the current progress status
      */
     protected abstract void onNextStatus(Progress.Status status);
 
     /**
      * Called when the request has new data.
      *
-     * @param t the data
+     * @param t
+     *         the data
      */
     protected abstract void onNextData(T t);
 

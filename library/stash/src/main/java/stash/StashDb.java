@@ -16,7 +16,6 @@
 
 package stash;
 
-
 import android.support.annotation.NonNull;
 
 import java.util.Collection;

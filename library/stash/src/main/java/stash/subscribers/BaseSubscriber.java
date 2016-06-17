@@ -45,7 +45,8 @@ public abstract class BaseSubscriber<T> extends NotifyingSubscriber<T> {
     /**
      * Called when there is new data. May be called more than once depending on the observable implementation.
      *
-     * @param t the data
+     * @param t
+     *         the data
      */
     @Override
     public abstract void onNext(T t);
@@ -53,7 +54,8 @@ public abstract class BaseSubscriber<T> extends NotifyingSubscriber<T> {
     /**
      * Called when there is an error.
      *
-     * @param e the wrapped exception that occurred
+     * @param e
+     *         the wrapped exception that occurred
      */
     protected abstract void onError(StashBaseException e);
 
@@ -61,7 +63,8 @@ public abstract class BaseSubscriber<T> extends NotifyingSubscriber<T> {
      * Called when either {@link #onCompleted()}, {@link #onError(Throwable)} or {@link #onUnsubscribe()} is called.
      * Will only be called once. Use this method to dismiss dialogs, etc.
      *
-     * @param complete true if the observable completed, false if unsubscribe() was called before completing
+     * @param complete
+     *         true if the observable completed, false if unsubscribe() was called before completing
      */
     protected void onFinished(boolean complete) {
         calledSuper = true;

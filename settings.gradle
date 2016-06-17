@@ -16,32 +16,18 @@
 
 include ':stash-annotations',
         ':stash-core',
-        ':stash-extension-model',
-        ':stash-extension-processor',
-        ':stash-plugin',
         ':stash-compiler',
         ':stash',
         ':stash-gson',
         ':stash-shopify',
         ':stash-retrofit',
         ':hockeyloader',
+        ':hockeyloader-core',
         ':shopify'
 
 // Annotations dir
 project(':stash-annotations')
         .setProjectDir(file('shared/stash-annotations'))
-
-// Extensions model dir
-project(':stash-extension-model')
-        .setProjectDir(file('shared/stash-extension-model'))
-
-// Extensions processor dir
-project(':stash-extension-processor')
-        .setProjectDir(file('library/extensions/stash-extension-processor'))
-
-// Plugin dir
-project(':stash-plugin')
-        .setProjectDir(file('plugin/stash-plugin'))
 
 // Core dir
 project(':stash-core')
@@ -70,6 +56,8 @@ project(':stash-retrofit')
 // Samples dirs
 project(':hockeyloader')
         .setProjectDir(file('samples/hockeyloader'))
+project(':hockeyloader-core')
+        .setProjectDir(file('samples/hockeyloader-core'))
 project(':shopify')
         .setProjectDir(file('samples/shopify'))
 

@@ -21,7 +21,6 @@ import android.support.annotation.Nullable;
 
 import stash.Params;
 
-
 public interface ContextParams extends Params {
     @Nullable Context getContext();
 }

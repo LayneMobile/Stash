@@ -66,11 +66,14 @@ public final class ServiceScheduler extends Scheduler {
     /**
      * Creates a ServiceScheduler that runs a specified service while tasks are executing.
      *
-     * @param context      any context
-     * @param serviceClass the service class to run
-     * @param scheduler    the execution scheduler
+     * @param context
+     *         any context
+     * @param serviceClass
+     *         the service class to run
+     * @param scheduler
+     *         the execution scheduler
+     *
      * @return the ServiceScheduler
-     * @see {@link #create(Context, Class, Scheduler, long, TimeUnit)}
      */
     public static ServiceScheduler create(Context context, Class<? extends Service> serviceClass, Scheduler scheduler) {
         return create(context, serviceClass, scheduler, DEFAULT_STOP_DELAY_TIME, DEFAULT_STOP_DELAY_UNIT);
@@ -79,11 +82,17 @@ public final class ServiceScheduler extends Scheduler {
     /**
      * Creates a ServiceScheduler that runs a specified service while tasks are executing.
      *
-     * @param context       any context
-     * @param serviceClass  the service class to run
-     * @param scheduler     the execution scheduler
-     * @param stopDelayTime the time to wait after all work is done before stopping the service
-     * @param stopDelayUnit the unit for the stopDelayTime
+     * @param context
+     *         any context
+     * @param serviceClass
+     *         the service class to run
+     * @param scheduler
+     *         the execution scheduler
+     * @param stopDelayTime
+     *         the time to wait after all work is done before stopping the service
+     * @param stopDelayUnit
+     *         the unit for the stopDelayTime
+     *
      * @return the ServiceScheduler
      */
     public static ServiceScheduler create(Context context, Class<? extends Service> serviceClass, Scheduler scheduler,
@@ -212,15 +221,14 @@ public final class ServiceScheduler extends Scheduler {
 
         @Override
         public void call() {
-            if (isUnsubscribed()) {
+            if (isUnsubscribed() || !incrementAction()) {
                 return;
             }
-            incrementAction();
             try {
                 actual.call();
             } finally {
-                unsubscribe();
                 decrementAction();
+                unsubscribe();
             }
         }
 
@@ -237,14 +245,16 @@ public final class ServiceScheduler extends Scheduler {
             }
         }
 
-        private void incrementAction() {
+        private boolean incrementAction() {
             if (CALLED_UPDATER.compareAndSet(this, 0, 1)) {
                 worker.incrementAction();
+                return true;
             }
+            return false;
         }
 
         private void decrementAction() {
-            if (CALLED_UPDATER.compareAndSet(this, 1, 2)) {
+            if (CALLED_UPDATER.getAndSet(this, 2) == 1) {
                 worker.decrementAction();
             }
         }

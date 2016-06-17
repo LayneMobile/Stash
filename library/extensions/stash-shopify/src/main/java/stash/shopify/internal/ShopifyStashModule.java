@@ -20,14 +20,17 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import stash.annotations.InstanceMethod;
+import sourcerer.ExtensionMethod;
 import stash.annotations.Module;
-import stash.annotations.ReturnThisMethod;
 import stash.internal.GsonStashModuleImpl;
 import stash.plugins.GsonDbHook;
 import stash.shopify.plugins.ShopifyConfig;
 import stash.shopify.plugins.ShopifyHook;
 import stash.stashdbs.GsonDb;
+
+import static sourcerer.ExtensionMethod.Kind.Instance;
+import static sourcerer.ExtensionMethod.Kind.Return;
+import static sourcerer.ExtensionMethod.Kind.ReturnThis;
 
 @Module
 public final class ShopifyStashModule {
@@ -37,11 +40,11 @@ public final class ShopifyStashModule {
 
     private ShopifyStashModule() {}
 
-    @InstanceMethod public static ShopifyStashModule instance() {
+    @ExtensionMethod(Instance) public static ShopifyStashModule instance() {
         return INSTANCE;
     }
 
-    @ReturnThisMethod public void registerShopifyHook(@NonNull ShopifyHook hook) {
+    @ExtensionMethod(ReturnThis) public void registerShopifyHook(@NonNull ShopifyHook hook) {
         if (!config.compareAndSet(null, hook.getShopifyConfig())) {
             throw new IllegalStateException("hook already registered");
         }
@@ -55,7 +58,7 @@ public final class ShopifyStashModule {
         }
     }
 
-    @NonNull public ShopifyConfig getShopifyConfig() {
+    @ExtensionMethod(Return) @NonNull public ShopifyConfig getShopifyConfig() {
         ShopifyConfig config = this.config.get();
         if (config == null) {
             throw new IllegalStateException("must register shopify config");

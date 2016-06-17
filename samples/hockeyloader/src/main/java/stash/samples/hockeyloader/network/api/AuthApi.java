@@ -16,8 +16,9 @@
 
 package stash.samples.hockeyloader.network.api;
 
-
 import android.support.annotation.NonNull;
+
+import org.immutables.value.Value;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,17 +27,21 @@ import retrofit.http.Header;
 import rx.functions.Func1;
 import rx.functions.Func2;
 import stash.Aggregable;
+import stash.Progress;
+import stash.Request;
+import stash.Stash;
 import stash.StashPolicy;
 import stash.Stashable;
+import stash.StashableApi;
 import stash.Stashes;
 import stash.aggregables.SimpleAggregable;
-import stash.StashableApi;
 import stash.params.NetworkParams;
 import stash.params.StashableParams;
 import stash.retrofit.RetrofitStashableApiBuilder;
 import stash.samples.hockeyloader.network.model.Auth;
 import stash.samples.hockeyloader.network.util.NetworkUtils;
 
+@Value.Enclosing
 public final class AuthApi {
     private static final int MEM_SIZE = 1;
     private static final String PATH = "/auth_tokens";
@@ -56,7 +61,7 @@ public final class AuthApi {
             .serviceType(Service.class)
             .source(new Func2<Service, Params, Auth>() {
                 @Override public Auth call(Service service, Params params) {
-                    return service.getAuth(((SourceParams) params).auth);
+                    return service.getAuth(((SourceParams) params).auth());
                 }
             })
             .add()
@@ -73,7 +78,7 @@ public final class AuthApi {
                 @Override public Aggregable call(Params params) {
                     final String key;
                     if (params instanceof SourceParams) {
-                        key = ((SourceParams) params).auth;
+                        key = ((SourceParams) params).auth();
                     } else {
                         key = params.getKey();
                     }
@@ -82,92 +87,94 @@ public final class AuthApi {
             })
             .build();
 
-    interface Params extends StashableParams<String>, NetworkParams { }
+    interface Params extends StashableParams<String>, NetworkParams {
+        String username();
+    }
 
-    public static class StashParams implements Params {
-        final String key;
-
-        private StashParams(Builder builder) {
-            this.key = builder.username;
-        }
-
-        @NonNull @Override public StashPolicy getStashPolicy() {
+    @Value.Immutable
+    public static abstract class StashParams implements Params {
+        @NonNull @Override public final StashPolicy getStashPolicy() {
             return StashPolicy.STASH_ONLY_NO_SOURCE;
         }
 
+        @Value.Derived
         @Override public String getKey() {
-            return key;
+            return username();
         }
 
-        public static class Builder {
-            String username;
+        public Request<Auth> request() {
+            return INSTANCE.getRequest(this);
+        }
 
-            public Builder setUsername(String username) {
-                this.username = username;
-                return this;
+        public Request<Progress<Auth>> progressRequest() {
+            return INSTANCE.getProgressRequest(this);
+        }
+
+        public Stash<Auth> stash() {
+            return INSTANCE.getStash(this);
+        }
+
+        public SourceParams.Builder toSourceParams() {
+            return new SourceParams.Builder()
+                    .from(this);
+        }
+
+        public static final class Builder extends AuthApiImpl.StashParams.Builder {
+            public Request<Auth> request() {
+                return build().request();
             }
 
-            public StashParams build() {
-                verify();
-                return new StashParams(this);
+            public Request<Progress<Auth>> progressRequest() {
+                return build().progressRequest();
             }
 
-            private void verify() {
-                if (username == null) {
-                    throw new IllegalArgumentException(
-                            "username must not be null");
-                }
+            public Stash<Auth> stash() {
+                return build().stash();
             }
         }
     }
 
-    public static final class SourceParams extends StashParams {
-        private final StashPolicy stashPolicy;
-        private final String auth;
+    @Value.Immutable
+    public static abstract class SourceParams implements Params {
+        abstract String password();
 
-        private SourceParams(Builder builder) {
-            super(builder);
-            this.stashPolicy = builder.stashPolicy;
-            this.auth = NetworkUtils.toBasicAuthHeaderValue(builder.username, builder.password);
-        }
-
+        @Value.Default
         @NonNull @Override public StashPolicy getStashPolicy() {
-            return stashPolicy;
+            return StashPolicy.STASH_UNLESS_EXPIRED;
         }
 
-        public static final class Builder extends StashParams.Builder {
-            private String password;
-            private StashPolicy stashPolicy = StashPolicy.STASH_UNLESS_EXPIRED;
+        @Value.Derived
+        @Override public String getKey() {
+            return username();
+        }
 
-            public Builder setUsername(String username) {
-                super.setUsername(username);
-                return this;
+        @Value.Derived String auth() {
+            return NetworkUtils.toBasicAuthHeaderValue(username(), password());
+        }
+
+        public Request<Auth> request() {
+            return INSTANCE.getRequest(this);
+        }
+
+        public Request<Progress<Auth>> progressRequest() {
+            return INSTANCE.getProgressRequest(this);
+        }
+
+        public Stash<Auth> stash() {
+            return INSTANCE.getStash(this);
+        }
+
+        public static final class Builder extends AuthApiImpl.SourceParams.Builder {
+            public Request<Auth> request() {
+                return build().request();
             }
 
-            public Builder setPassword(String password) {
-                this.password = password;
-                return this;
+            public Request<Progress<Auth>> progressRequest() {
+                return build().progressRequest();
             }
 
-            public Builder setStashPolicy(StashPolicy stashPolicy) {
-                this.stashPolicy = stashPolicy;
-                return this;
-            }
-
-            public SourceParams build() {
-                verify();
-                return new SourceParams(this);
-            }
-
-            private void verify() {
-                super.verify();
-                if (password == null) {
-                    if (stashPolicy != StashPolicy.STASH_ONLY_NO_SOURCE) {
-                        throw new IllegalArgumentException(
-                                "password can only be null for stash-only request");
-                    }
-                    password = "";
-                }
+            public Stash<Auth> stash() {
+                return build().stash();
             }
         }
     }

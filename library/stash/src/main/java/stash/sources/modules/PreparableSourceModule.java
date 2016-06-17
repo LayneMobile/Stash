@@ -25,9 +25,9 @@ import rx.functions.Func2;
 import stash.Params;
 import stash.SourceModuleBuilder;
 import stash.sources.PreparableSource;
-import stash.sources.builder.MethodResult;
-import stash.sources.builder.SourceHandlerModule;
+import stash.sources.builder.SourceHandler;
 import stash.sources.builder.SourceMethodHandler;
+import stash.types.MethodResult;
 
 @stash.annotations.SourceModule(PreparableSource.class)
 public final class PreparableSourceModule<T, P extends Params> implements SourceModuleBuilder {
@@ -38,8 +38,8 @@ public final class PreparableSourceModule<T, P extends Params> implements Source
         return this;
     }
 
-    @NonNull @Override public SourceHandlerModule build() {
-        return new SourceHandlerModule.Builder(PreparableSource.class)
+    @NonNull @Override public SourceHandler build() {
+        return new SourceHandler.Builder(PreparableSource.class)
                 .handle("prepareSourceRequest", new Handler<T, P>(func))
                 .build();
     }

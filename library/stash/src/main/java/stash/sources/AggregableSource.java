@@ -16,7 +16,6 @@
 
 package stash.sources;
 
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 

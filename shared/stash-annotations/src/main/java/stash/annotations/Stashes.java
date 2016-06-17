@@ -16,15 +16,20 @@
 
 package stash.annotations;
 
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import sourcerer.ExtensionClass;
+
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 @Target({ElementType.TYPE})
-public @interface Stashes {
-}
+@ExtensionClass(
+        kind = ExtensionClass.Kind.StaticDelegate,
+        packageName = "stash",
+        className = "Stashes"
+)
+public @interface Stashes {}

@@ -19,7 +19,6 @@ package stash.samples.hockeyloader.plugin;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.File;
 
@@ -33,16 +32,11 @@ public class GsonHook extends GsonDbHook {
     private static final int SIZE = 10 * 1024 * 1024; // 10 MB
 
     private final Context mContext;
+    private final Gson mGson;
 
-    public GsonHook(Context context) {
+    public GsonHook(Context context, Gson gson) {
         this.mContext = context.getApplicationContext();
-    }
-
-    private static Gson gson() {
-        // TODO: customize Gson as needed
-        return new GsonBuilder()
-                .disableHtmlEscaping()
-                .create();
+        this.mGson = gson;
     }
 
     private static File cacheDir(Context context) {
@@ -51,6 +45,6 @@ public class GsonHook extends GsonDbHook {
 
     @Override
     public GsonDb.Config getGsonConfig() {
-        return new GsonDb.Config(gson(), cacheDir(mContext), VERSION, SIZE);
+        return new GsonDb.Config(mGson, cacheDir(mContext), VERSION, SIZE);
     }
 }

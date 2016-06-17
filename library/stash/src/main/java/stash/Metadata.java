@@ -35,7 +35,6 @@ public interface Metadata {
         private long lastUpdated = System.currentTimeMillis();
         private List<String> data;
 
-
         public Builder setLastUpdated(long lastUpdated) {
             called = true;
             this.lastUpdated = lastUpdated;

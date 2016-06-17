@@ -16,7 +16,6 @@
 
 package stash.internal;
 
-
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -24,10 +23,9 @@ import android.support.annotation.Nullable;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import stash.annotations.InstanceMethod;
+import sourcerer.ExtensionMethod;
+import sourcerer.ExtensionMethod.Kind;
 import stash.annotations.Module;
-import stash.annotations.ReturnMethod;
-import stash.annotations.ReturnThisMethod;
 import stash.plugins.MemDbHook;
 import stash.plugins.StashSchedulersHook;
 import stash.util.Logger;
@@ -42,11 +40,11 @@ public class StashModuleImpl {
 
     private StashModuleImpl() {}
 
-    @InstanceMethod @NonNull public static StashModuleImpl getInstance() {
+    @ExtensionMethod(Kind.Instance) @NonNull public static StashModuleImpl getInstance() {
         return INSTANCE;
     }
 
-    @ReturnThisMethod @NonNull public StashModuleImpl init(@NonNull Context context) {
+    @ExtensionMethod(Kind.ReturnThis) @NonNull public StashModuleImpl init(@NonNull Context context) {
         if (this.context == null) {
             if (context instanceof Application) {
                 this.context = context;
@@ -57,16 +55,17 @@ public class StashModuleImpl {
         return this;
     }
 
-    @ReturnMethod @Nullable public Context getContext() {
+    @ExtensionMethod(Kind.Return) @Nullable public Context getContext() {
         return context;
     }
 
-    @ReturnThisMethod @NonNull public StashModuleImpl setLogger(@NonNull Logger logger) {
+    @ExtensionMethod(Kind.ReturnThis) @NonNull
+    public StashModuleImpl setLogger(@NonNull Logger logger) {
         StashLog.setLogger(logger);
         return this;
     }
 
-    @ReturnMethod @NonNull public StashSchedulersHook getSchedulersHook() {
+    @ExtensionMethod(Kind.Return) @NonNull public StashSchedulersHook getSchedulersHook() {
         StashSchedulersHook hook = schedulersHook.get();
         if (hook == null) {
             schedulersHook.compareAndSet(null, StashSchedulersHook.getDefaultInstance());
@@ -75,7 +74,8 @@ public class StashModuleImpl {
         return hook;
     }
 
-    @ReturnThisMethod @NonNull public StashModuleImpl registerSchedulersHook(@NonNull StashSchedulersHook hook) {
+    @ExtensionMethod(Kind.ReturnThis) @NonNull
+    public StashModuleImpl registerSchedulersHook(@NonNull StashSchedulersHook hook) {
         if (!schedulersHook.compareAndSet(null, hook)) {
             throw new IllegalStateException(
                     "Another strategy was already registered: " + schedulersHook.get());
@@ -83,7 +83,7 @@ public class StashModuleImpl {
         return this;
     }
 
-    @ReturnMethod @NonNull public MemDbHook getMemDbHook() {
+    @ExtensionMethod(Kind.Return) @NonNull public MemDbHook getMemDbHook() {
         MemDbHook hook = memSourceHook.get();
         if (hook == null) {
             memSourceHook.compareAndSet(null, MemDbHook.getDefaultInstance());
@@ -92,7 +92,7 @@ public class StashModuleImpl {
         return hook;
     }
 
-    @ReturnThisMethod @NonNull public StashModuleImpl registerMemDbHook(@NonNull MemDbHook hook) {
+    @ExtensionMethod(Kind.ReturnThis) @NonNull public StashModuleImpl registerMemDbHook(@NonNull MemDbHook hook) {
         if (!memSourceHook.compareAndSet(null, hook)) {
             throw new IllegalArgumentException(
                     "Another strategy was already registered: " + memSourceHook.get());

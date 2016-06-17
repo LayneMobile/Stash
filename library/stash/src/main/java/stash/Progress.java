@@ -16,7 +16,6 @@
 
 package stash;
 
-
 public final class Progress<T> {
     private final Status status;
     private final T data;

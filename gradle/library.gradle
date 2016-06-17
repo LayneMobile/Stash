@@ -23,8 +23,8 @@ project.android {
     buildToolsVersion appBuildToolsVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_6
-        targetCompatibility JavaVersion.VERSION_1_6
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 
     defaultConfig {
@@ -44,8 +44,9 @@ project.android {
 }
 
 dependencies {
-    provided project(':stash-annotations')
+    compile project(':stash-annotations')
+    apt "com.laynemobile.sourcerer:extensions-processor:${appSourcererVersion}"
     // TODO: hack because if not already built, doesn't work
-    provided project(':stash-extension-processor')
-    apt project(':stash-extension-processor')
+    provided project(':stash-compiler')
+    apt project(':stash-compiler')
 }

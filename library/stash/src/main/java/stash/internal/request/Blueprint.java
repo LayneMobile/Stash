@@ -16,7 +16,6 @@
 
 package stash.internal.request;
 
-
 class Blueprint<T> {
     final StashRunner<T> stashRunner;
     final Steps steps;

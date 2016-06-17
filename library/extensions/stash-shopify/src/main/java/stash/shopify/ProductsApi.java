@@ -16,7 +16,6 @@
 
 package stash.shopify;
 
-
 import java.util.concurrent.TimeUnit;
 
 import rx.functions.Func1;

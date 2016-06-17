@@ -26,7 +26,6 @@ import stash.Progress;
 import stash.Source;
 import stash.SourceProcessor;
 
-
 class SourceProgressProcessor<T, P extends Params> {
     private final Observable<Progress<T>> callingSource = Observable.just(Progress.<T>callingSource());
     private final Func1<T, Progress<T>> map = new Func1<T, Progress<T>>() {
@@ -86,5 +85,5 @@ class SourceProgressProcessor<T, P extends Params> {
         return Observable.concat(callingSource, observable);
     }
 
-    interface ConcatFunction<T> extends Func1<Progress<T>, Observable<? extends Progress<T>>> { }
+    interface ConcatFunction<T> extends Func1<Progress<T>, Observable<? extends Progress<T>>> {}
 }

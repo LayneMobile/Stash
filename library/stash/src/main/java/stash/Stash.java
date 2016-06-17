@@ -16,7 +16,6 @@
 
 package stash;
 
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -29,7 +28,6 @@ import stash.internal.Util;
 import stash.internal.stash.CombineTransformer;
 import stash.predicates.EntryPredicate;
 import stash.util.Result;
-
 
 public class Stash<T> {
     private static final Stash EMPTY = Stash.create(new EmptyWorker());
@@ -196,7 +194,7 @@ public class Stash<T> {
         @NonNull Observable<Boolean> remove();
     }
 
-    public interface Transformer<T, R> extends Func1<StashWorker<T>, ObservableWorker<R>> { }
+    public interface Transformer<T, R> extends Func1<StashWorker<T>, ObservableWorker<R>> {}
 
     public static final class StashWorker<T> {
         private final ObservableWorker<T> worker;

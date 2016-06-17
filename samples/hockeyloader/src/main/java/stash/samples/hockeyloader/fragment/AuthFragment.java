@@ -16,7 +16,6 @@
 
 package stash.samples.hockeyloader.fragment;
 
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -35,10 +34,8 @@ import rx.functions.Action1;
 import stash.StashPolicy;
 import stash.internal.StashLog;
 import stash.samples.hockeyloader.R;
-import stash.samples.hockeyloader.network.api.Api;
 import stash.samples.hockeyloader.network.api.AuthApi;
 import stash.samples.hockeyloader.network.model.Auth;
-
 
 public class AuthFragment extends HockeyFragment {
     private static final String TAG = AuthFragment.class.getSimpleName();
@@ -65,10 +62,10 @@ public class AuthFragment extends HockeyFragment {
         super.onCreate(savedInstanceState);
         final String lastUsername = Auth.getLastUsername(getActivity());
         if (lastUsername != null) {
-            AuthApi.StashParams params = new AuthApi.StashParams.Builder()
+            new AuthApi.StashParams.Builder()
                     .setUsername(lastUsername)
-                    .build();
-            Api.Auth.getRequest(params).onMain(subscriptions()).subscribe(new Action1<Auth>() {
+                    .request()
+                    .onMain(subscriptions()).subscribe(new Action1<Auth>() {
                 @Override public void call(Auth auth) {
                     if (auth != null) {
                         onSuccess(auth);
@@ -118,12 +115,11 @@ public class AuthFragment extends HockeyFragment {
                     "",
                     getString(R.string.Authenticating),
                     true);
-            AuthApi.SourceParams params = new AuthApi.SourceParams.Builder()
+            new AuthApi.SourceParams.Builder()
                     .setUsername(username)
                     .setPassword(password)
                     .setStashPolicy(StashPolicy.SOURCE)
-                    .build();
-            Api.Auth.getRequest(params).onMain(subscriptions()).subscribe(new Action1<Auth>() {
+                    .request().onMain(subscriptions()).subscribe(new Action1<Auth>() {
                 @Override
                 public void call(Auth o) {
                     if (o != null) {

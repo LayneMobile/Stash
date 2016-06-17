@@ -148,7 +148,6 @@ final class Util {
         return paramType(rawType, paramTypes.toArray(new TypeName[paramTypes.size()]));
     }
 
-
     static TypeName coallesceParamType(ClassName rawType, List<? extends TypeName> paramTypes,
             ContainerType containerType, Types typeUtils) {
         List<? extends TypeMirror> containerTypes = new ArrayList<>(containerType.parameterizedType.typeArguments);

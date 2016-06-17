@@ -16,7 +16,6 @@
 
 package stash.internal.request;
 
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 

@@ -22,12 +22,12 @@ import android.support.annotation.NonNull;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
+import sourcerer.ExtensionMethod;
+import sourcerer.ExtensionMethod.Kind;
 import stash.Stash;
 import stash.StashCollection;
 import stash.StashDb;
 import stash.StashKey;
-import stash.annotations.InstanceMethod;
-import stash.annotations.ReturnMethod;
 import stash.annotations.Stashes;
 import stash.stashdbs.FileDb;
 import stash.stashdbs.GsonDb;
@@ -41,11 +41,11 @@ public final class GsonStashesImpl {
 
     private GsonStashesImpl() {}
 
-    @InstanceMethod public static GsonStashesImpl getInstance() {
+    @ExtensionMethod(Kind.Instance) public static GsonStashesImpl getInstance() {
         return INSTANCE;
     }
 
-    @ReturnMethod @NonNull public StashDb<String> gsonDb() {
+    @ExtensionMethod(Kind.Return) @NonNull public StashDb<String> gsonDb() {
         FileDb gsonDb = this.gsonDb;
         if (gsonDb == null || gsonDb.isClosed()) {
             GsonDb.Config gsonConfig = getGsonConfig();
@@ -64,11 +64,13 @@ public final class GsonStashesImpl {
         return StashDb.create(gsonDb);
     }
 
-    @ReturnMethod @NonNull public <T> StashCollection<String, T> gsonCollection(@NonNull Class<T> type) {
+    @ExtensionMethod(Kind.Return) @NonNull
+    public <T> StashCollection<String, T> gsonCollection(@NonNull Class<T> type) {
         return gsonDb().getStashCollection(type);
     }
 
-    @ReturnMethod @NonNull public <T> Stash<T> gson(@NonNull Class<T> type, @NonNull StashKey<String> stashKey) {
+    @ExtensionMethod(Kind.Return) @NonNull
+    public <T> Stash<T> gson(@NonNull Class<T> type, @NonNull StashKey<String> stashKey) {
         return gsonDb().getStash(type, stashKey);
     }
 

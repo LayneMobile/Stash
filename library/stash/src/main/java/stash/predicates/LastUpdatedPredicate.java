@@ -16,7 +16,6 @@
 
 package stash.predicates;
 
-
 import android.support.annotation.NonNull;
 
 import stash.Metadata;

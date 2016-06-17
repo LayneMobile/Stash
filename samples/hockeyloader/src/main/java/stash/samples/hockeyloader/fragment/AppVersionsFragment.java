@@ -24,8 +24,12 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Collections;
+import java.util.List;
+
 import stash.StashPolicy;
 import stash.exceptions.StashBaseException;
+import stash.internal.StashLog;
 import stash.samples.hockeyloader.HockeyIntent;
 import stash.samples.hockeyloader.R;
 import stash.samples.hockeyloader.network.api.Api;
@@ -36,9 +40,11 @@ import stash.samples.hockeyloader.network.model.AppVersions;
 import stash.samples.hockeyloader.network.model.Auth;
 
 public class AppVersionsFragment extends ListFragment {
+    private static final String TAG = AppVersionsFragment.class.getSimpleName();
+
     private Auth.Token mToken;
     private App mApp;
-    private AppVersions mAppVersions = new AppVersions();
+    private AppVersions mAppVersions;
     private AppAdapter mAdapter;
 
     public static AppVersionsFragment newInstance(Auth.Token token, App app) {
@@ -75,7 +81,7 @@ public class AppVersionsFragment extends ListFragment {
                 .setApp(mApp)
                 .setStashPolicy(stashPolicy)
                 .build();
-        Api.AppVersions.getProgressRequest(params)
+        Api.appVersions().getProgressRequest(params)
                 .onMain(subscriptions())
                 .subscribe(new Subscriber());
     }
@@ -89,19 +95,25 @@ public class AppVersionsFragment extends ListFragment {
         }
 
         @Override protected void onError(StashBaseException e) {
+            StashLog.e(TAG, "error", e);
             Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
         }
     }
 
     private class AppAdapter extends BaseAdapter {
+        List<AppVersion> versions;
+
         @Override
         public int getCount() {
-            return mAppVersions.getAppVersions().size();
+            AppVersions appVersions = mAppVersions;
+            List<AppVersion> v = appVersions == null ? Collections.<AppVersion>emptyList() : appVersions.getAppVersions();
+            versions = v;
+            return v.size();
         }
 
         @Override
         public AppVersion getItem(int position) {
-            return mAppVersions.getAppVersions().get(position);
+            return versions.get(position);
         }
 
         @Override
