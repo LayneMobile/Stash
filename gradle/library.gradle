@@ -29,9 +29,6 @@ project.android {
 
     defaultConfig {
         minSdkVersion appMinSdkVersion as int
-        targetSdkVersion appTargetSdkVersion as int
-        versionCode VERSION_CODE as int
-        versionName VERSION_NAME
     }
 
     buildTypes {
@@ -49,4 +46,7 @@ dependencies {
     // TODO: hack because if not already built, doesn't work
     provided project(':stash-compiler')
     apt project(':stash-compiler')
+    // Immutables
+    apt "org.immutables:value:${appImmutablesVersion}"
+    provided "org.immutables:value:${appImmutablesVersion}:annotations"
 }

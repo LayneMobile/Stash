@@ -24,11 +24,13 @@ import java.lang.annotation.Target;
 
 import sourcerer.ExtensionClass;
 
+import static sourcerer.ExtensionClass.Kind.StaticDelegate;
+
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 @Target({ElementType.TYPE})
 @ExtensionClass(
-        kind = ExtensionClass.Kind.StaticDelegate,
+        kind = StaticDelegate,
         packageName = "stash",
         className = "Stashes"
 )
