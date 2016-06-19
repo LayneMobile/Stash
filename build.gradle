@@ -28,8 +28,6 @@ buildscript {
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
         mavenLocal()
-        maven { url 'http://dl.bintray.com/laynemobile/stash' }
-        maven { url 'http://dl.bintray.com/laynemobile/sourcerer' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${appGradleAndroidVersion}"
@@ -58,7 +56,6 @@ subprojects {
         maven { url 'https://maven.fabric.io/public' }
         mavenLocal()
         maven { url 'http://dl.bintray.com/laynemobile/maven' }
-        maven { url 'http://dl.bintray.com/laynemobile/stash' }
         flatDir {
             dirs "${project.rootDir}/libs"
         }
