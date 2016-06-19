@@ -16,6 +16,12 @@
 
 apply from: "${rootDir}/gradle/android-library.gradle"
 
+android {
+    lintOptions {
+        abortOnError false
+    }
+}
+
 dependencies {
     compile project(':stash-gson')
 
