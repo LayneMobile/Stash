@@ -23,8 +23,7 @@ public final class Build {
         List<String> taskNames = project.gradle.startParameter.taskNames
         def upload1 = 'bintrayUpload' as String
         def upload2 = ":${project.name}:bintrayUpload" as String
-        boolean isUpload = taskNames.contains(upload1) ||
-                taskNames.contains(upload2)
+        boolean isUpload = taskNames.contains(upload1) || taskNames.contains(upload2)
         println "project: ${project.name} isPublishProject? ${isUpload}"
         return isUpload
     }
