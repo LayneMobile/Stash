@@ -14,6 +14,15 @@
  * limitations under the License.
  */
 
+ext {
+    minSdkVersion = appMinSdkVersion as int
+    compileSdkVersion = appCompileSdkVersion as int
+    buildToolsVersion = appBuildToolsVersion
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    LICENSES = ['Apache-2.0']
+    LABELS = ['android', 'stash', 'caching']
+}
+
 buildscript {
     repositories {
         jcenter()
@@ -23,17 +32,22 @@ buildscript {
         maven { url 'http://dl.bintray.com/laynemobile/sourcerer' }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:${appAndroidGradleVersion}"
+        classpath "com.android.tools.build:gradle:${appGradleAndroidVersion}"
+        classpath "com.github.dcendents:android-maven-gradle-plugin:${appGradleAndroidMavenVersion}"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${appGradleBintrayPluginVersion}"
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:${appGradleBuildInfoExtractorVersion}"
         classpath "com.neenbedankt.gradle.plugins:android-apt:${appAptGradleVersion}"
         classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:2.2.2'
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${appBintrayGradlePlugin}"
-        classpath "com.github.dcendents:android-maven-gradle-plugin:${appAndroidMavenGradleVersion}"
         classpath "com.laynemobile.sourcerer:extensions-plugin:${appSourcererVersion}"
     }
 }
 
-ext {
-    LICENSES = ["Apache-2.0"]
+// brittle but works
+def isReleaseBuild = gradle.startParameter.taskNames.contains('bintrayUpload')
+allprojects {
+    group = GROUP
+    version = isReleaseBuild ? VERSION_NAME : "$VERSION_NAME-SNAPSHOT"
+    logger.info("Project ${it.name} using version=${it.version}")
 }
 
 subprojects {

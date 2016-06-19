@@ -14,15 +14,23 @@
  * limitations under the License.
  */
 
-ext {
-    javaPoetVersion = '1.2.0'
-    appOkioVersion = '1.5.0'
+def props = new Properties()
+props.load(new FileInputStream("${rootDir}/../gradle.properties"))
+props.each { key, val ->
+    project.set(key, val)
 }
+
+// brittle but works
+def isReleaseBuild = gradle.startParameter.taskNames.contains('bintrayUpload')
+group GROUP
+version isReleaseBuild ? VERSION_NAME : "$VERSION_NAME-SNAPSHOT"
+logger.info("Project ${project.name} using version=${project.version}")
 
 repositories {
     jcenter()
 }
+
 dependencies {
-    compile "com.squareup:javapoet:${javaPoetVersion}"
+    compile "com.squareup:javapoet:${appJavaPoetGradleVersion}"
     compile "com.squareup.okio:okio:${appOkioVersion}"
 }

@@ -14,12 +14,19 @@
  * limitations under the License.
  */
 
-apply from: "${rootDir}/gradle/android-library.gradle"
+apply plugin: 'groovy'
+apply from: "${rootDir}/gradle/abstract-library.gradle"
 
-dependencies {
-    compile "com.android.support:support-annotations:${appAndroidSupportVersion}"
-    compile "io.reactivex:rxjava:${appRxJavaVersion}"
-    compile "io.reactivex:rxandroid:${appRxAndroidVersion}"
-    compile "com.laynemobile:rxsubscriptions:${appRxSubscriptionsVersion}"
-    compile project(':stash-core')
+task groovydocJar(type: Jar, dependsOn: groovydoc) {
+    classifier = 'groovydoc'
+    from groovydoc.destinationDir
+    encoding = 'UTF-8'
 }
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+    archives groovydocJar
+}
+
+apply from: "${rootDir}/gradle/install.gradle"

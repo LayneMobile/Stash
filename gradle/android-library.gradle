@@ -14,24 +14,28 @@
  * limitations under the License.
  */
 
+ext {
+    POM_PACKAGING = 'aar'
+}
+
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.jfrog.artifactory-upload'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'provided-base'
 
-project.android {
-    compileSdkVersion appCompileSdkVersion as int
-    buildToolsVersion appBuildToolsVersion
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility rootProject.ext.sourceCompatibility
+        targetCompatibility rootProject.ext.sourceCompatibility
     }
 
     defaultConfig {
-        minSdkVersion appMinSdkVersion as int
-        targetSdkVersion appTargetSdkVersion as int
-        versionCode VERSION_CODE as int
-        versionName VERSION_NAME
+        minSdkVersion rootProject.ext.minSdkVersion
     }
 
     buildTypes {
@@ -42,6 +46,10 @@ project.android {
         }
     }
 }
+
+// Create javadoc/sources
+apply from: "${rootDir}/gradle/android-artifacts.gradle"
+apply from: "${rootDir}/gradle/install.gradle"
 
 dependencies {
     compile project(':stash-annotations')
