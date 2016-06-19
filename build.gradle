@@ -36,11 +36,13 @@ buildscript {
         classpath "com.github.dcendents:android-maven-gradle-plugin:${appGradleAndroidMavenVersion}"
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${appGradleBintrayPluginVersion}"
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:${appGradleBuildInfoExtractorVersion}"
-        classpath "com.neenbedankt.gradle.plugins:android-apt:${appAptGradleVersion}"
-        classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:2.2.2'
+        classpath "com.neenbedankt.gradle.plugins:android-apt:${appGradleAptVersion}"
+        classpath "com.netflix.nebula:gradle-extra-configurations-plugin:${appGradleNebulaVersion}"
         classpath "com.laynemobile.sourcerer:extensions-plugin:${appSourcererVersion}"
     }
 }
+
+apply from: "${rootDir}/gradle/artifactory.gradle"
 
 // brittle but works
 def isReleaseBuild = gradle.startParameter.taskNames.contains('bintrayUpload')
@@ -57,7 +59,6 @@ subprojects {
         mavenLocal()
         maven { url 'http://dl.bintray.com/laynemobile/maven' }
         maven { url 'http://dl.bintray.com/laynemobile/stash' }
-        maven { url 'http://dl.bintray.com/laynemobile/sourcerer' }
         flatDir {
             dirs "${project.rootDir}/libs"
         }
