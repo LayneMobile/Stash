@@ -26,13 +26,17 @@ android {
         applicationId "stash.samples.hockeyloader"
         minSdkVersion 15
         targetSdkVersion appTargetSdkVersion as int
-        versionCode VERSION_CODE as int
+        versionCode 1
         versionName VERSION_NAME
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     signingConfigs {

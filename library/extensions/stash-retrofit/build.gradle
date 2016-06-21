@@ -18,11 +18,9 @@ ext {
     retrofitVersion = '1.9.0'
 }
 
-apply from: "${rootDir}/gradle/library.gradle"
+apply from: "${rootDir}/gradle/android-library.gradle"
 
 dependencies {
     compile "com.squareup.retrofit:retrofit:${retrofitVersion}"
     compile project(':stash')
 }
-
-apply from: 'https://raw.githubusercontent.com/LayneMobile/gradle-publish/master/android-artifacts.gradle'

@@ -30,8 +30,12 @@ android {
         applicationId "stash.samples.shopify"
         minSdkVersion 15
         targetSdkVersion appTargetSdkVersion as int
-        versionCode VERSION_CODE as int
+        versionCode 1
         versionName VERSION_NAME
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     compileOptions {

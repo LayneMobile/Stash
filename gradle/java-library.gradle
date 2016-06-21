@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-apply from: "${rootDir}/gradle/android-library.gradle"
+apply plugin: 'java'
+apply from: "${rootDir}/gradle/abstract-library.gradle"
 
-dependencies {
-    compile "com.android.support:support-annotations:${appAndroidSupportVersion}"
-    compile "io.reactivex:rxjava:${appRxJavaVersion}"
-    compile "io.reactivex:rxandroid:${appRxAndroidVersion}"
-    compile "com.laynemobile:rxsubscriptions:${appRxSubscriptionsVersion}"
-    compile project(':stash-core')
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }
+
+apply from: "${rootDir}/gradle/install.gradle"

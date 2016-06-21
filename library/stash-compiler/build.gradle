@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-apply plugin: 'groovy'
+apply from: "${rootDir}/gradle/java-library.gradle"
 
 dependencies {
     compile 'com.google.auto.service:auto-service:1.0-rc2'
@@ -23,5 +23,3 @@ dependencies {
     compile project(':stash-annotations')
     compile project(':stash-core')
 }
-
-apply from: "${rootDir}/gradle/groovyArtifacts.gradle"

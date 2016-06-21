@@ -14,12 +14,25 @@
  * limitations under the License.
  */
 
-apply from: "${rootDir}/gradle/android-library.gradle"
+ext {
+    POM_PACKAGING = 'jar'
+}
 
-dependencies {
-    compile "com.android.support:support-annotations:${appAndroidSupportVersion}"
-    compile "io.reactivex:rxjava:${appRxJavaVersion}"
-    compile "io.reactivex:rxandroid:${appRxAndroidVersion}"
-    compile "com.laynemobile:rxsubscriptions:${appRxSubscriptionsVersion}"
-    compile project(':stash-core')
+apply plugin: 'provided-base'
+apply plugin: 'maven'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.jfrog.artifactory'
+
+sourceCompatibility = rootProject.ext.sourceCompatibility
+targetCompatibility = rootProject.ext.sourceCompatibility
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource.srcDirs
+    classifier = 'sources'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+    encoding = 'UTF-8'
 }

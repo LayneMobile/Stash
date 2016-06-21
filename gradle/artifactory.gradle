@@ -14,12 +14,26 @@
  * limitations under the License.
  */
 
-apply from: "${rootDir}/gradle/android-library.gradle"
+apply plugin: "com.jfrog.artifactory"
 
-dependencies {
-    compile "com.android.support:support-annotations:${appAndroidSupportVersion}"
-    compile "io.reactivex:rxjava:${appRxJavaVersion}"
-    compile "io.reactivex:rxandroid:${appRxAndroidVersion}"
-    compile "com.laynemobile:rxsubscriptions:${appRxSubscriptionsVersion}"
-    compile project(':stash-core')
+artifactory {
+    contextUrl = 'https://oss.jfrog.org'
+
+    publish {
+        repository {
+            repoKey = 'oss-snapshot-local'
+
+            if (project.hasProperty('bintrayUser')) {
+                username = project.property('bintrayUser')
+                password = project.property('bintrayKey')
+            }
+        }
+
+        defaults {
+            publishConfigs('archives')
+        }
+    }
+    resolve {
+        repoKey = 'jcenter'
+    }
 }

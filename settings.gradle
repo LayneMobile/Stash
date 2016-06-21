@@ -25,6 +25,8 @@ include ':stash-annotations',
         ':hockeyloader-core',
         ':shopify'
 
+rootProject.name = 'com.laynemobile.stash'
+
 // Annotations dir
 project(':stash-annotations')
         .setProjectDir(file('shared/stash-annotations'))

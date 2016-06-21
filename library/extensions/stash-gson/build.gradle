@@ -19,12 +19,10 @@ ext {
     gsonVersion = '2.3.1'
 }
 
-apply from: "${rootDir}/gradle/library.gradle"
+apply from: "${rootDir}/gradle/android-library.gradle"
 
 dependencies {
     compile "com.jakewharton:disklrucache:${diskLruCacheVersion}"
     compile "com.google.code.gson:gson:${gsonVersion}"
     compile project(':stash')
 }
-
-apply from: 'https://raw.githubusercontent.com/LayneMobile/gradle-publish/master/android-artifacts.gradle'
