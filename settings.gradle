@@ -27,33 +27,17 @@ include ':stash-annotations',
 
 rootProject.name = 'com.laynemobile.stash'
 
-// Annotations dir
-project(':stash-annotations')
-        .setProjectDir(file('shared/stash-annotations'))
-
-// Core dir
-project(':stash-core')
-        .setProjectDir(file('library/stash-core'))
-
-// Stash Compiler dir
-project(':stash-compiler')
-        .setProjectDir(file('library/stash-compiler'))
-
-// Stash dir
-project(':stash')
-        .setProjectDir(file('library/stash'))
-
 // Stash-Gson dir
 project(':stash-gson')
-        .setProjectDir(file('library/extensions/stash-gson'))
+        .setProjectDir(file('extensions/stash-gson'))
 
 // Stash-Shopify dir
 project(':stash-shopify')
-        .setProjectDir(file('library/extensions/stash-shopify'))
+        .setProjectDir(file('extensions/stash-shopify'))
 
 // Stash-Retrofit dir
 project(':stash-retrofit')
-        .setProjectDir(file('library/extensions/stash-retrofit'))
+        .setProjectDir(file('extensions/stash-retrofit'))
 
 // Samples dirs
 project(':hockeyloader')
