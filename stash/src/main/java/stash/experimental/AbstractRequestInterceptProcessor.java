@@ -35,7 +35,7 @@ abstract class AbstractRequestInterceptProcessor<T, P extends Params> implements
                 .proceed(p);
     }
 
-    private final class Child implements RequestProcessor.Interceptor.Chain<T, P> {
+    private final class Child implements Interceptor.Chain<T, P> {
         private final int index;
         private final P params;
 
