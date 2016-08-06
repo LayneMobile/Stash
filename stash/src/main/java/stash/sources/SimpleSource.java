@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-apply from: "${rootDir}/gradle/java-library.gradle"
+package stash.sources;
 
-dependencies {
-    compile "com.laynemobile.proxy:proxy-annotations:${appProxyVersion}"
-    compile("com.laynemobile.proxy:proxy-core:${appProxyVersion}") {
-        exclude module: 'proxy-functions'
-    }
-    compile "com.laynemobile.proxy:proxy-functions-rx:${appProxyVersion}"
-    provided "io.reactivex:rxjava:${appRxJavaVersion}"
-    provided "com.laynemobile.proxy:proxy-generator:${appProxyVersion}"
+import com.laynemobile.proxy.annotations.GenerateProxyFunction;
+
+import rx.Subscriber;
+import stash.Source;
+import stash.params.SimpleParams;
+
+// TODO: problems with compiled source parent
+//@GenerateProxyBuilder(extendsFrom = Source.class)
+public interface SimpleSource<T> extends Source<T, SimpleParams> {
+    @GenerateProxyFunction("source")
+    @Override void call(SimpleParams ignored, Subscriber<? super T> subscriber);
 }

@@ -22,4 +22,5 @@ dependencies {
     compile "org.immutables:value:${appImmutablesVersion}"
     compile project(':stash-annotations')
     compile project(':stash-core')
+    compile "com.laynemobile.proxy:proxy-generator:${appProxyVersion}"
 }

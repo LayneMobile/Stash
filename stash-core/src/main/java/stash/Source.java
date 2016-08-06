@@ -16,12 +16,17 @@
 
 package stash;
 
-import rx.Subscriber;
-import rx.functions.Action2;
+import com.laynemobile.proxy.annotations.GenerateProxyBuilder;
+import com.laynemobile.proxy.annotations.GenerateProxyFunction;
 
+import rx.Subscriber;
+
+@GenerateProxyBuilder(parent = true)
 public interface Source<T, P extends Params> {
+    @GenerateProxyFunction("source")
     void call(P p, Subscriber<? super T> subscriber);
 
+    /*
     final class SourceTypeHandler<T, P extends Params> implements TypeHandlerModule<Source> {
         Action2<P, Subscriber<? super T>> action;
 
@@ -30,7 +35,6 @@ public interface Source<T, P extends Params> {
         }
     }
 
-    /*
     public interface RequestProcessor<T, P> {
         Request<T> request(P params);
 

@@ -19,4 +19,5 @@ apply from: "${rootDir}/gradle/java-library.gradle"
 dependencies {
     provided project(':stash-core')
     compile "com.laynemobile.sourcerer:extensions-annotations:${appSourcererVersion}"
+    compile "com.laynemobile.proxy:proxy-annotations:${appProxyVersion}"
 }

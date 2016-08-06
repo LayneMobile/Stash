@@ -19,6 +19,9 @@ package stash.sources;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import com.laynemobile.proxy.annotations.GenerateProxyBuilder;
+import com.laynemobile.proxy.annotations.GenerateProxyFunction;
+
 import stash.Api;
 import stash.Params;
 import stash.Request;
@@ -29,7 +32,9 @@ import stash.experimental.RequestProcessor;
 import stash.internal.StashLog;
 import stash.util.NetworkChecker;
 
+@GenerateProxyBuilder
 public interface NetworkSource<T, P extends Params> extends Source<T, P> {
+    @GenerateProxyFunction("networkChecker")
     @Nullable NetworkChecker getNetworkChecker();
 
     class Transformer<T, P extends Params> implements Processor.Interceptor.Transformer<NetworkSource<T, P>, RequestProcessor.Interceptor<T, P>> {
