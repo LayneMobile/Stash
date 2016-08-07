@@ -16,14 +16,14 @@
 
 package stash.sources;
 
+import com.laynemobile.proxy.annotations.GenerateProxyBuilder;
 import com.laynemobile.proxy.annotations.GenerateProxyFunction;
 
 import rx.Subscriber;
 import stash.Source;
 import stash.params.SimpleParams;
 
-// TODO: problems with compiled source parent
-//@GenerateProxyBuilder(extendsFrom = Source.class)
+@GenerateProxyBuilder(extendsFrom = Source.class)
 public interface SimpleSource<T> extends Source<T, SimpleParams> {
     @GenerateProxyFunction("source")
     @Override void call(SimpleParams ignored, Subscriber<? super T> subscriber);

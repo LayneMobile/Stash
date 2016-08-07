@@ -24,8 +24,10 @@ import stash.experimental.Processor;
 import stash.experimental.RequestProcessor;
 import stash.params.StashableParams;
 
-public interface StashableSource<T, P extends StashableParams<?>> extends
-        Source<T, P>,
+// TODO: currently causing an error
+//@GenerateProxyBuilder
+public interface StashableSource<T, P extends StashableParams<?>>
+        extends Source<T, P>,
         StashableProcessor<T, P> {
 
     final class Transformer<T, P extends StashableParams<?>>
