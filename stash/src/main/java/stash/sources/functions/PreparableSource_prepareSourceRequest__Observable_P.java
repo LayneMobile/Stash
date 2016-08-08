@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package stash.sources.templates;
+package stash.sources.functions;
 
 import com.laynemobile.proxy.annotations.Generated;
-import com.laynemobile.proxy.functions.Func1;
+import com.laynemobile.proxy.functions.Func2;
 
-import stash.Aggregable;
+import rx.Observable;
 import stash.Params;
-import stash.sources.generated.AbstractAggregableSource_getAggregable__P;
+import stash.sources.functions.parent.AbstractPreparableSource_prepareSourceRequest__Observable_P;
 
 @Generated
-public class AggregableSource_getAggregable__P<T, P extends Params> extends AbstractAggregableSource_getAggregable__P<T, P> {
-    public AggregableSource_getAggregable__P(Func1<P, Aggregable> aggregable) {
-        super(aggregable);
+public class PreparableSource_prepareSourceRequest__Observable_P<T, P extends Params> extends AbstractPreparableSource_prepareSourceRequest__Observable_P<T, P> {
+    public PreparableSource_prepareSourceRequest__Observable_P(
+            Func2<Observable<T>, P, Observable<T>> prepareSourceRequest) {
+        super(prepareSourceRequest);
     }
 }

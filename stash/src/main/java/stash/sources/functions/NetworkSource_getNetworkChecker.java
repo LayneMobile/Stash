@@ -14,28 +14,18 @@
  * limitations under the License.
  */
 
-package stash.sources.templates;
+package stash.sources.functions;
 
 import com.laynemobile.proxy.annotations.Generated;
-import com.laynemobile.proxy.functions.Action1;
 import com.laynemobile.proxy.functions.Func0;
 
-import rx.Observable;
-import rx.Subscriber;
-import stash.params.SimpleParams;
-import stash.templates.Source_call__P_Subscriber;
+import stash.Params;
+import stash.sources.functions.parent.AbstractNetworkSource_getNetworkChecker;
+import stash.util.NetworkChecker;
 
 @Generated
-public class SimpleSource_call__SimpleParams_Subscriber<T> extends Source_call__P_Subscriber<T, SimpleParams> {
-    public SimpleSource_call__SimpleParams_Subscriber(Action1<Subscriber<? super T>> source) {
-        super(source);
-    }
-
-    public SimpleSource_call__SimpleParams_Subscriber(Func0<T> source) {
-        super(source);
-    }
-
-    public SimpleSource_call__SimpleParams_Subscriber(Observable<T> source) {
-        super(source);
+public class NetworkSource_getNetworkChecker<T, P extends Params> extends AbstractNetworkSource_getNetworkChecker<T, P> {
+    public NetworkSource_getNetworkChecker(Func0<NetworkChecker> networkChecker) {
+        super(networkChecker);
     }
 }

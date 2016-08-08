@@ -16,6 +16,8 @@
 
 package stash.sources;
 
+import com.laynemobile.proxy.annotations.GenerateProxyBuilder;
+
 import stash.Request;
 import stash.Source;
 import stash.StashPolicy;
@@ -24,8 +26,7 @@ import stash.experimental.Processor;
 import stash.experimental.RequestProcessor;
 import stash.params.StashableParams;
 
-// TODO: currently causing an error
-//@GenerateProxyBuilder
+@GenerateProxyBuilder
 public interface StashableSource<T, P extends StashableParams<?>>
         extends Source<T, P>,
         StashableProcessor<T, P> {

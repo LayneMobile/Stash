@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package stash.sources.templates;
+package stash.sources.functions;
 
 import com.laynemobile.proxy.annotations.Generated;
-import com.laynemobile.proxy.functions.Func0;
+import com.laynemobile.proxy.functions.Func1;
 
-import stash.Params;
-import stash.sources.generated.AbstractNetworkSource_getNetworkChecker;
-import stash.util.NetworkChecker;
+import stash.Stashable;
+import stash.params.StashableParams;
+import stash.sources.functions.parent.AbstractStashableSource_getStashable__P;
 
 @Generated
-public class NetworkSource_getNetworkChecker<T, P extends Params> extends AbstractNetworkSource_getNetworkChecker<T, P> {
-    public NetworkSource_getNetworkChecker(Func0<NetworkChecker> networkChecker) {
-        super(networkChecker);
+public class StashableSource_getStashable__P<T, P extends StashableParams<?>> extends AbstractStashableSource_getStashable__P<T, P> {
+    public StashableSource_getStashable__P(Func1<P, Stashable<T>> getStashable) {
+        super(getStashable);
     }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package stash.templates;
+package stash.functions;
 
 import com.laynemobile.proxy.annotations.Generated;
 import com.laynemobile.proxy.functions.Action1;
@@ -25,7 +25,7 @@ import com.laynemobile.proxy.functions.Func1;
 import rx.Observable;
 import rx.Subscriber;
 import stash.Params;
-import stash.generated.AbstractSource_call__P_Subscriber;
+import stash.functions.parent.AbstractSource_call__P_Subscriber;
 
 @Generated
 public class Source_call__P_Subscriber<T, P extends Params> extends AbstractSource_call__P_Subscriber<T, P> {
