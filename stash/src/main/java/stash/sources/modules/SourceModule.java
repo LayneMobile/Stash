@@ -18,6 +18,8 @@ package stash.sources.modules;
 
 import android.support.annotation.NonNull;
 
+import com.laynemobile.proxy.MethodResult;
+
 import java.lang.reflect.Method;
 
 import rx.Subscriber;
@@ -28,7 +30,6 @@ import stash.Source;
 import stash.SourceModuleBuilder;
 import stash.sources.builder.SourceHandler;
 import stash.sources.builder.SourceMethodHandler;
-import stash.types.MethodResult;
 
 @stash.annotations.SourceModule(Source.class)
 public final class SourceModule<T, P extends Params> implements SourceModuleBuilder {

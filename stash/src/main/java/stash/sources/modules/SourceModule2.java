@@ -18,17 +18,18 @@ package stash.sources.modules;
 
 import android.support.annotation.NonNull;
 
+import com.laynemobile.proxy.MethodHandler;
+import com.laynemobile.proxy.MethodResult;
+import com.laynemobile.proxy.ProxyHandler;
+
 import java.lang.reflect.Method;
 
 import rx.Subscriber;
 import rx.functions.Action2;
 import rx.functions.Func1;
-import stash.MethodHandler;
 import stash.Params;
 import stash.Source;
-import stash.TypeHandler;
 import stash.TypeHandlerModule;
-import stash.types.MethodResult;
 
 public final class SourceModule2<T, P extends Params> implements TypeHandlerModule<Source> {
     private Action2<P, Subscriber<? super T>> source;
@@ -42,11 +43,11 @@ public final class SourceModule2<T, P extends Params> implements TypeHandlerModu
         return sourceInternal(this, source);
     }
 
-    @NonNull @Override public TypeHandler<Source> build() {
+    @NonNull @Override public ProxyHandler<Source> build() {
         if (source == null) {
             throw new IllegalStateException("source must be set");
         }
-        return new TypeHandler.Builder<Source>(Source.class)
+        return ProxyHandler.builder(Source.class)
                 .handle("call", new Handler<T, P>(source))
                 .build();
     }

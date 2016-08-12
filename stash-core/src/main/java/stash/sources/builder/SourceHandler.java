@@ -16,20 +16,23 @@
 
 package stash.sources.builder;
 
-import stash.Source;
-import stash.types.MethodHandler;
-import stash.types.TypeHandler;
+import com.laynemobile.proxy.MethodHandler;
+import com.laynemobile.proxy.ProxyHandler;
 
-public final class SourceHandler extends TypeHandler<Source> {
+import stash.Source;
+
+public final class SourceHandler {
+    final ProxyHandler<? extends Source> source;
+
     private SourceHandler(Builder builder) {
-        super(builder.source);
+        this.source = builder.source.build();
     }
 
     public static final class Builder {
-        private final TypeHandler.Builder<Source> source;
+        private final ProxyHandler.Builder<? extends Source> source;
 
         public Builder(Class<? extends Source> source) {
-            this.source = new TypeHandler.Builder<>(source);
+            this.source = ProxyHandler.builder(source);
         }
 
         public MethodBuilder method(String methodName) {
@@ -48,7 +51,7 @@ public final class SourceHandler extends TypeHandler<Source> {
 
     public static final class MethodBuilder {
         private final Builder builder;
-        private final TypeHandler.MethodBuilder<Source> method;
+        private final ProxyHandler.MethodBuilder<? extends Source> method;
 
         public MethodBuilder(Builder builder, String methodName) {
             this.builder = builder;

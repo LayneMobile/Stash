@@ -16,14 +16,14 @@
 
 package stash;
 
-import com.laynemobile.proxy.annotations.GenerateProxyBuilder;
-import com.laynemobile.proxy.annotations.GenerateProxyFunction;
+import com.laynemobile.proxy.annotations.GenerateProxyHandler;
+import com.laynemobile.proxy.annotations.GenerateProxyHandlerFunction;
 
 import rx.Subscriber;
 
-@GenerateProxyBuilder(parent = true)
+@GenerateProxyHandler(parent = true)
 public interface Source<T, P extends Params> {
-    @GenerateProxyFunction("source")
+    @GenerateProxyHandlerFunction("source")
     void call(P p, Subscriber<? super T> subscriber);
 
     /*

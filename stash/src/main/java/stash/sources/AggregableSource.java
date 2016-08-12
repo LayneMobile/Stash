@@ -19,8 +19,8 @@ package stash.sources;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.laynemobile.proxy.annotations.GenerateProxyBuilder;
-import com.laynemobile.proxy.annotations.GenerateProxyFunction;
+import com.laynemobile.proxy.annotations.GenerateProxyHandler;
+import com.laynemobile.proxy.annotations.GenerateProxyHandlerFunction;
 
 import stash.Aggregable;
 import stash.Params;
@@ -29,9 +29,9 @@ import stash.Source;
 import stash.experimental.Processor;
 import stash.experimental.RequestProcessor;
 
-@GenerateProxyBuilder
+@GenerateProxyHandler
 public interface AggregableSource<T, P extends Params> extends Source<T, P> {
-    @GenerateProxyFunction("aggregable")
+    @GenerateProxyHandlerFunction("aggregable")
     @Nullable Aggregable getAggregable(@NonNull P p);
 
     class Transformer<T, P extends Params> implements Processor.Interceptor.Transformer<AggregableSource<T, P>, RequestProcessor.Interceptor<T, P>> {

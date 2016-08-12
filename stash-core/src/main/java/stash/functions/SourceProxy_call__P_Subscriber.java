@@ -25,15 +25,15 @@ import com.laynemobile.proxy.functions.Func1;
 import rx.Observable;
 import rx.Subscriber;
 import stash.Params;
-import stash.functions.parent.AbstractSource_call__P_Subscriber;
+import stash.functions.parent.AbstractSourceProxy_call__P_Subscriber;
 
 @Generated
-public class Source_call__P_Subscriber<T, P extends Params> extends AbstractSource_call__P_Subscriber<T, P> {
-    public Source_call__P_Subscriber(Action2<P, Subscriber<? super T>> source) {
+public class SourceProxy_call__P_Subscriber<T, P extends Params> extends AbstractSourceProxy_call__P_Subscriber<T, P> {
+    public SourceProxy_call__P_Subscriber(Action2<P, Subscriber<? super T>> source) {
         super(source);
     }
 
-    public Source_call__P_Subscriber(final Action1<Subscriber<? super T>> source) {
+    public SourceProxy_call__P_Subscriber(final Action1<Subscriber<? super T>> source) {
         super(new Action2<P, Subscriber<? super T>>() {
             @Override public void call(P p, Subscriber<? super T> subscriber) {
                 source.call(subscriber);
@@ -41,7 +41,7 @@ public class Source_call__P_Subscriber<T, P extends Params> extends AbstractSour
         });
     }
 
-    public Source_call__P_Subscriber(final Func1<P, T> source) {
+    public SourceProxy_call__P_Subscriber(final Func1<P, T> source) {
         super(new Action2<P, Subscriber<? super T>>() {
             @Override public void call(P p, Subscriber<? super T> subscriber) {
                 try {
@@ -55,7 +55,7 @@ public class Source_call__P_Subscriber<T, P extends Params> extends AbstractSour
         });
     }
 
-    public Source_call__P_Subscriber(final Func0<T> source) {
+    public SourceProxy_call__P_Subscriber(final Func0<T> source) {
         this(new Func1<P, T>() {
             @Override public T call(P p) {
                 return source.call();
@@ -63,7 +63,7 @@ public class Source_call__P_Subscriber<T, P extends Params> extends AbstractSour
         });
     }
 
-    public Source_call__P_Subscriber(final Observable<T> source) {
+    public SourceProxy_call__P_Subscriber(final Observable<T> source) {
         super(new Action2<P, Subscriber<? super T>>() {
             @Override public void call(P p, final Subscriber<? super T> child) {
                 source.unsafeSubscribe(new Subscriber<T>(child) {

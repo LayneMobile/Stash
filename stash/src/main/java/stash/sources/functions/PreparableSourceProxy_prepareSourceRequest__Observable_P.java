@@ -21,11 +21,11 @@ import com.laynemobile.proxy.functions.Func2;
 
 import rx.Observable;
 import stash.Params;
-import stash.sources.functions.parent.AbstractPreparableSource_prepareSourceRequest__Observable_P;
+import stash.sources.functions.parent.AbstractPreparableSourceProxy_prepareSourceRequest__Observable_P;
 
 @Generated
-public class PreparableSource_prepareSourceRequest__Observable_P<T, P extends Params> extends AbstractPreparableSource_prepareSourceRequest__Observable_P<T, P> {
-    public PreparableSource_prepareSourceRequest__Observable_P(
+public class PreparableSourceProxy_prepareSourceRequest__Observable_P<T, P extends Params> extends AbstractPreparableSourceProxy_prepareSourceRequest__Observable_P<T, P> {
+    public PreparableSourceProxy_prepareSourceRequest__Observable_P(
             Func2<Observable<T>, P, Observable<T>> prepareSourceRequest) {
         super(prepareSourceRequest);
     }

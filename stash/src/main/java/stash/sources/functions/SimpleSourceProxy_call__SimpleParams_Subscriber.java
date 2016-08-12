@@ -17,15 +17,25 @@
 package stash.sources.functions;
 
 import com.laynemobile.proxy.annotations.Generated;
-import com.laynemobile.proxy.functions.Func1;
+import com.laynemobile.proxy.functions.Action1;
+import com.laynemobile.proxy.functions.Func0;
 
-import stash.Stashable;
-import stash.params.StashableParams;
-import stash.sources.functions.parent.AbstractStashableSource_getStashable__P;
+import rx.Observable;
+import rx.Subscriber;
+import stash.functions.SourceProxy_call__P_Subscriber;
+import stash.params.SimpleParams;
 
 @Generated
-public class StashableSource_getStashable__P<T, P extends StashableParams<?>> extends AbstractStashableSource_getStashable__P<T, P> {
-    public StashableSource_getStashable__P(Func1<P, Stashable<T>> getStashable) {
-        super(getStashable);
+public class SimpleSourceProxy_call__SimpleParams_Subscriber<T> extends SourceProxy_call__P_Subscriber<T, SimpleParams> {
+    public SimpleSourceProxy_call__SimpleParams_Subscriber(Action1<Subscriber<? super T>> source) {
+        super(source);
+    }
+
+    public SimpleSourceProxy_call__SimpleParams_Subscriber(Func0<T> source) {
+        super(source);
+    }
+
+    public SimpleSourceProxy_call__SimpleParams_Subscriber(Observable<T> source) {
+        super(source);
     }
 }

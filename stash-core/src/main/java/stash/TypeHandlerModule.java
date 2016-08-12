@@ -16,4 +16,6 @@
 
 package stash;
 
-public interface TypeHandlerModule<T> extends Builder<TypeHandler<T>> { }
+import com.laynemobile.proxy.ProxyHandler;
+
+public interface TypeHandlerModule<T> extends Builder<ProxyHandler<T>> {}

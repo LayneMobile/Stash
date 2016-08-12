@@ -18,7 +18,7 @@ package stash.sources;
 
 import android.support.annotation.NonNull;
 
-import com.laynemobile.proxy.annotations.GenerateProxyBuilder;
+import com.laynemobile.proxy.annotations.GenerateProxyHandler;
 
 import rx.Observable;
 import stash.Params;
@@ -27,7 +27,7 @@ import stash.Source;
 import stash.experimental.Processor;
 import stash.experimental.RequestProcessor;
 
-@GenerateProxyBuilder
+@GenerateProxyHandler
 public interface PreparableSource<T, P extends Params> extends Source<T, P> {
     /**
      * Prepare the observable after it's created.

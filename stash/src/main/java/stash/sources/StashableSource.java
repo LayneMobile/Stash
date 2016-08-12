@@ -16,7 +16,7 @@
 
 package stash.sources;
 
-import com.laynemobile.proxy.annotations.GenerateProxyBuilder;
+import com.laynemobile.proxy.annotations.GenerateProxyHandler;
 
 import stash.Request;
 import stash.Source;
@@ -26,7 +26,7 @@ import stash.experimental.Processor;
 import stash.experimental.RequestProcessor;
 import stash.params.StashableParams;
 
-@GenerateProxyBuilder
+@GenerateProxyHandler
 public interface StashableSource<T, P extends StashableParams<?>>
         extends Source<T, P>,
         StashableProcessor<T, P> {

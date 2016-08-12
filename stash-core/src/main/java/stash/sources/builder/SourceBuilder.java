@@ -16,44 +16,52 @@
 
 package stash.sources.builder;
 
+import com.laynemobile.proxy.ProxyBuilder;
+import com.laynemobile.proxy.TypeToken;
+
 import java.util.Collection;
 import java.util.List;
 
 import stash.Builder;
 import stash.Params;
 import stash.Source;
-import stash.types.TypeBuilder;
-import stash.types.TypeHandler;
 
 public final class SourceBuilder<T, P extends Params> implements Builder<Source<T, P>> {
-    private final TypeBuilder<Source> source;
+    private final ProxyBuilder<Source> source;
 
     public SourceBuilder() {
-        this.source = new TypeBuilder<>(Source.class);
+        this.source = new ProxyBuilder<>(TypeToken.get(Source.class));
     }
 
     public boolean contains(Class<? extends Source> type) {
         return source.contains(type);
     }
 
-    public TypeBuilder<Source> module(SourceHandler module) {
-        return source.module(module);
+    public SourceBuilder<T, P> module(SourceHandler module) {
+        source.add(module.source);
+        return this;
     }
 
     public void verifyContains(Class<? extends Source> type) {
         source.verifyContains(type);
     }
 
-    public TypeBuilder<Source> modules(List<SourceHandler> modules) {
-        return source.modules(modules);
+    public SourceBuilder<T, P> modules(List<SourceHandler> modules) {
+        for (SourceHandler handler : modules) {
+            module(handler);
+        }
+        return this;
     }
 
     public void verifyContains(Collection<Class<? extends Source>> types) {
         source.verifyContains(types);
     }
 
-    @SafeVarargs public final TypeBuilder<Source> modules(TypeHandler<? extends Source>... modules) {
-        return source.modules(modules);
+    public final SourceBuilder<T, P> modules(SourceHandler[] modules) {
+        for (SourceHandler handler : modules) {
+            module(handler);
+        }
+        return this;
     }
 
     @SuppressWarnings("unchecked")

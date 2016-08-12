@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package stash.types;
+package stash.sources.functions;
 
-public final class MethodResult {
-    private Object result;
+import com.laynemobile.proxy.annotations.Generated;
+import com.laynemobile.proxy.functions.Func1;
 
-    public MethodResult() {}
+import stash.Aggregable;
+import stash.Params;
+import stash.sources.functions.parent.AbstractAggregableSourceProxy_getAggregable__P;
 
-    public void set(Object result) {
-        this.result = result;
-    }
-
-    public Object get() {
-        return result;
+@Generated
+public class AggregableSourceProxy_getAggregable__P<T, P extends Params> extends AbstractAggregableSourceProxy_getAggregable__P<T, P> {
+    public AggregableSourceProxy_getAggregable__P(Func1<P, Aggregable> aggregable) {
+        super(aggregable);
     }
 }

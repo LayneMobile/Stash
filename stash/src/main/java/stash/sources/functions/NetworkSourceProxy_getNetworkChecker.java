@@ -17,25 +17,15 @@
 package stash.sources.functions;
 
 import com.laynemobile.proxy.annotations.Generated;
-import com.laynemobile.proxy.functions.Action1;
 import com.laynemobile.proxy.functions.Func0;
 
-import rx.Observable;
-import rx.Subscriber;
-import stash.functions.Source_call__P_Subscriber;
-import stash.params.SimpleParams;
+import stash.Params;
+import stash.sources.functions.parent.AbstractNetworkSourceProxy_getNetworkChecker;
+import stash.util.NetworkChecker;
 
 @Generated
-public class SimpleSource_call__SimpleParams_Subscriber<T> extends Source_call__P_Subscriber<T, SimpleParams> {
-    public SimpleSource_call__SimpleParams_Subscriber(Action1<Subscriber<? super T>> source) {
-        super(source);
-    }
-
-    public SimpleSource_call__SimpleParams_Subscriber(Func0<T> source) {
-        super(source);
-    }
-
-    public SimpleSource_call__SimpleParams_Subscriber(Observable<T> source) {
-        super(source);
+public class NetworkSourceProxy_getNetworkChecker<T, P extends Params> extends AbstractNetworkSourceProxy_getNetworkChecker<T, P> {
+    public NetworkSourceProxy_getNetworkChecker(Func0<NetworkChecker> networkChecker) {
+        super(networkChecker);
     }
 }

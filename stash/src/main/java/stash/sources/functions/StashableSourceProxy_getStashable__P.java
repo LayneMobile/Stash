@@ -14,10 +14,18 @@
  * limitations under the License.
  */
 
-package stash.types;
+package stash.sources.functions;
 
-import java.lang.reflect.Method;
+import com.laynemobile.proxy.annotations.Generated;
+import com.laynemobile.proxy.functions.Func1;
 
-public interface MethodHandler {
-    boolean handle(Object proxy, Method method, Object[] args, MethodResult result) throws Throwable;
+import stash.Stashable;
+import stash.params.StashableParams;
+import stash.sources.functions.parent.AbstractStashableSourceProxy_getStashable__P;
+
+@Generated
+public class StashableSourceProxy_getStashable__P<T, P extends StashableParams<?>> extends AbstractStashableSourceProxy_getStashable__P<T, P> {
+    public StashableSourceProxy_getStashable__P(Func1<P, Stashable<T>> getStashable) {
+        super(getStashable);
+    }
 }

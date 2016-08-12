@@ -16,6 +16,6 @@
 
 package stash.sources.builder;
 
-import stash.types.MethodHandler;
+import com.laynemobile.proxy.MethodHandler;
 
 public interface SourceMethodHandler extends MethodHandler {}

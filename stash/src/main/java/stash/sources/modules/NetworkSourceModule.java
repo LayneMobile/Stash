@@ -19,13 +19,14 @@ package stash.sources.modules;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.laynemobile.proxy.MethodResult;
+
 import java.lang.reflect.Method;
 
 import stash.SourceModuleBuilder;
 import stash.sources.NetworkSource;
 import stash.sources.builder.SourceHandler;
 import stash.sources.builder.SourceMethodHandler;
-import stash.types.MethodResult;
 import stash.util.NetworkChecker;
 
 @stash.annotations.SourceModule(NetworkSource.class)

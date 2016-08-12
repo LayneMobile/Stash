@@ -16,15 +16,15 @@
 
 package stash.sources;
 
-import com.laynemobile.proxy.annotations.GenerateProxyBuilder;
-import com.laynemobile.proxy.annotations.GenerateProxyFunction;
+import com.laynemobile.proxy.annotations.GenerateProxyHandler;
+import com.laynemobile.proxy.annotations.GenerateProxyHandlerFunction;
 
 import rx.Subscriber;
 import stash.Source;
 import stash.params.SimpleParams;
 
-@GenerateProxyBuilder(extendsFrom = Source.class)
+@GenerateProxyHandler(extendsFrom = Source.class)
 public interface SimpleSource<T> extends Source<T, SimpleParams> {
-    @GenerateProxyFunction("source")
+    @GenerateProxyHandlerFunction("source")
     @Override void call(SimpleParams ignored, Subscriber<? super T> subscriber);
 }

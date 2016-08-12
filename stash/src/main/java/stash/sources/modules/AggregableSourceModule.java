@@ -18,6 +18,8 @@ package stash.sources.modules;
 
 import android.support.annotation.NonNull;
 
+import com.laynemobile.proxy.MethodResult;
+
 import java.lang.reflect.Method;
 
 import rx.functions.Func1;
@@ -27,7 +29,6 @@ import stash.SourceModuleBuilder;
 import stash.sources.AggregableSource;
 import stash.sources.builder.SourceHandler;
 import stash.sources.builder.SourceMethodHandler;
-import stash.types.MethodResult;
 
 @stash.annotations.SourceModule(AggregableSource.class)
 public final class AggregableSourceModule<P extends Params> implements SourceModuleBuilder {

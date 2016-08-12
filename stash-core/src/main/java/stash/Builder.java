@@ -16,6 +16,4 @@
 
 package stash;
 
-public interface Builder<T> {
-    T build();
-}
+public interface Builder<T> extends com.laynemobile.proxy.Builder<T> {}
