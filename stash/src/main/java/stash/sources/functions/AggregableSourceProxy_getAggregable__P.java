@@ -17,6 +17,7 @@
 package stash.sources.functions;
 
 import com.laynemobile.proxy.annotations.Generated;
+import com.laynemobile.proxy.functions.Func0;
 import com.laynemobile.proxy.functions.Func1;
 
 import stash.Aggregable;
@@ -27,5 +28,13 @@ import stash.sources.functions.parent.AbstractAggregableSourceProxy_getAggregabl
 public class AggregableSourceProxy_getAggregable__P<T, P extends Params> extends AbstractAggregableSourceProxy_getAggregable__P<T, P> {
     public AggregableSourceProxy_getAggregable__P(Func1<P, Aggregable> aggregable) {
         super(aggregable);
+    }
+
+    public AggregableSourceProxy_getAggregable__P(final Func0<Aggregable> aggregable) {
+        super(new Func1<P, Aggregable>() {
+            @Override public Aggregable call(P p) {
+                return aggregable.call();
+            }
+        });
     }
 }

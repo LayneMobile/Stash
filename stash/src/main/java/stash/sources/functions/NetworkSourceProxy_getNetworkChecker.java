@@ -28,4 +28,21 @@ public class NetworkSourceProxy_getNetworkChecker<T, P extends Params> extends A
     public NetworkSourceProxy_getNetworkChecker(Func0<NetworkChecker> networkChecker) {
         super(networkChecker);
     }
+
+    public NetworkSourceProxy_getNetworkChecker(final NetworkChecker networkChecker) {
+        super(new Func0<NetworkChecker>() {
+            @Override public NetworkChecker call() {
+                return networkChecker;
+            }
+        });
+    }
+
+    public NetworkSourceProxy_getNetworkChecker() {
+        super(new Func0<NetworkChecker>() {
+            @Override public NetworkChecker call() {
+                // TODO: plugin for default implementation
+                return NetworkChecker.DEFAULT;
+            }
+        });
+    }
 }

@@ -17,6 +17,7 @@
 package stash.sources.functions;
 
 import com.laynemobile.proxy.annotations.Generated;
+import com.laynemobile.proxy.functions.Func1;
 import com.laynemobile.proxy.functions.Func2;
 
 import rx.Observable;
@@ -28,5 +29,14 @@ public class PreparableSourceProxy_prepareSourceRequest__Observable_P<T, P exten
     public PreparableSourceProxy_prepareSourceRequest__Observable_P(
             Func2<Observable<T>, P, Observable<T>> prepareSourceRequest) {
         super(prepareSourceRequest);
+    }
+
+    public PreparableSourceProxy_prepareSourceRequest__Observable_P(
+            final Func1<Observable<T>, Observable<T>> prepareSourceRequest) {
+        super(new Func2<Observable<T>, P, Observable<T>>() {
+            @Override public Observable<T> call(Observable<T> observable, P p) {
+                return prepareSourceRequest.call(observable);
+            }
+        });
     }
 }

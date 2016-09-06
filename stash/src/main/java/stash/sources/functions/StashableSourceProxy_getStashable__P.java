@@ -17,6 +17,7 @@
 package stash.sources.functions;
 
 import com.laynemobile.proxy.annotations.Generated;
+import com.laynemobile.proxy.functions.Func0;
 import com.laynemobile.proxy.functions.Func1;
 
 import stash.Stashable;
@@ -27,5 +28,13 @@ import stash.sources.functions.parent.AbstractStashableSourceProxy_getStashable_
 public class StashableSourceProxy_getStashable__P<T, P extends StashableParams<?>> extends AbstractStashableSourceProxy_getStashable__P<T, P> {
     public StashableSourceProxy_getStashable__P(Func1<P, Stashable<T>> getStashable) {
         super(getStashable);
+    }
+
+    public StashableSourceProxy_getStashable__P(final Func0<Stashable<T>> getStashable) {
+        super(new Func1<P, Stashable<T>>() {
+            @Override public Stashable<T> call(P p) {
+                return getStashable.call();
+            }
+        });
     }
 }
