@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.laynemobile.sourcerer</groupId>
+  <artifactId>extensions-plugin</artifactId>
+  <version>0.2.1-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <localCopy>true</localCopy>
+    </snapshot>
+    <lastUpdated>20250302234243</lastUpdated>
+  </versioning>
+</metadata>

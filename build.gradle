@@ -28,7 +28,7 @@ buildscript {
         maven { url 'https://maven.google.com' }
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
-        mavenLocal()
+        maven { url "${rootDir}/repo" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${appGradleAndroidVersion}"
@@ -56,8 +56,7 @@ subprojects {
         maven { url 'https://maven.google.com' }
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
-        mavenLocal()
-        maven { url 'http://dl.bintray.com/laynemobile/maven' }
+        maven { url "${rootDir}/repo" }
         flatDir {
             dirs "${project.rootDir}/libs"
         }
