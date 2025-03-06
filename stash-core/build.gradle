@@ -17,11 +17,20 @@
 apply from: "${rootDir}/gradle/java-library.gradle"
 
 dependencies {
-    compile "com.laynemobile.proxy:proxy-annotations:${appProxyVersion}"
-    compile("com.laynemobile.proxy:proxy-core:${appProxyVersion}") {
-        exclude module: 'proxy-functions'
+    compile("com.laynemobile.proxy:proxy-annotations:${appProxyVersion}") {
+        exclude module: 'proxy-functions-core'
     }
-    compile "com.laynemobile.proxy:proxy-functions-rx:${appProxyVersion}"
+    compile("com.laynemobile.proxy:proxy-core:${appProxyVersion}") {
+        exclude module: 'proxy-functions-core'
+    }
+    compile("com.laynemobile.proxy:proxy-functions:${appProxyVersion}") {
+        exclude module: 'proxy-functions-core'
+    }
+    compile("com.laynemobile.proxy:proxy-functions-rx:${appProxyVersion}") {
+        exclude module: 'proxy-functions-core'
+    }
     provided "io.reactivex:rxjava:${appRxJavaVersion}"
-    provided "com.laynemobile.proxy:proxy-generator:${appProxyVersion}"
+    provided("com.laynemobile.proxy:proxy-generator:${appProxyVersion}") {
+        exclude module: 'proxy-functions-core'
+    }
 }
