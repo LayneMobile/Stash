@@ -20,8 +20,8 @@ ext {
 
 apply plugin: 'provided-base'
 apply plugin: 'maven'
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'com.jfrog.artifactory'
+// apply plugin: 'com.jfrog.bintray'
+// apply plugin: 'com.jfrog.artifactory'
 
 sourceCompatibility = rootProject.ext.sourceCompatibility
 targetCompatibility = rootProject.ext.sourceCompatibility
@@ -34,5 +34,5 @@ task sourcesJar(type: Jar) {
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
-    encoding = 'UTF-8'
+    // encoding = 'UTF-8'
 }

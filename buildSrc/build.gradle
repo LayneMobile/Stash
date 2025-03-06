@@ -17,7 +17,7 @@
 def props = new Properties()
 props.load(new FileInputStream("${rootDir}/../gradle.properties"))
 props.each { key, val ->
-    project.set(key, val)
+    project.ext."${key}" = val
 }
 
 // brittle but works
